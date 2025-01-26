@@ -27,30 +27,30 @@
                 <div class="grid grid-cols-2 gap-4">
                     <!-- First Name -->
                     <div>
-                        <x-input-label for="first_name" :value="__('First Name')" />
-                        <x-text-input id="first_name" class="block mt-1 w-full" placeholder="John" type="text" name="first_name" :value="old('first_name')" required autofocus autocomplete="first_name" />
-                        <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
+                        <x-input-label for="firstname" :value="__('First Name')" />
+                        <x-text-input id="firstname" class="block mt-1 w-full" placeholder="John" type="text" name="admin_fname" :value="old('admin_fname')" required autofocus autocomplete="admin_fname" />
+                        <x-input-error :messages="$errors->get('admin_fname')" class="mt-2" />
                     </div>
 
                     <!-- Last Name -->
                     <div>
-                        <x-input-label for="last_name" :value="__('Last Name')" />
-                        <x-text-input id="last_name" class="block mt-1 w-full" placeholder="Doe" type="text" name="last_name" :value="old('last_name')" required autocomplete="last_name" />
-                        <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+                        <x-input-label for="lastname" :value="__('Last Name')" />
+                        <x-text-input id="lastname" class="block mt-1 w-full" placeholder="Doe" type="text" name="admin_lname" :value="old('admin_lname')" required autocomplete="admin_lname" />
+                        <x-input-error :messages="$errors->get('admin_lname')" class="mt-2" />
                     </div>
 
                     <!-- Username -->
                     <div>
                         <x-input-label for="username" :value="__('Username')" />
-                        <x-text-input id="username" class="block mt-1 w-full" placeholder="JohnDoe" type="text" name="username" :value="old('username')" required autocomplete="username" />
-                        <x-input-error :messages="$errors->get('username')" class="mt-2" />
+                        <x-text-input id="username" class="block mt-1 w-full" placeholder="JohnDoe" type="text" name="admin_uname" :value="old('admin_uname')" required autocomplete="admin_uname" />
+                        <x-input-error :messages="$errors->get('admin_uname')" class="mt-2" />
                     </div>
 
                     <!-- Email Address -->
                     <div>
                         <x-input-label for="email" :value="__('Email Address')" />
-                        <x-text-input id="email" class="block mt-1 w-full" placeholder="example@gmail.com" type="email" name="email" :value="old('email')" required autocomplete="email" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <x-text-input id="email" class="block mt-1 w-full" placeholder="example@gmail.com" type="email" name="admin_email" :value="old('admin_email')" required autocomplete="admin_email" />
+                        <x-input-error :messages="$errors->get('admin_email')" class="mt-2" />
                     </div>
 
                     <!-- Password -->

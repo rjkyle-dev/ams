@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('fines', function (Blueprint $table) {
             $table->id();
             $table->foreignId('attendance_id')->constrained('student_attendances');
-            $table->int('fines');
-            $table->int('morning_checkIn');
-            $table->int('morning_checkOut');
-            $table->int('afternoon_checkIn');
-            $table->int('afternoon_checkOut');
+            $table->integer('fines');
+            $table->integer('morning_checkIn');
+            $table->integer('morning_checkOut');
+            $table->integer('afternoon_checkIn');
+            $table->integer('afternoon_checkOut');
             $table->timestamps();
         });
     }

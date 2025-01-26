@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('attend_checkOut');
             $table->string('attend_day');
             $table->date('attend_date');
-            $table->int('attend_rowUpdate');
+            $table->integer('attend_rowUpdate');
             $table->timestamps();
         });
     }
