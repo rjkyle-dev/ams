@@ -66,7 +66,7 @@
                     </x-primary-button>
                 </div>
                 <div class="flex justify-center mt-5">
-                    Don't have an account? <a href="{{route('register')}}" class="text-blue-700 ml-1"> Create Account</a>
+                    Don't have an account? <a href="{{route('admin.code')}}" class="text-blue-700 ml-1"> Create Account</a>
                 </div>
             </form>
         </div>
