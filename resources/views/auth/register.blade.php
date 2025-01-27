@@ -18,6 +18,8 @@
     </div>
 
 
+                
+
     <!-- Right Column: Takes up 1/3 of the width on medium screens and larger -->
     <div
         class="md:basis-1/3 lg:basis-5/12 border-4 border-purple-900 md:border md:border-purple-900 lg:border-t-4 lg:border-b-4 lg:border-l-4 lg:border-r-0 bg-white p-6 py-12 rounded-xl md:rounded-l-3xl md:rounded-r-none shadow-md">
