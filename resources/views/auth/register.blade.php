@@ -1,6 +1,7 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    @if (session('admin_code_verified'))
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
         <!-- Left Column: Takes up 2/3 of the width on medium screens and larger -->
         <div class="md:basis-2/3 lg:basis-7/12 flex flex-col items-center justify-center space-y-4">
             <!-- Images stacked on top of each other -->
@@ -87,4 +88,9 @@
                 </div>
             </form>
         </div>
+    @else
+        <script>
+            window.location.href = "{{ route('admin.code') }}";
+        </script>
+    @endif
 </x-guest-layout>
