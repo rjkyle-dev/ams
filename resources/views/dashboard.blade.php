@@ -42,18 +42,20 @@
         </div>
     </div>
 
+
     <div class="bg-white p-3">
         <div class="flex justify-between">
-            <div><button class="bg-violet-600 text-white rounded-xl px-5 text-2xl">
+            <div>
+                <button onclick="" class="bg-violet-600 text-white rounded-xl px-5 text-2xl">
                     Start Attendance
                 </button>
 
             </div>
             <div>
-                <button class="bg-violet-600 text-white rounded-xl px-5 text-2xl">
+                <button onclick="openModal('studentModal')" class="bg-violet-600 text-white rounded-xl px-5 text-2xl">
                     Create Event
                 </button>
-                <button class="bg-violet-600 text-white rounded-xl px-5 text-2xl">
+                <button onclick="openModal('eventModal')" class="bg-violet-600 text-white rounded-xl px-5 text-2xl">
                     Add Student
                 </button>
             </div>
@@ -81,4 +83,64 @@
         </div>
 
     </div>
+    {{-- MODAL --}}
+
+    <div id="studentModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <div class="border-b-2 border-gray-300">
+                <h1 class="text-2xl font-bold">Add Student Information</h1>
+            </div>
+            <div>
+                Test
+            </div>
+
+            <div class="flex justify-end">
+                <button onclick="closeModal('studentModal')"
+                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="eventModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <div class="border-b-2 border-gray-300">
+                <h1 class="text-2xl font-bold">Add Student Information</h1>
+            </div>
+            <div>
+                Test
+            </div>
+
+            <div class="flex justify-end">
+                <button onclick="closeModal('eventModal')"
+                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Close</button>
+            </div>
+        </div>
+    </div>
+
+
 </x-app-layout>
+
+<script>
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.remove('hidden');
+
+    }
+
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        modal.classList.add('hidden');
+
+    }
+
+
+    const modal = document.getElementsByClassName('modal');
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', (event) => {
+        modal.forEach(element => {
+            modal.classList.add('hidden');
+
+        });
+
+    });
+</script>
