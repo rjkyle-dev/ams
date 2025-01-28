@@ -4,6 +4,15 @@
         <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
+        <div class="flex justify-between items-center p-4 bg-gray-100 border-b">
+            <h1 class="text-xl font-bold">Dashboard</h1>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md">
+                    Logout
+                </button>
+            </form>
+        </div>
     </x-slot>
 
     <div class="flex gap-5 mb-4">

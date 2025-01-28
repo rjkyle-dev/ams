@@ -27,10 +27,10 @@
 
             <!-- Email Address -->
             <div>
-                <x-input-label for="email" :value="__('Email Address')" />
-                <x-text-input id="email" placeholder="example@gmail.com" class="block mt-1 w-full" type="email"
-                    name="admin_email" :value="old('email')" autofocus autocomplete="username" />
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                <x-input-label for="admin_email" :value="__('Email Address')" />
+                <x-text-input id="admin_email" placeholder="example@gmail.com" class="block mt-1 w-full" type="email"
+                    name="admin_email" :value="old('admin_email')" autofocus autocomplete="admin_email" />
+                <x-input-error :messages="$errors->get('admin_email')" class="mt-2" />
             </div>
 
             <!-- Password -->
