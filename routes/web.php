@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentAttendanceController;
 use App\Http\Controllers\StudentController;
+use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +31,14 @@ Route::middleware('auth')->group(function () {
 
     // STUDENT RELATED ROUTES
     Route::post('/addStudent', [StudentController::class, 'create'])->name('addStudent');
+
+
+    // ATTENDANCE RELATED ROUTES
+    Route::get('/attendance', [StudentAttendanceController::class, 'view'])->name('attendance');
+    // Route::post
+
+    // EVENTS RELATED ROUTES
+    Route::post('/addEvent', [EventController::class, 'create'])->name('addEvent');
 });
 
 require __DIR__ . '/auth.php';
