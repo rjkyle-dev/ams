@@ -1,5 +1,9 @@
+@php
+    $class = 'bg-violet-600 text-white rounded-xl px-5 text-2xl';
+@endphp
+
 <div x-data="{ open: false }" class="transition-all">
-    <button x-on:click="open = ! open" class="bg-violet-600 text-white rounded-xl px-5 text-2xl">
+    <button x-on:click="open = ! open" class="{{ $class }}">
         {{ $button }}
     </button>
 

@@ -46,7 +46,6 @@
                         <input id = "inputField" type = "text" name = "s_rfid" onload="console.log('Hello World')"
                             onfocus = "console.log('hi')" placeholder="Enter RFID or Student ID"
                             onchange = "console.log('Hello World')">
-
                     </form>
                 </x-slot>
             </x-new-modal>
