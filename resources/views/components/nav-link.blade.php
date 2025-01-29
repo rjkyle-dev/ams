@@ -1,7 +1,7 @@
 {{-- Main Navlink --}}
 @props(['active' => false])
 
-<a class="{{ $active ? 'text-yellow-300 border-b-2 border-yellow-300 transform scale-125 linear transition-transform' : 'text-gray-100 hover:text-yellow-400 hover:font-semibold transition-all' }} nav-link"
+<a class="{{ $active ? 'bg-yellow-600 px-3 py-2 text-white font-bold rounded transform scale-75 linear transition-transform' : 'text-gray-100 hover:text-yellow-400 hover:font-semibold transition-all font-black' }} nav-link"
     aria-current="{{ $active ? 'page' : 'false' }}" {{ $attributes }}>
     {{ $slot }}
 </a>
