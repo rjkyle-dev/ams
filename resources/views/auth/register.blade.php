@@ -1,14 +1,27 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-    <!-- Left Column: Takes up 2/3 of the width on medium screens and larger -->
-    <div class="md:basis-2/3 lg:basis-7/12 flex flex-col items-center justify-center space-y-4">
-        <!-- Images stacked on top of each other -->
-        <div class="flex gap-3">
-            <img src="{{ asset('images/logos/IC.svg') }}" alt="Logo 1" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
-            <img src="{{ asset('images/logos/ICSA.svg') }}" alt="Logo 2" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
+    @if (session('admin_code_verified'))
+    
+    @endif
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+        <!-- Left Column: Takes up 2/3 of the width on medium screens and larger -->
+        <div class="md:basis-2/3 lg:basis-7/12 flex flex-col items-center justify-center space-y-4">
+            <!-- Images stacked on top of each other -->
+            <div class="flex gap-3">
+                <img src="{{ asset('images/logos/IC.svg') }}" alt="Logo 1" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
+                <img src="{{ asset('images/logos/ICSA.svg') }}" alt="Logo 2" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
+            </div>
+            
+            <!-- Text below the images -->
+            <h1 class="text-3xl md:text-5xl lg:text-8xl font-extrabold text-center drop-shadow-2xl">
+                <span class="text-yellow-400">Attendance</span> 
+                <span class="text-white">Management</span> 
+                <span class="text-yellow-400">System</span>
+            </h1>
+    
         </div>
 
+<div>
         <!-- Text below the images -->
         <h1 class="text-3xl md:text-5xl lg:text-8xl font-extrabold text-center drop-shadow-2xl">
             <span class="text-yellow-400">Attendance</span>
