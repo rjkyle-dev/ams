@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="bg-white basis-1/2 flex items-center justify-evenly rounded-md">
-            <div
+            <div onclick="window.location.href = '{{ route('students') }}'"
                 class="flex items-center gap-1 bg-yellow-500 rounded-md p-2 hover:scale-105 hover:text-gray-900 ease-linear transition-all cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-20">
@@ -47,7 +47,7 @@
                     Students
                 </h1>
             </div>
-            <div
+            <div onclick="window.location.href = '{{ route('students') }}'"
                 class="flex items-center gap-1 bg-yellow-500 rounded-lg p-2 hover:scale-105 hover:text-gray-900 ease-linear transition-all cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-20">
@@ -66,7 +66,7 @@
 
     <div class="flex items-center justify-between bg-white p-3">
         <div class="flex gap-5">
-            <button
+            <button onclick="window.location.href = '{{ route('attendance') }}'"
                 class="bg-violet-800 hover:bg-violet-950 ease-linear transition-all text-white rounded-xl px-5 text-2xl flex items-center p-4 gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-9">
@@ -339,10 +339,6 @@
             </tbody>
         </table>
     </div>
-
-
-
-
 </x-app-layout>
 
 <script>
@@ -354,13 +350,5 @@
     function closeModal(id) {
         const modal = document.getElementById(id);
         modal.classList.add('hidden');
-    }
-
-    function uploadImage() {
-        console.log("Working");
-
-        // const file = document.getElementById('uploadFile');
-        // const image = document.getElementById('uploadImage')
-        // image.src = file.files[0]
     }
 </script>

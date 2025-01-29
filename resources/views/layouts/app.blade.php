@@ -30,9 +30,8 @@
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Dashboard</x-nav-link>
                                 <x-nav-link href="{{ route('logs') }}" :active="request()->routeIs('logs')">Logs</x-nav-link>
-                                <x-nav-link href="#">Projects</x-nav-link>
-                                <x-nav-link href="#">Calendar</x-nav-link>
-                                <x-nav-link href="#">Reports</x-nav-link>
+                                <x-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')">Students</x-nav-link>
+
                             </div>
                         </div>
                     </div>
