@@ -1,5 +1,5 @@
 <x-app-layout>
-    @vite(['resources/js/axios.js'])
+    @vite(['resources/js/axios.js', 'resources/js/student_attendance.js'])
 
     <x-slot name="header">
         <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
@@ -20,35 +20,30 @@
 
         </div>
     </x-slot>
-    <script>
-        function myFunction() {
-            console.log('hoo')
-            document.getElementById("inputField").focus();
-        }
-    </script>
+
     <div class="mt-4">
         <div class="flex justify-between">
 
             <h3 class="text-3xl text-violet-800 font-extrabold">
                 Attendance Record
             </h3>
-            <x-new-modal>
-                <x-slot name="button">
-                    Start Attendance
-                </x-slot>
-                <x-slot name="heading">
-                    Start Attendance
-                </x-slot>
-                <x-slot name="content">
-                    <form action="" class="flex flex-col mb-3 min-w-[300px]" method = "POST">
 
-                        <label for="">Enter RFID / Student ID:</label>
-                        <input id = "inputField" type = "text" name = "s_rfid" onload="console.log('Hello World')"
-                            onfocus = "console.log('hi')" placeholder="Enter RFID or Student ID"
-                            onchange = "console.log('Hello World')">
-                    </form>
-                </x-slot>
-            </x-new-modal>
+            <div x-data="{ play: false }" class="flex">
+
+                <button x-show='play' x-on:click='play=false'
+                    class="bg-red-500 px-3 py-2 mb-2 text-white transition-full max-w-xs text-center rounded-xl shadow-lg">
+                    Stop Attendance
+                </button>
+
+                <button x-show='!play' x-on:click='play = true'
+                    class="bg-orange-500 px-3 py-2 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-xl text-white shadow-lg"
+                    onclick="">
+                    Start Attendance
+                </button>
+
+            </div>
+
+
         </div>
 
         <table class="min-w-full">
@@ -67,4 +62,12 @@
         </table>
     </div>
 
+
+
 </x-app-layout>
+<script>
+    function myFunction() {
+        console.log('hoo')
+        document.getElementById("inputField").focus();
+    }
+</script>
