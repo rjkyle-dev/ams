@@ -9,8 +9,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-
-
 window.toggleDropdown = toggleDropdown;
 
 window.startTime = startTime;

@@ -209,112 +209,111 @@
 
             {{-- class="bg-yellow-500 hover:bg-amber-500 ease-linear transition-all text-white rounded-xl px-5 text-2xl flex items-center p-4 gap-1" --}}
 
-
             <x-new-modal>
-                <x-slot name="button">
-                    <div class="flex px-3 py-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="1.5" stroke="currentColor" class="size-9">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-                        </svg>
-                        Student
+                    <x-slot name="button">
+                        <div class="flex px-3 py-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="size-9">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                            </svg>
+                            Student
+                    </x-slot>
+
+
+                <x-slot name="heading">
+                    Add Student Information
                 </x-slot>
+                <x-slot name="content">
+                    <form method="POST" action="{{ route('addStudent') }}" class="flex items-center">
+                        @csrf
+                        <div class="basis-3/4 justify-start">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
 
+                                <div class="grid grid-cols-1">
+                                    <label for="">
+                                        RFID
+                                    </label>
+                                    <input type="text" placeholder="Scan RFID" name="s_rfid">
+                                </div>
+                                <div class="grid grid-cols-1">
+                                    <label for="">Student ID:</label>
+                                    <input type="text" placeholder="Enter Student ID (Ex. 2023-00069)" name="s_studentID">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                <label for="">First Name:</label>
+                                <input type="text" placeholder="Enter Firstname" name="s_fname">
+                            </div>
+                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                <label for="">Last Name:</label>
+                                <input type="text" placeholder="Enter Lastname" name="s_lname">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
+
+                                <div class="grid grid-cols-1">
+                                    <label for="">Middle Name</label>
+                                    <input type="text" placeholder="Enter Middlename" name="s_mname">
+                                </div>
+                                <div class="grid grid-cols-1">
+                                    <label for="">Suffix</label>
+                                    <input type="text" placeholder="Enter Suffix" name="s_suffix">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+
+                                <div class="grid grid-cols-1">
+                                    <label for="">Program</label>
+                                    <select name="s_program" id="">
+                                        <option selected>Select Program</option>
+                                        <option value="BSIT">BSIT</option>
+                                        <option value="BSIS">BSIS</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-1">
+                                    <label for="">Year Level</label>
+                                    <select name="s_lvl" id="">
+                                        <option selected>Select Year Level</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-1">
+                                    <label for="">Set</label>
+                                    <select name="s_set" id="">
+                                        <option selected>Select Set</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+                                        <option value="F">F</option>
+                                        <option value="G">G</option>
+                                        <option value="H">H</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div x-data="{ image: '{{ asset('images/icons/profile.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
+                            <img id="uploadImage" class="max-w-1/2" :src="image" alt="">
+                            <input id="uploadFile" type="file" name="s_image" x-ref="imageFile"
+                                x-on:change="image = URL.createObjectURL($refs.imageFile.files[0])" hidden>
+                            <button x-on:click="$refs.imageFile.click()" type="button"
+                                class="bg-green-400 text-white px-3 py-2 text-xl">
+                                Upload Image
+                            </button>
+                        </div>
+
+                    </form>
+                </x-slot>
+                <x-slot name="footer">
+                    <button type="submit" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
+                        Save </button>
+                </x-slot>
+            </x-new-modal>
         </div>
-
-        <x-slot name="heading">
-            Add Student Information
-        </x-slot>
-        <x-slot name="content">
-            <form method="POST" action="{{ route('addStudent') }}" class="flex items-center">
-                @csrf
-                <div class="basis-3/4 justify-start">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
-
-                        <div class="grid grid-cols-1">
-                            <label for="">
-                                RFID
-                            </label>
-                            <input type="text" placeholder="Scan RFID" name="s_rfid">
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="">Student ID:</label>
-                            <input type="text" placeholder="Enter Student ID (Ex. 2023-00069)" name="s_studentID">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                        <label for="">First Name:</label>
-                        <input type="text" placeholder="Enter Firstname" name="s_fname">
-                    </div>
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                        <label for="">Last Name:</label>
-                        <input type="text" placeholder="Enter Lastname" name="s_lname">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
-
-                        <div class="grid grid-cols-1">
-                            <label for="">Middle Name</label>
-                            <input type="text" placeholder="Enter Middlename" name="s_mname">
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="">Suffix</label>
-                            <input type="text" placeholder="Enter Suffix" name="s_suffix">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
-
-                        <div class="grid grid-cols-1">
-                            <label for="">Program</label>
-                            <select name="s_program" id="">
-                                <option selected>Select Program</option>
-                                <option value="BSIT">BSIT</option>
-                                <option value="BSIS">BSIS</option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="">Year Level</label>
-                            <select name="s_lvl" id="">
-                                <option selected>Select Year Level</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="">Set</label>
-                            <select name="s_set" id="">
-                                <option selected>Select Set</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                                <option value="F">F</option>
-                                <option value="G">G</option>
-                                <option value="H">H</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div x-data="{ image: '{{ asset('images/icons/profile.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
-                    <img id="uploadImage" class="max-w-1/2" :src="image" alt="">
-                    <input id="uploadFile" type="file" name="s_image" x-ref="imageFile"
-                        x-on:change="image = URL.createObjectURL($refs.imageFile.files[0])" hidden>
-                    <button x-on:click="$refs.imageFile.click()" type="button"
-                        class="bg-green-400 text-white px-3 py-2 text-xl">
-                        Upload Image
-                    </button>
-                </div>
-
-            </form>
-        </x-slot>
-        <x-slot name="footer">
-            <button type="submit" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
-                Save </button>
-        </x-slot>
-        </x-new-modal>
 
     </div>
     </div>
@@ -346,6 +345,7 @@
 </x-app-layout>
 
 <script>
+    //JavaScript logic for modals
     function openModal(id) {
         const modal = document.getElementById(id);
         modal.classList.remove('hidden');
