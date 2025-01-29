@@ -36,18 +36,16 @@ class RegisteredUserController extends Controller
             'admin_email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
+    
         $user = User::create([
             'admin_fname' => $request->admin_fname,
             'admin_lname' => $request->admin_lname,
             'admin_uname' => $request->admin_uname,
-            'admin_type' => 'admin',
             'admin_email' => $request->admin_email,
             'password' => Hash::make($request->password),
         ]);
-
+    
         event(new Registered($user));
-
       
         return redirect()->route('login')->with('status', 'Account created successfully! Please login.');
     }

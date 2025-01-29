@@ -8,4 +8,14 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        proxy: {
+            '/app': 'http://localhost', // Proxy Laravel requests to your Laravel app
+        },
+        cors: {
+            origin: 'http://localhost', // Allow your Laravel app to access the Vite server
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'Authorization'],
+        },
+    },
 });
