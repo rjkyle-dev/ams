@@ -219,7 +219,7 @@
                             </svg>
                             Student
                     </x-slot>
-
+        </div>
 
                 <x-slot name="heading">
                     Add Student Information
@@ -313,8 +313,6 @@
                         Save </button>
                 </x-slot>
             </x-new-modal>
-        </div>
-
     </div>
     </div>
     <div class="mt-4">

@@ -105,7 +105,7 @@
             </legend>
 
             <img src="{{ asset('images/logos/fox.png') }}" alt=""
-                class="max-h-[100px] fixed z-40 opacity-25 bottom-0 hover:opacity-100 transition-opacity duration-100">
+                class="max-h-[100px] fixed z-0 opacity-25 bottom-0 hover:opacity-100 transition-opacity duration-100">
 
             @if ($header)
                 <header>
