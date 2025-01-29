@@ -18,15 +18,25 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="admin_fname" :value="__('First Name')" />
+            <x-text-input id="admin_fname" name="admin_fname" type="text" class="mt-1 block w-full" :value="old('admin_fname', $user->admin_fname)" required autofocus autocomplete="admin_fname" />
+            <x-input-error class="mt-2" :messages="$errors->get('admin_fname')" />
+        </div>
+        <div>
+            <x-input-label for="admin_lname" :value="__('Last Name')" />
+            <x-text-input id="admin_lname" name="admin_lname" type="text" class="mt-1 block w-full" :value="old('admin_lname', $user->admin_lname)" required autofocus autocomplete="admin_lname" />
+            <x-input-error class="mt-2" :messages="$errors->get('admin_lname')" />
+        </div>
+        <div>
+            <x-input-label for="admin_uname" :value="__('Username')" />
+            <x-text-input id="admin_uname" name="admin_uname" type="text" class="mt-1 block w-full" :value="old('admin_uname', $user->admin_uname)" required autofocus autocomplete="admin_uname" />
+            <x-input-error class="mt-2" :messages="$errors->get('admin_uname')" />
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            <x-input-label for="admin_email" :value="__('Email')" />
+            <x-text-input id="admin_email" name="admin_email" type="email" class="mt-1 block w-full" :value="old('admin_email', $user->admin_email)" required autocomplete="admin_email" />
+            <x-input-error class="mt-2" :messages="$errors->get('admin_email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
