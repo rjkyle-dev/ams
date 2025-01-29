@@ -10,14 +10,14 @@ class AdminCodeController extends Controller
     public function verify(Request $request)
     {
         $request->validate([
-            'code' => 'required',
+            'code' => 'required'
         ]);
 
         if ($request->code === '101623') {
             session(['admin_code_verified' => true]);
             return redirect()->route('register');
-        } else {
-            return redirect()->route('admin.code')->with('error', 'Incorrect Admin Code!');
         }
+
+        return back()->with('error', 'Incorrect Admin Code!');
     }
 }
