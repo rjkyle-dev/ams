@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'RFID Attendance Management System') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,18 +19,27 @@
 <body class="font-sans antialiased" onload="startTime()">
     <div class="min-h-full">
         <!-- Navigation Bar -->
-        <nav class="bg-violet-800">
+        <nav class="bg-violet-800 w-100">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex items-center">
                         <div class="shrink-0">
-                            <img class="h-8 w-auto" src="{{ asset('images/logos/ICSA.svg') }}" alt="Your Company">
+                            <img class="h-14 w-auto " src="{{ asset('images/logos/ICSA.svg') }}" alt="Your Company">
                         </div>
                         <div class="hidden md:block">
-                            <div class="ml-10 flex items-baseline space-x-4">
+                            <div class="ml-10 flex items-baseline space-x-4 w-100">
+                                <div class="font-black">
                                 <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Dashboard</x-nav-link>
+                                </div>
+                    
+                                <div class="font-black">
                                 <x-nav-link href="{{ route('logs') }}" :active="request()->routeIs('logs')">Logs</x-nav-link>
+                            </div>
+                               
+      <div class="font-black">
                                 <x-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')">Students</x-nav-link>
+
+                            </div>
 
                             </div>
                         </div>
