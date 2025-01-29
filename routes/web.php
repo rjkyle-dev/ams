@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
     // STUDENT RELATED ROUTES
     Route::post('/addStudent', [StudentController::class, 'create'])->name('addStudent');
-
+    Route::get('/students', [StudentController::class, 'view'])->name('students');
 
     // ATTENDANCE RELATED ROUTES
     Route::get('/attendance', [StudentAttendanceController::class, 'view'])->name('attendance');
