@@ -64,7 +64,7 @@
     </div>
 
 
-    <div class="flex items-center justify-between bg-white p-3">
+    <div class="flex items-center justify-between bg-white p-3 rounded">
         <div class="flex gap-5">
             <button onclick="window.location.href = '{{ route('attendance') }}'"
                 class="bg-violet-800 hover:bg-violet-950 ease-linear transition-all text-white rounded-xl px-5 text-2xl flex items-center p-4 gap-1">
