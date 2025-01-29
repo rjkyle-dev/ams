@@ -11,4 +11,9 @@ class StudentController extends Controller
     {
         dd('working');
     }
+
+    public function view()
+    {
+        return view('pages.students');
+    }
 }
