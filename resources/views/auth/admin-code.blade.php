@@ -1,4 +1,3 @@
-{{-- filepath: /c:/Users/lozad/OneDrive/Documents/GitHub/ams/resources/views/auth/admin-code.blade.php --}}
 <x-guest-layout>
     <!-- Left Column: Takes up 2/3 of the width on medium screens and larger -->
     <div class="md:basis-2/3 lg:basis-7/12 flex flex-col items-center justify-center space-y-4">
