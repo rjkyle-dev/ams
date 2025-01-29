@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('admin_fname');
             $table->string('admin_lname');
-            $table->string('admin_uname');
+            $table->string('admin_uname')->unique();
             $table->string('admin_type')->default("admin");
             $table->string('admin_email')->unique();
             $table->timestamp('email_verified_at')->nullable();

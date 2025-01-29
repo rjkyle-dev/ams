@@ -24,7 +24,7 @@
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex items-center">
                         <div class="shrink-0">
-                            <img class="h-14 w-auto " src="{{ asset('images/logos/ICSA.svg') }}" alt="Your Company">
+                            <img class="h-14 w-auto" src="{{asset('images/logos/fox.png')}}" alt="Your Company">
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4 w-100">
