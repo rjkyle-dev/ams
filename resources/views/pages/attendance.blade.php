@@ -6,17 +6,68 @@
             {{ __('Student Attendance') }}
         </h2>
         <div class="flex justify-between items-center p-4 bg-gray-100 border-b">
-            <h1 class="text-xl font-bold">Dashboard</h1>
-            <div class="flex">
+            <div>
+                <h2 class="text-2xl font-bold text-violet-800">
+                    Today's Event:
+
+                    @if ($event)
+                        <span class="text-green-500">
+                            {{ $event->event_name }}
+                        </span>
+                    @else
+                        <span class="text-red-600">
+                            None
+                        </span>
+                    @endif
+
+                </h2>
+                @if ($event)
+                    <h2 class="text-2xl font-bold text-violet-800">
+                        Check In Start:
+                        <span class="text-green-500">
+                            {{ date_format(date_create($event->checkIn_start), 'h:i A') }}
+                        </span>
+                    </h2>
+                    <h2 class="text-2xl font-bold text-violet-800">
+                        Check In End:
+                        <span class="text-green-500">
+                            {{ date_format(date_create($event->checkIn_end), 'h:i A') }}
+                        </span>
+                    </h2>
+                    <h2 class="text-2xl font-bold text-violet-800">
+                        Check Out Start:
+                        <span class="text-green-500">
+                            {{ date_format(date_create($event->checkOut_start), 'h:i A') }}
+                        </span>
+                    </h2>
+                    <h2 class="text-2xl font-bold text-violet-800">
+                        Check Out Start:
+                        <span class="text-green-500">
+                            {{ date_format(date_create($event->checkOut_end), 'h:i A') }}
+                        </span>
+                    </h2>
+                @endif
 
             </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md">
-                    Logout
-                </button>
-            </form>
+            <div x-data="{ play: false }" class="flex">
 
+                <button onclick="stopAttendance()" x-show='play' x-on:click='play=false'
+                    class="bg-red-500 px-3 py-2 mb-2 text-white transition-full max-w-xs text-center rounded-xl shadow-lg">
+                    Stop Attendance
+                </button>
+
+                <button onclick="myFunction()" x-show='!play' x-on:click='play = true'
+                    class="bg-orange-500 px-3 py-2 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-xl text-white shadow-lg"
+                    onclick="">
+                    Start Attendance
+                </button>
+
+
+                <form action="" method="POST">
+                    <input type="text" name="s_rfid" id="inputField">
+
+                </form>
+            </div>
 
         </div>
     </x-slot>
@@ -28,20 +79,6 @@
                 Attendance Record
             </h3>
 
-            <div x-data="{ play: false }" class="flex">
-
-                <button x-show='play' x-on:click='play=false'
-                    class="bg-red-500 px-3 py-2 mb-2 text-white transition-full max-w-xs text-center rounded-xl shadow-lg">
-                    Stop Attendance
-                </button>
-
-                <button x-show='!play' x-on:click='play = true'
-                    class="bg-orange-500 px-3 py-2 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-xl text-white shadow-lg"
-                    onclick="">
-                    Start Attendance
-                </button>
-
-            </div>
 
 
         </div>
@@ -66,8 +103,21 @@
 
 </x-app-layout>
 <script>
+    var startAttendance = false;
+
     function myFunction() {
-        console.log('hoo')
+        console.log("attendance start");
         document.getElementById("inputField").focus();
+        startAttendance = true;
     }
+
+    function stopAttendance() {
+        console.log("attendance stop");
+        startAttendance = false;
+    }
+    document.getElementById('inputField').onkeydown = function() {
+        if (startAttendance) {
+            return false
+        }
+    };
 </script>

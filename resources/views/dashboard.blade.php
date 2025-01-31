@@ -9,6 +9,14 @@
         @endforeach
     @endif
 
+    @isset($successful)
+        @foreach ($successful->all() as $error)
+            <x-alert-error>
+                {{ $error }}
+            </x-alert-error>
+        @endforeach
+
+    @endisset
 
     <x-slot name="header">
         <div class="">
@@ -38,9 +46,7 @@
                 <p class="text-base font-bold">Email Address: <span
                         class="text-slate-500 font-medium">{{ auth()->user()->admin_email }}</span></p>
             </div>
-            <div class="">
 
-            </div>
         </div>
         <div class="bg-white basis-1/2 flex items-center justify-evenly rounded-md">
             <div onclick="window.location.href = '{{ route('students') }}'"
@@ -76,7 +82,7 @@
 
     <div class="flex items-center justify-between bg-white p-3 rounded">
         <div class="flex gap-5">
-            <button onclick="window.location.href = '{{ route('attendance') }}'"
+            <button onclick="location.href = '{{ route('attendance') }}'"
                 class="bg-violet-800 hover:bg-violet-950 ease-linear transition-all text-white rounded-xl px-5 text-2xl flex items-center p-4 gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-9">
@@ -96,6 +102,7 @@
         </div>
 
         <div class="flex gap-3">
+            {{-- MODALS --}}
             <x-new-modal>
                 <x-slot name="button"
                     class="bg-violet-600 hover:bg-violet-950 ease-linear transition-all text-white rounded-xl px-5 text-2xl
@@ -114,11 +121,12 @@
                     Create Event
                 </x-slot>
                 <x-slot name="content">
-                    <form action="" method="POST" class="min-w-[500px]">
+                    <form x-ref="eventForm" action="{{ route('addEvent') }}" method="POST" class="min-w-[500px]">
+                        @csrf
 
                         <div class="flex flex-col mb-3">
                             <label for="">Day or Event:</label>
-                            <input type="text" placeholder="Enter Event Name" name="s_fname">
+                            <input type="text" placeholder="Enter Event Name" name="event_name">
                         </div>
 
                         <p>Check In:</p>
@@ -137,7 +145,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="time" id="start-time"
+                                    <input type="time" id="start-time" name="checkIn_start"
                                         class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         min="09:00" max="18:00" value="00:00" required />
                                 </div>
@@ -157,7 +165,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="time" id="end-time"
+                                    <input type="time" id="checkIn_end" name="checkIn_end"
                                         class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         min="09:00" max="18:00" value="00:00" required />
                                 </div>
@@ -180,7 +188,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="time" id="start-time"
+                                    <input type="time" id="start-time" name="checkOut_start"
                                         class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         min="09:00" max="18:00" value="00:00" required />
                                 </div>
@@ -200,7 +208,7 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
-                                    <input type="time" id="end-time"
+                                    <input type="time" id="end-time" name="checkOut_end"
                                         class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         min="09:00" max="18:00" value="00:00" required />
                                 </div>
@@ -210,13 +218,12 @@
 
                 </x-slot>
                 <x-slot name="footer">
-                    <button type="submit" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
+                    <button x-on:click="$refs.eventForm.submit()" type="submit"
+                        class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
                         Save </button>
                 </x-slot>
             </x-new-modal>
-
-            {{-- class="bg-yellow-500 hover:bg-amber-500 ease-linear transition-all text-white rounded-xl px-5 text-2xl flex items-center p-4 gap-1" --}}
-
+            {{-- MODALS --}}
             <x-new-modal>
                 <x-slot name="button">
                     <div class="flex px-3 py-4">
@@ -227,112 +234,107 @@
                         </svg>
                         Student
                 </x-slot>
+
+
+                <x-slot name="heading">
+                    Add Student Information
+                </x-slot>
+                <x-slot name="content">
+                    <form id="studentForm"action="{{ route('addStudent') }}" x-ref ="studentForm" method="POST"
+                        enctype="multipart/form-data" class="flex items-center">
+                        @csrf
+                        <div class="basis-3/4 justify-start">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
+
+                                <div class="grid grid-cols-1">
+                                    <label for="">
+                                        RFID
+                                    </label>
+                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_rfid">
+                                </div>
+                                <div class="grid grid-cols-1">
+                                    <label for="">Student ID:</label>
+                                    <input type="text" placeholder="Enter Student ID (Ex. 2023-00069)"
+                                        name="s_studentID" id="s_studentID">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                <label for="">First Name:</label>
+                                <input type="text" placeholder="Enter Firstname" name="s_fname" id="s_fname">
+                            </div>
+                            <div class="grid grid-cols-1 mt-5 mx-7">
+                                <label for="">Last Name:</label>
+                                <input type="text" placeholder="Enter Lastname" name="s_lname" id="s_lname">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
+
+                                <div class="grid grid-cols-1">
+                                    <label for="">Middle Name</label>
+                                    <input type="text" placeholder="Enter Middlename" name="s_mname"
+                                        id="s_mname">
+                                </div>
+                                <div class="grid grid-cols-1">
+                                    <label for="">Suffix</label>
+                                    <input type="text" placeholder="Enter Suffix" name="s_suffix" id="s_suffix">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+
+                                <div class="grid grid-cols-1">
+                                    <label for="">Program</label>
+                                    <select name="s_program" id="s_program">
+                                        <option selected value="">Select Program</option>
+                                        <option value="BSIT">BSIT</option>
+                                        <option value="BSIS">BSIS</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-1">
+                                    <label for="">Year Level</label>
+                                    <select name="s_lvl" id="s_lvl">
+                                        <option selected value="">Select Year Level</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-1">
+                                    <label for="">Set</label>
+                                    <select name="s_set" id="s_set">
+                                        <option selected value="">Select Set</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+                                        <option value="F">F</option>
+                                        <option value="G">G</option>
+                                        <option value="H">H</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div x-data="{ image: '{{ asset('images/icons/profile.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
+                            <img id="uploadImage" class="max-w-1/2" :src="image" alt="">
+                            <input id="uploadFile" type="file" name="s_image" x-ref="imageFile"
+                                x-on:change="image = URL.createObjectURL($refs.imageFile.files[0])" hidden>
+                            <button x-on:click="$refs.imageFile.click()" type="button"
+                                class="bg-green-400 text-white px-3 py-2 text-xl">
+                                Upload Image
+                            </button>
+                        </div>
+                    </form>
+                </x-slot>
+                <x-slot name="footer">
+                    <button onclick="testStudentForm()" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
+                        Test Form </button>
+                    <button x-on:click="$refs.studentForm.submit()"
+                        class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
+                        Save </button>
+                </x-slot>
+            </x-new-modal>
+
         </div>
-
-        <x-slot name="heading">
-            Add Student Information
-        </x-slot>
-        <x-slot name="content">
-            <form id="studentForm"action="{{ route('addStudent') }}" x-ref ="studentForm" method="POST"
-                enctype="multipart/form-data" class="flex items-center">
-                @csrf
-                <div class="basis-3/4 justify-start">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
-
-                        <div class="grid grid-cols-1">
-                            <label for="">
-                                RFID
-                            </label>
-                            <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_rfid">
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="">Student ID:</label>
-                            <input type="text" placeholder="Enter Student ID (Ex. 2023-00069)" name="s_studentID"
-                                id="s_studentID">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                        <label for="">First Name:</label>
-                        <input type="text" placeholder="Enter Firstname" name="s_fname" id="s_fname">
-                    </div>
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                        <label for="">Last Name:</label>
-                        <input type="text" placeholder="Enter Lastname" name="s_lname" id="s_lname">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
-
-                        <div class="grid grid-cols-1">
-                            <label for="">Middle Name</label>
-                            <input type="text" placeholder="Enter Middlename" name="s_mname" id="s_mname">
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="">Suffix</label>
-                            <input type="text" placeholder="Enter Suffix" name="s_suffix" id="s_suffix">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
-
-                        <div class="grid grid-cols-1">
-                            <label for="">Program</label>
-                            <select name="s_program" id="s_program">
-                                <option selected value="">Select Program</option>
-                                <option value="BSIT">BSIT</option>
-                                <option value="BSIS">BSIS</option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="">Year Level</label>
-                            <select name="s_lvl" id="s_lvl">
-                                <option selected value="">Select Year Level</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="">Set</label>
-                            <select name="s_set" id="s_set">
-                                <option selected value="">Select Set</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                <option value="E">E</option>
-                                <option value="F">F</option>
-                                <option value="G">G</option>
-                                <option value="H">H</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div x-data="{ image: '{{ asset('images/icons/profile.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
-                    <img id="uploadImage" class="max-w-1/2" :src="image" alt="">
-                    <input id="uploadFile" type="file" name="s_image" x-ref="imageFile"
-                        x-on:change="image = URL.createObjectURL($refs.imageFile.files[0])" hidden>
-                    <button x-on:click="$refs.imageFile.click()" type="button"
-                        class="bg-green-400 text-white px-3 py-2 text-xl">
-                        Upload Image
-                    </button>
-                </div>
-            </form>
-        </x-slot>
-        <x-slot name="footer">
-            <button onclick="testStudentForm()" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
-                Test Form </button>
-            <button x-on:click="$refs.studentForm.submit()" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
-                Save </button>
-        </x-slot>
-        </x-new-modal>
-
-        </form>
-        </x-slot>
-        <x-slot name="footer">
-            <button type="submit" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
-                Save </button>
-        </x-slot>
-        </x-new-modal>
-    </div>
     </div>
     <div class="mt-4">
         <h3 class="text-3xl text-violet-800 font-extrabold">
@@ -351,17 +353,15 @@
                 <td>Date</td>
             </tr>
             <tbody>
-                @isset($students)
-                    <td>No.</td>
-                    <td>Name</td>
-                    <td>Program</td>
-                    <td>Set</td>
-                    <td>Year Level</td>
-                    <td>Time In</td>
-                    <td>Time Out</td>
-                    <td>Event</td>
-                    <td>Date</td>
-                @endisset
+                <td>No.</td>
+                <td>Name</td>
+                <td>Program</td>
+                <td>Set</td>
+                <td>Year Level</td>
+                <td>Time In</td>
+                <td>Time Out</td>
+                <td>Event</td>
+                <td>Date</td>
             </tbody>
         </table>
     </div>

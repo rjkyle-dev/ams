@@ -11,15 +11,15 @@ class StudentController extends Controller
     public function create(Request $request)
     {
         $fields = $request->validate([
-            "s_rfid" => ["required"],
-            "s_studentID" => ["required"],
+            "s_rfid" => ["required", "unique:students,s_rfid"],
+            "s_studentID" => ["required", "unique:students,s_studentID"],
             "s_fname" => ["required"],
             "s_lname" => ["required"],
             "s_program" => ["required"],
             "s_lvl" => ["required"],
             "s_set" => ["required"],
         ]);
-        $path = "";
+        $path = null;
         if ($request->hasFile('s_image')) {
             $request->file('s_image')->store('profile_pictures');
             $path = $request->file('s_image')->getClientOriginalName();
