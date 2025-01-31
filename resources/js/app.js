@@ -2,6 +2,7 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 import { toggleDropdown, triggerDropdownOnLoad } from './component.js';
 import { startTime} from './clockdate.js';
+// import 'flowbite';
 
 console.log("Testing App------- Developer")
 
