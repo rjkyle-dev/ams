@@ -1,5 +1,5 @@
 <x-app-layout>
-    @vite(['resources/js/axios.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/axios.js'])
 
     <x-slot name="header">
         <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
