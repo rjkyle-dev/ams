@@ -67,7 +67,7 @@ class StudentController extends Controller
                 $studentData['s_image'] = $filename;
             }
 
-            $studentData['s_status'] = 'active'; // Set default status
+            $studentData['s_status'] = 'ENROLLED'; // Set default status
             
             Student::create($studentData);
 
