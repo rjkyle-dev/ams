@@ -11,7 +11,10 @@
             <img src="{{ asset('images/logos/ICSA.svg') }}" alt="Logo 2" class="w-32 md:w-40 lg:w-44 drop-shadow-lg">
         </div>
 
+
         <h1 class="text-3xl md:text-5xl lg:text-8xl font-extrabold text-center drop-shadow-2xl">
+            <span class="text-yellow-400">Attendance</span>
+            <span class="text-white">Management</span>
             <span class="text-yellow-400">Attendance</span>
             <span class="text-white">Management</span>
             <span class="text-yellow-400">System</span>
