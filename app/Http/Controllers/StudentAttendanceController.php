@@ -29,11 +29,16 @@ class StudentAttendanceController extends Controller
             "s_rfid" => ['required'],
         ]);
         // INITIALIZE VARIABLES, ETC
-        $time = date();
+        $time = date("H: a");
         $student = StudentAttendance::where('s_rfid',)->get();
         $event = Event::where('id', $request->event_id)->get()->first();
         // CHECK IF THE STUDENT ALREADY HAS A RECORD TODAY OR AT THE CURRENT TIME
         if ($student->empty) {
+
+            // CHECK IF CHECK IN
+            if ($time > $event->checkIn_start && $time < $event->checkIn_end) {
+                StudentAttendance::create([]);
+            }
         }
 
 
