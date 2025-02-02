@@ -17,13 +17,13 @@ return new class extends Migration
             $table->string('s_studentID');
             $table->string('s_fname');
             $table->string('s_lname');
-            $table->string('s_mname');
-            $table->string('s_suffix');
+            $table->string('s_mname')->nullable();
+            $table->string('s_suffix')->nullable();
             $table->string('s_program');
             $table->string('s_lvl');
             $table->string('s_set');
-            $table->string('s_image');
-            $table->string('s_status');
+            $table->string('s_image')->nullable();
+            $table->string('s_status')->default('ENROLLED');
 
             $table->timestamps();
         });

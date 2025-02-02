@@ -5,7 +5,7 @@ export function startTime() {
     const updateClock = () => {
         const today = new Date();
         let [hr, min, sec] = [today.getHours(), today.getMinutes(), today.getSeconds()];
-        
+
         const ap = hr < 12 ? "<span>AM</span>" : "<span>PM</span>";
         hr = hr % 12 || 12; // Convert 0 to 12 and adjust 24-hour format
 

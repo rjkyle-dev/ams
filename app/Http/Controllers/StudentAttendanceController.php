@@ -6,12 +6,6 @@ use App\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-namespace App\Http\Controllers;
-
-use App\Models\Event;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-
 class StudentAttendanceController extends Controller
 {
     public function view()

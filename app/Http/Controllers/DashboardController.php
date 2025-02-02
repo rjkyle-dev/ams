@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -14,4 +15,6 @@ class DashboardController extends Controller
 
         return view('dashboard', compact('studentCount', 'graduateCount'));
     }
+
+    public function test(Request $request) {}
 }
