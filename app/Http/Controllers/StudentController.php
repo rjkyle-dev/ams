@@ -29,7 +29,7 @@ class StudentController extends Controller
         $fields['s_image'] = $path;
         $fields['s_status'] = "ENROLLED";
         Student::create($fields);
-        return back()->with(['success' => "Student added successfully"]);
+        return back()->with("success", "Student Added Successfully");
     }
 
     public function view()

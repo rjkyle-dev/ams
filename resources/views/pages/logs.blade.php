@@ -154,14 +154,16 @@
                     <td>Name</td>
                     <td>Program</td>
                     <td>Set</td>
-                    <td>Year Level</td>
+                    <td>Level</td>
                     <td>Time In</td>
                     <td>Time Out</td>
                     <td>Event</td>
                     <td>Date</td>
+                    <td>Fines</td>
                 </tr>
                 <tbody>
-
+                    {{-- Removed Hard-coded data --- This is now ready for dynamic data --}}
+                    
                 </tbody>
             </table>
         </div>

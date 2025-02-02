@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('s_rfid');
-            $table->string('s_studentID');
+            $table->string('s_rfid')->unique();
+            $table->string('s_studentID')->unique();
             $table->string('s_fname');
             $table->string('s_lname');
             $table->string('s_mname')->nullable();
             $table->string('s_suffix')->nullable();
-            $table->string('s_program');
+            $table->enum('s_program', ['BSIS', 'BSIT']);
             $table->string('s_lvl');
             $table->string('s_set');
             $table->string('s_image')->nullable();
-            $table->string('s_status')->default('ENROLLED');
+            $table->enum('s_status', ['ENROLLED', 'DROPPED', 'GRADUATED'])->default('ENROLLED');
 
             $table->timestamps();
         });

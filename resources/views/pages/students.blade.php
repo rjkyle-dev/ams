@@ -26,6 +26,8 @@
             <tbody>
                 @isset($students)
                     @foreach ($students as $student)
+                    {{-- Added tr elements for rows to fix UI --}}
+                    <tr>
                         <td>{{ $student->s_studentID }}</td>
                         <td>{{ $student->s_fname }}</td>
                         <td>{{ $student->s_lname }}</td>
@@ -41,10 +43,10 @@
                             <button>Delete</button>
 
                         </td>
+                    </tr>
                     @endforeach
                 @endisset
             </tbody>
         </table>
     </div>
-
 </x-app-layout>
