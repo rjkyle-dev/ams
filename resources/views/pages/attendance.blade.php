@@ -5,7 +5,7 @@
         <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
             {{ __('Student Attendance') }}
         </h2>
-        <div class="flex justify-between items-center p-4 bg-gray-100 border-b">
+        <div class="flex justify-between items-start p-4 bg-gray-100 border-b">
             <div>
                 <h2 class="text-2xl font-bold text-violet-800">
                     Today's Event:
@@ -49,8 +49,7 @@
                 @endif
 
             </div>
-
-
+      
             @if ($event)
                 <div x-data="{ play: false }" class="flex">
                     <div x-data="{ open: false }" class="transition-all">
@@ -103,9 +102,6 @@
             <h3 class="text-3xl text-violet-800 font-extrabold">
                 Attendance Record
             </h3>
-
-
-
         </div>
 
         <table class="min-w-full">
@@ -130,17 +126,32 @@
 
 </x-app-layout>
 <script>
-    var startAttendance = false;
+    // Added Pop Ups from Sweet Alert2
+    let startAttendance = false;
+
     const scannedData = document.getElementById("inputField");
 
     function myFunction() {
         console.log("attendance start");
         document.getElementById("inputField").focus();
         startAttendance = true;
+
+        Swal.fire({
+            icon: "info",
+            title: "Attendance is now starting!",
+            showConfirmButton: false,
+            timer: 500
+        });
     }
 
     function stopAttendance() {
         console.log("attendance stop");
         startAttendance = false;
+        Swal.fire({
+            icon: "warning",
+            title: "Attendance Stopped!",
+            showConfirmButton: false,
+            timer: 500
+        });
     }
 </script>
