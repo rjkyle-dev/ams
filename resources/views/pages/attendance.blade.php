@@ -49,28 +49,53 @@
                 @endif
 
             </div>
-            <div x-data="{ play: false }" class="flex">
-
-                <button onclick="stopAttendance()" x-show='play' x-on:click='play=false'
-                    class="bg-red-500 px-3 py-2 mb-2 text-white transition-full max-w-xs text-center rounded-xl shadow-lg">
-                    Stop Attendance
-                </button>
-
-                <button onclick="myFunction()" x-show='!play' x-on:click='play = true'
-                    class="bg-orange-500 px-3 py-2 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-xl text-white shadow-lg"
-                    onclick="">
-                    Start Attendance
-                </button>
 
 
-                <form action="" method="POST">
-                    <input type="text" name="s_rfid" id="inputField">
+            @if ($event)
+                <div x-data="{ play: false }" class="flex">
+                    <div x-data="{ open: false }" class="transition-all">
+                        <button x-on:click="open = ! open" onclick="myFunction()"
+                            class="bg-orange-500 px-3 py-2 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-xl text-white shadow-lg">
+                            Start Attendance
+                        </button>
 
-                </form>
-            </div>
+                        <div x-show.important="open"
+                            class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                            <div id="modalAttendance" x-on:click.outside="open = false"
+                                class="max-w-[1000px] min-w-[500px] bg-white p-6 rounded-lg shadow-lg">
+                                <div class="border-b-2 border-gray-300 mb-5">
+                                    <h1 class="text-2xl font-bold">
+                                        Attendance is Starting
+                                    </h1>
+                                </div>
+                                <div class="mb-5">
+                                    <form id="attendanceForm" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                        <input type="hidden" name="uri" value="{{ route('attendanceStudent') }}">
+                                        <div class="flex flex-col">
+                                            <label class="text-lg font-semibold" for="">Enter RFID:</label>
+                                            <input type="text" name="s_rfid" id="inputField">
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="flex justify-end">
+                                    <button x-on:click="open = false"
+                                        class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Close</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            @endif
 
         </div>
     </x-slot>
+
 
     <div class="mt-4">
         <div class="flex justify-between">
@@ -99,11 +124,14 @@
         </table>
     </div>
 
-
+    <form id="getAttendanceForm" hidden>
+        <input type="text" id="getURI" value="{{ route('getAttendanceRecent') }}" hidden>
+    </form>
 
 </x-app-layout>
 <script>
     var startAttendance = false;
+    const scannedData = document.getElementById("inputField");
 
     function myFunction() {
         console.log("attendance start");
@@ -115,9 +143,4 @@
         console.log("attendance stop");
         startAttendance = false;
     }
-    document.getElementById('inputField').onkeydown = function() {
-        if (startAttendance) {
-            return false
-        }
-    };
 </script>
