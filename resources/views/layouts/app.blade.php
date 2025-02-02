@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body class="font-sans antialiased " onload="startTime()">
+<body class="font-sans antialiased bg-gradient-to-r from-purple-500 to-indigo-900" onload="startTime()">
     <div class="min-h-full">
         <!-- Navigation Bar -->
         <nav class="bg-violet-800 w-100">
@@ -25,22 +25,27 @@
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex items-center">
                         <div class="shrink-0">
-                            <img class="h-14 w-auto" src="{{asset('images/logos/fox.png')}}" alt="Your Company">
+                            <img class="h-14 w-auto" src="{{ asset('images/logos/fox.png') }}" alt="Your Company">
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4 w-100">
                                 <div class="font-black">
-                                <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Dashboard</x-nav-link>
+                                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Dashboard</x-nav-link>
                                 </div>
-                    
-                                <div class="font-black">
-                                <x-nav-link href="{{ route('logs') }}" :active="request()->routeIs('logs')">Logs</x-nav-link>
-                            </div>
-                               
-      <div class="font-black">
-                                <x-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')">Students</x-nav-link>
 
-                            </div>
+                                <div class="font-black">
+                                    <x-nav-link href="{{ route('logs') }}" :active="request()->routeIs('logs')">Logs</x-nav-link>
+                                </div>
+
+                                <div class="font-black">
+                                    <x-nav-link href="{{ route('students') }}" :active="request()->routeIs('students')">Students</x-nav-link>
+
+                                </div>
+
+                                <div class="font-black">
+                                    <x-nav-link href="{{ route('events') }}" :active="request()->routeIs('events')">Events</x-nav-link>
+
+                                </div>
 
                             </div>
                         </div>
@@ -76,18 +81,23 @@
                                 <div id="user-menu"
                                     class="absolute hidden right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
                                     role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
-                                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 transition duration-300 font-extrabold"
+                                    <a href="{{ route('profile.edit') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 transition duration-300 font-extrabold"
                                         role="menuitem">Your Profile</a>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <div class="flex hover:bg-gray-400 transition duration-300 ">
-                                        <button type="submit"
-                                            class="block w-full font-extrabold px-4 py-2 text-left text-sm text-gray-700 "
-                                            role="menuitem">Sign out
-                                        </button>
-                                        <svg fill="#000000" width="30px" height="30px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 9.875v12.219c0 1.125 0.469 2.125 1.219 2.906 0.75 0.75 1.719 1.156 2.844 1.156h6.125v-2.531h-6.125c-0.844 0-1.5-0.688-1.5-1.531v-12.219c0-0.844 0.656-1.5 1.5-1.5h6.125v-2.563h-6.125c-1.125 0-2.094 0.438-2.844 1.188-0.75 0.781-1.219 1.75-1.219 2.875zM6.719 13.563v4.875c0 0.563 0.5 1.031 1.063 1.031h5.656v3.844c0 0.344 0.188 0.625 0.5 0.781 0.125 0.031 0.25 0.031 0.313 0.031 0.219 0 0.406-0.063 0.563-0.219l7.344-7.344c0.344-0.281 0.313-0.844 0-1.156l-7.344-7.313c-0.438-0.469-1.375-0.188-1.375 0.563v3.875h-5.656c-0.563 0-1.063 0.469-1.063 1.031z"></path>
-</svg></div>
+                                            <button type="submit"
+                                                class="block w-full font-extrabold px-4 py-2 text-left text-sm text-gray-700 "
+                                                role="menuitem">Sign out
+                                            </button>
+                                            <svg fill="#000000" width="30px" height="30px" viewBox="0 0 32 32"
+                                                version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M0 9.875v12.219c0 1.125 0.469 2.125 1.219 2.906 0.75 0.75 1.719 1.156 2.844 1.156h6.125v-2.531h-6.125c-0.844 0-1.5-0.688-1.5-1.531v-12.219c0-0.844 0.656-1.5 1.5-1.5h6.125v-2.563h-6.125c-1.125 0-2.094 0.438-2.844 1.188-0.75 0.781-1.219 1.75-1.219 2.875zM6.719 13.563v4.875c0 0.563 0.5 1.031 1.063 1.031h5.656v3.844c0 0.344 0.188 0.625 0.5 0.781 0.125 0.031 0.25 0.031 0.313 0.031 0.219 0 0.406-0.063 0.563-0.219l7.344-7.344c0.344-0.281 0.313-0.844 0-1.156l-7.344-7.313c-0.438-0.469-1.375-0.188-1.375 0.563v3.875h-5.656c-0.563 0-1.063 0.469-1.063 1.031z">
+                                                </path>
+                                            </svg>
+                                        </div>
                                     </form>
                                 </div>
 

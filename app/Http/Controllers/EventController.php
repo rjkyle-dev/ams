@@ -21,8 +21,10 @@ class EventController extends Controller
         $fields['date'] = Carbon::now();
         $fields['admin_id'] = Auth::user()->id;
         Event::create($fields);
+
         return back()->with(["successful" => "Event created successfully"]);
     }
+
     public function view()
     {
         return view('pages.events');
