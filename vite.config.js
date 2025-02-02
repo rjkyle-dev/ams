@@ -9,7 +9,8 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/css/guest.css',
                 'resources/js/axios.js',
-                'resources/js/dashboard.js'
+                'resources/js/dashboard.js',
+                'resources/js/student_attendance.js',
             ],
             refresh: true,
         }),
