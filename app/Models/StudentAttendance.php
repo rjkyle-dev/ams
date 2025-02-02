@@ -15,6 +15,6 @@ class StudentAttendance extends Model
         "attend_checkOut",
         "event_id",
         "student_rfid",
-        "attend_rowUpdate"
+        "didCheckIn"
     ];
 }

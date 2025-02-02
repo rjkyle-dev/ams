@@ -29,12 +29,44 @@ class StudentAttendanceController extends Controller
             "s_rfid" => ['required'],
         ]);
         // INITIALIZE VARIABLES, ETC
-        $time = date();
-        $student = StudentAttendance::where('s_rfid',)->get();
-        $event = Event::where('id', $request->event_id)->get()->first();
+        $time = date("H: a");
+        $event = Event::find($request->event_id)->get();
+        $student = StudentAttendance::where('s_rfid', $request->s_rfid)
+            ->where('event_id', $request->event_id)
+            ->get();
+
         // CHECK IF THE STUDENT ALREADY HAS A RECORD TODAY OR AT THE CURRENT TIME
         if ($student->empty) {
+            // CHECK IF CHECK IN
+            if ($time > $event->checkIn_start && $time < $event->checkIn_end) {
+                StudentAttendance::create([
+                    "attend_checkIn" => "true",
+                    "event_id" => $request->event_id,
+                    "student_rfid" => $request->s_rfid,
+                    "didCheckIn" => "true"
+                ]);
+            }
+
+            // CHECK IF CHECK OUT
+            if ($time > $event->checkOut_start && $time < $event->checkOut_end) {
+                StudentAttendance::create([
+                    "attend_checkOut" => "true",
+                    "event_id" => $request->event_id,
+                    "student_rfid" => $request->s_rfid,
+                ]);
+            }
         }
+        // UPDATE THE ROW IF STUDENT ALREADY ATTENDED IN THE EVENT
+        else {
+            if ($time > $event->checkOut_start && $time < $event->checkOut_end) {
+                $student = $student->first();
+                StudentAttendance::where('event_id', $request->event_id)
+                    ->where('student_rfid', $request->s_rfid)->update([
+                        "attend_checkOut" => "true",
+                    ]);
+            }
+        }
+
 
 
 

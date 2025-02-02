@@ -49,8 +49,7 @@
                 @endif
 
             </div>
-
-
+      
             @if ($event)
                 <div x-data="{ play: false }" class="flex">
                     <div x-data="{ open: false }" class="transition-all">
@@ -127,7 +126,9 @@
 
 </x-app-layout>
 <script>
-    var startAttendance = false;
+    // Added Pop Ups from Sweet Alert2
+    let startAttendance = false;
+
     const scannedData = document.getElementById("inputField");
 
     function myFunction() {

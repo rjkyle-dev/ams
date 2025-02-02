@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('event_name');
             $table->date('date');
-            $table->string('checkIn_start');
-            $table->string('checkIn_end');
-            $table->string('checkOut_start');
-            $table->string('checkOut_end');
+            $table->time('checkIn_start');
+            $table->time('checkIn_end');
+            $table->time('checkOut_start');
+            $table->time('checkOut_end');
             $table->foreignId('admin_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
