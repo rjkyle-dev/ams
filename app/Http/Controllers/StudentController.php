@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
-
     public function create(Request $request)
     {
         $fields = $request->validate([

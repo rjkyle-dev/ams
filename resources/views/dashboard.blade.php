@@ -74,7 +74,7 @@
 
 
                 <h1 class="font-semibold text-2xl">
-                    <span>10000</span>
+                    <span>{{ $studentCount }}</span>
                     Students
                 </h1>
             </div>
@@ -87,7 +87,7 @@
                 </svg>
 
                 <h1 class="font-semibold text-2xl">
-                    <span>10000</span>
+                    <span>{{ $graduateCount }}</span>
                     Graduates
                 </h1>
             </div>
