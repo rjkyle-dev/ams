@@ -9,6 +9,11 @@ use App\Http\Controllers\StudentController;
 use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminCodeController;
+use App\Http\Resources\Attendance;
+use App\Models\User;
+use Illuminate\Http\Request as Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +34,8 @@ Route::get('/register', function () {
 
 Route::middleware('auth')->group(function () {
 
+
+
     // DASHBOARD RELATED ROUTES
     Route::get('/dashboard', [DashboardController::class, 'viewDashboard'])->name('dashboard');
 
@@ -48,6 +55,8 @@ Route::middleware('auth')->group(function () {
 
     // ATTENDANCE RELATED ROUTES
     Route::get('/attendance', [StudentAttendanceController::class, 'view'])->name('attendance');
+    Route::post('/student-attendance', [StudentAttendanceController::class, 'recordAttendance'])->name('attendanceStudent');
+    Route::get('/studentAttendace/recent', [StudentAttendance::class, 'recent'])->name('getAttendanceRecent');
     // Route::post
 
     // EVENTS RELATED ROUTES
@@ -55,4 +64,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/events', [EventController::class, 'view'])->name('events');
 });
 
+
 require __DIR__ . '/auth.php';
+
+
+
+// THE CODE BELOW IS USED FOR DEVELOPMENT AND TESTING  PURPOSES ONLY
+// API TESTING OR DEVELOPMENT
+Route::get('/api/test/1', function () {
+    $data = new Attendance(User::all());
+    return view('test.test_1', compact('data'));
+})->name('api_test_1');
+
+Route::get('/api/test/2', function () {
+    // $response = Http::get('https://jsonplaceholder.typicode.com/posts');
+    // $data = $response->json(); // Convert response to array
+    return response()->json([
+        "message" => "WOrking",
+    ]);
+});
+
+Route::post('/api/test/3', function (Request $request) {
+
+    return response()->json([
+        "message" => "POST created successfully",
+        "data" => $request->name
+
+    ]);
+})->name('postAPI');

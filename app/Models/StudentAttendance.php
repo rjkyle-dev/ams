@@ -13,8 +13,8 @@ class StudentAttendance extends Model
     protected $fillable = [
         "attend_checkIn",
         "attend_checkOut",
-        "attend_day",
-        "attend_date",
-        "attend_rowUpdate",
+        "event_id",
+        "student_rfid",
+        "attend_rowUpdate"
     ];
 }
