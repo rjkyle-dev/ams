@@ -10,14 +10,9 @@ use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminCodeController;
 
-
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+});
 
 Route::get('/admin-code', function () {
     return view('auth.admin-code');
@@ -57,6 +52,7 @@ Route::middleware('auth')->group(function () {
 
     // EVENTS RELATED ROUTES
     Route::post('/addEvent', [EventController::class, 'create'])->name('addEvent');
+    Route::get('/events', [EventController::class, 'view'])->name('events');
 });
 
 require __DIR__ . '/auth.php';

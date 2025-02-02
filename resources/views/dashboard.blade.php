@@ -43,7 +43,7 @@
 
 
                 <h1 class="font-semibold text-2xl">
-                    <span>10000</span>
+                    <span>{{ $studentCount }}</span>
                     Students
                 </h1>
             </div>
@@ -56,7 +56,7 @@
                 </svg>
 
                 <h1 class="font-semibold text-2xl">
-                    <span>10000</span>
+                    <span>{{ $graduateCount }}</span>
                     Graduates
                 </h1>
             </div>
@@ -225,7 +225,7 @@
                     Add Student Information
                 </x-slot>
                 <x-slot name="content">
-                    <form method="POST" action="{{ route('addStudent') }}" class="flex items-center">
+                    <form method="POST" action="{{ route('addStudent') }}" id="studentForm" class="flex items-center" enctype="multipart/form-data">
                         @csrf
                         <div class="basis-3/4 justify-start">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
@@ -309,10 +309,12 @@
                     </form>
                 </x-slot>
                 <x-slot name="footer">
-                    <button type="submit" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
-                        Save </button>
+                    <button type="submit" form="studentForm" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
+                        Save
+                    </button>
                 </x-slot>
             </x-new-modal>
+            
     </div>
     </div>
     <div class="mt-4">
@@ -349,4 +351,46 @@
         const modal = document.getElementById(id);
         modal.classList.add('hidden');
     }
+
+    document.getElementById('studentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let formData = new FormData(this);
+        
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    // Optionally reset form or close modal
+                    this.reset();
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: data.message
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+            });
+        });
+    });
 </script>
