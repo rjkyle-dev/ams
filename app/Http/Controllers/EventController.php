@@ -22,7 +22,7 @@ class EventController extends Controller
         $fields['admin_id'] = Auth::user()->id;
         Event::create($fields);
 
-        return back()->with(["successful" => "Event created successfully"]);
+        return back()->with(["success" => "Event created successfully"]);
     }
 
     public function view()

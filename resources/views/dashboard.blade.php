@@ -1,22 +1,37 @@
 <x-app-layout>
-    @vite(['resources/js/dashboard.js'])
+    {{-- @vite(['resources/js/dashboard.js', 'resources/js/app.js']) --}}
 
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <x-alert-error>
-                {{ $error }}
-            </x-alert-error>
-        @endforeach
+    {{-- Implemented Sweet Alert Pop Ups on Conditionals --}}
+    @if($errors->any())
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                icon: "error",
+                title: "Oops!...",
+                html: `
+                    <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside text-left">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                `,
+                showConfirmButton: true,
+            });
+        });
+    </script>
     @endif
 
-    @isset($successful)
-        @foreach ($successful->all() as $error)
-            <x-alert-error>
-                {{ $error }}
-            </x-alert-error>
-        @endforeach
-
-    @endisset
+    @if (session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '{{ session('success') }}',
+                });
+            });
+        </script>
+    @endif
 
     <x-slot name="header">
         <div class="">
@@ -353,31 +368,10 @@
                 <td>Date</td>
             </tr>
             <tbody>
-                <td>No.</td>
-                <td>Name</td>
-                <td>Program</td>
-                <td>Set</td>
-                <td>Year Level</td>
-                <td>Time In</td>
-                <td>Time Out</td>
-                <td>Event</td>
-                <td>Date</td>
+
             </tbody>
         </table>
     </div>
 </x-app-layout>
 
-<script>
-    function testStudentForm() {
-        document.getElementById('s_rfid').value = "1023213";
-        document.getElementById('s_studentID').value = "2023-00069";
-        document.getElementById('s_fname').value = "Don Dominick";
-        document.getElementById('s_lname').value = "Enargan";
-        document.getElementById('s_program').value = "BSIT";
-        document.getElementById('s_lvl').value = "2";
-        document.getElementById('s_set').value = "H";
-        document.getElementById('s_suffix').value = "Jr.";
-        document.getElementById('s_mname').value = "Banagaso";
-
-    }
-</script>
+{{-- Removed the script file, transferred them into dashboard.js --}}

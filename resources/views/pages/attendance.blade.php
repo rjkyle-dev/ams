@@ -5,7 +5,7 @@
         <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
             {{ __('Student Attendance') }}
         </h2>
-        <div class="flex justify-between items-center p-4 bg-gray-100 border-b">
+        <div class="flex justify-between items-start p-4 bg-gray-100 border-b">
             <div>
                 <h2 class="text-2xl font-bold text-violet-800">
                     Today's Event:
@@ -49,23 +49,23 @@
                 @endif
 
             </div>
-            <div x-data="{ play: false }" class="flex">
+            <div x-data="{ play: false }" class="flex gap-2">
 
                 <button onclick="stopAttendance()" x-show='play' x-on:click='play=false'
-                    class="bg-red-500 px-3 py-2 mb-2 text-white transition-full max-w-xs text-center rounded-xl shadow-lg">
+                    class="bg-red-500 p-3 mb-2 text-white transition-full max-w-xs text-center rounded-md shadow-lg">
                     Stop Attendance
                 </button>
 
                 <button onclick="myFunction()" x-show='!play' x-on:click='play = true'
-                    class="bg-orange-500 px-3 py-2 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-xl text-white shadow-lg"
+                    class="bg-orange-500 p-3 mb-2 hover:bg-orange-600 transition-full max-w-xs text-center rounded-md text-white shadow-lg"
                     onclick="">
                     Start Attendance
                 </button>
 
 
                 <form action="" method="POST">
-                    <input type="text" name="s_rfid" id="inputField">
-
+                    <input type="text" name="s_rfid" id="inputField" placeholder="103xxxxxxxx"
+                        class="bg-gray-50 border border-gray-500 text-gray-900 text-lg rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full">
                 </form>
             </div>
 
@@ -78,9 +78,6 @@
             <h3 class="text-3xl text-violet-800 font-extrabold">
                 Attendance Record
             </h3>
-
-
-
         </div>
 
         <table class="min-w-full">
@@ -103,17 +100,31 @@
 
 </x-app-layout>
 <script>
-    var startAttendance = false;
+    // Added Pop Ups from Sweet Alert2
+    let startAttendance = false;
 
     function myFunction() {
         console.log("attendance start");
         document.getElementById("inputField").focus();
         startAttendance = true;
+
+        Swal.fire({
+            icon: "info",
+            title: "Attendance is now starting!",
+            showConfirmButton: false,
+            timer: 500
+        });
     }
 
     function stopAttendance() {
         console.log("attendance stop");
         startAttendance = false;
+        Swal.fire({
+            icon: "warning",
+            title: "Attendance Stopped!",
+            showConfirmButton: false,
+            timer: 500
+        });
     }
     document.getElementById('inputField').onkeydown = function() {
         if (startAttendance) {

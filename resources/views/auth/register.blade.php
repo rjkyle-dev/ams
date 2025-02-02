@@ -21,14 +21,7 @@
     
         </div>
 
-<div>
-        <!-- Text below the images -->
-        <h1 class="text-3xl md:text-5xl lg:text-8xl font-extrabold text-center drop-shadow-2xl">
-            <span class="text-yellow-400">Attendance</span>
-            <span class="text-white">Management</span>
-            <span class="text-yellow-400">System</span>
-        </h1>
-    </div>
+
 
     <!-- Right Column: Takes up 1/3 of the width on medium screens and larger -->
     <div
@@ -93,10 +86,16 @@
                     {{ __('Register') }}
                 </x-primary-button>
             </div>
-            <div class="flex justify-center mt-3">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            <div class="flex justify-center flex-col text-center mt-3 gap-3">
+                <span>Already Registered?
+                <a class="underline font-semibold text-blue-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('Log In?') }}
+                </a>
+                </span>
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    href="{{ route('admin.code') }}">
+                    {{ __('Get an Admin Code') }}
                 </a>
             </div>
         </form>
