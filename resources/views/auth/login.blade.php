@@ -15,8 +15,6 @@
         <h1 class="text-3xl md:text-5xl lg:text-8xl font-extrabold text-center drop-shadow-2xl">
             <span class="text-yellow-400">Attendance</span>
             <span class="text-white">Management</span>
-            <span class="text-yellow-400">Attendance</span>
-            <span class="text-white">Management</span>
             <span class="text-yellow-400">System</span>
         </h1>
     </div>
