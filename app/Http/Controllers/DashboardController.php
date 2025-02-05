@@ -10,10 +10,8 @@ class DashboardController extends Controller
 {
     public function viewDashboard()
     {
-        $studentCount = Student::count();
-        $graduateCount = Student::where('s_status', 'graduate')->count();
-
-        return view('dashboard', compact('studentCount', 'graduateCount'));
+        $studentCount = Student::all()->count();
+        return view('dashboard', compact('studentCount'));
     }
 
     public function test(Request $request) {}

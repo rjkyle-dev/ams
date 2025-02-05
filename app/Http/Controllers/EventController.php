@@ -18,6 +18,7 @@ class EventController extends Controller
             "checkOut_start" => ['required', "date_format:H:i", "after:checkIn_end"],
             "checkOut_end" => ['required', "date_format:H:i", "after:checkOut_start"],
         ]);
+        date_default_timezone_set('Asia/Manila');
         $fields['date'] = Carbon::now();
         $fields['admin_id'] = Auth::user()->id;
         Event::create($fields);
@@ -27,6 +28,16 @@ class EventController extends Controller
 
     public function view()
     {
-        return view('pages.events');
+        $events = Event::all();
+        return view('pages.events', compact('events'));
+    }
+
+    public function delete(Request $request)
+    {
+        dd('deleting events');
+    }
+    public function update(Request $request)
+    {
+        dd('updating events');
     }
 }

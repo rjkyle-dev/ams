@@ -49,7 +49,7 @@
                 @endif
 
             </div>
-      
+
             @if ($event)
                 <div x-data="{ play: false }" class="flex">
                     <div x-data="{ open: false }" class="transition-all">
@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class="flex justify-end">
-                                    <button x-on:click="open = false"
+                                    <button x-on:click="open = false" onclick="stopAttendance()"
                                         class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Close</button>
                                 </div>
                             </div>
@@ -140,12 +140,18 @@
             icon: "info",
             title: "Attendance is now starting!",
             showConfirmButton: false,
-            timer: 500
+            timer: 1000
         });
     }
 
     function stopAttendance() {
         console.log("attendance stop");
         startAttendance = false;
+        Swal.fire({
+            icon: "warning",
+            title: "Attendance Stopped!",
+            showConfirmButton: false,
+            timer: 1000
+        });
     }
 </script>
