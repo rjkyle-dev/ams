@@ -34,10 +34,24 @@ class EventController extends Controller
 
     public function delete(Request $request)
     {
-        dd('deleting events');
+        $request->validate([
+            "id" => ['required']
+        ]);
+
+        Event::find($request->id)->delete();
+        return back()->with(["successful" => "Event deleted successfully"]);
     }
     public function update(Request $request)
     {
-        dd('updating events');
+        $fields = $request->validate([
+            "event_name" => ['required'],
+            "checkIn_start" => ['required', "date_format:H:i"],
+            "checkIn_end" => ['required', "date_format:H:i", "after:checkIn_start"],
+            "checkOut_start" => ['required', "date_format:H:i", "after:checkIn_end"],
+            "checkOut_end" => ['required', "date_format:H:i", "after:checkOut_start"],
+        ]);
+
+        Event::where('id', $request->id)->update($fields);
+        return back()->with(["successful" => "Event updated successfully"]);
     }
 }

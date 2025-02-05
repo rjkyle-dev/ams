@@ -115,6 +115,18 @@
                 <td>Date</td>
             </tr>
             <tbody>
+                @isset($students)
+                    @foreach ($students as $student)
+                        <tr>
+                            <td>{{ $student }}</td>
+                            <td>Hi</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                @endisset
 
             </tbody>
         </table>

@@ -2,28 +2,28 @@
     {{-- @vite(['resources/js/dashboard.js', 'resources/js/app.js']) --}}
 
     {{-- Implemented Sweet Alert Pop Ups on Conditionals --}}
-    @if($errors->any())
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            Swal.fire({
-                icon: "error",
-                title: "Oops!...",
-                html: `
+    @if ($errors->any())
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops!...",
+                    html: `
                     <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside text-left">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                 `,
-                showConfirmButton: true,
+                    showConfirmButton: true,
+                });
             });
-        });
-    </script>
+        </script>
     @endif
 
     @if (session('success'))
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 Swal.fire({
                     icon: 'success',
                     title: 'Success!',
@@ -368,6 +368,22 @@
                 <td>Date</td>
             </tr>
             <tbody>
+                @php
+                    $index = 1;
+                @endphp
+                @foreach ($attendances as $attendance)
+                    <tr>
+                        <td>{{ $index++ }}</td>
+                        <td>{{ $attendance->s_fname . ' ' . $attendance->s_lname }}</td>
+                        <td>{{ $attendance->s_program }}</td>
+                        <td>{{ $attendance->s_set }}</td>
+                        <td>{{ $attendance->s_lvl }}</td>
+                        <td>{{ $attendance->attend_checkIn }}</td>
+                        <td>{{ $attendance->attend_checkOut }}</td>
+                        <td>{{ $attendance->event_name }}</td>
+                        <td>{{ $attendance->date }}</td>
+                    </tr>
+                @endforeach
 
             </tbody>
         </table>
