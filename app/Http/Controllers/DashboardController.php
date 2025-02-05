@@ -10,7 +10,8 @@ class DashboardController extends Controller
 {
     public function viewDashboard()
     {
-        return view('dashboard');
+        $studentCount = Student::all()->count();
+        return view('dashboard', compact('studentCount'));
     }
 
     public function test(Request $request) {}

@@ -52,7 +52,8 @@ Route::middleware('auth')->group(function () {
     // STUDENT RELATED ROUTES
     Route::post('/addStudent', [StudentController::class, 'create'])->name('addStudent');
     Route::get('/students', [StudentController::class, 'view'])->name('students');
-
+    Route::delete('/deleteStudent', [StudentController::class, 'delete'])->name('deleteStudent');
+    Route::patch('/updateStudent', [StudentController::class, 'update'])->name('updateStudent');
     // ATTENDANCE RELATED ROUTES
     Route::get('/attendance', [StudentAttendanceController::class, 'view'])->name('attendance');
     Route::post('/student-attendance', [StudentAttendanceController::class, 'recordAttendance'])->name('attendanceStudent');
@@ -62,6 +63,7 @@ Route::middleware('auth')->group(function () {
     // EVENTS RELATED ROUTES
     Route::post('/addEvent', [EventController::class, 'create'])->name('addEvent');
     Route::get('/events', [EventController::class, 'view'])->name('events');
+    Route::delete('/deleteEvent', [EventController::class, 'delete'])->name('deleteEvent');
 });
 
 

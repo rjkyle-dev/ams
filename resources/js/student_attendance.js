@@ -17,7 +17,7 @@ function post(form){
         }
     })
     .then(response => {
-        console.log("Response",response);
+        console.log("Response",response.data);
         isRecorded = true;
     })
     .catch(error =>{
@@ -32,9 +32,9 @@ function post(form){
  form.addEventListener('submit',event=>{
     event.preventDefault();
    let isRecorded = post(new FormData(event.target));
-    notify(isRecorded, "")
-    let isFetch = setTimeout(get(), 500);
-    notify(isFetch, "")
+    // notify(isRecorded, "")
+    // let isFetch = setTimeout(get(), 500);
+    // notify(isFetch, "")
 });
 
 // LOAD THE TABLE => GET

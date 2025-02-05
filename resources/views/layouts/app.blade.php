@@ -117,11 +117,11 @@
             <img src="{{ asset('images/logos/fox.png') }}" alt=""
                 class="max-h-[100px] fixed z-0 opacity-25 bottom-0 hover:opacity-100 transition-opacity duration-100">
 
-            @if ($header)
+            @isset($header)
                 <header>
                     {{ $header }}
                 </header>
-            @endif
+            @endisset
 
             <main class="mt-4">
                 {{ $slot }}
