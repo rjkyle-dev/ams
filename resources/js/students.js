@@ -15,6 +15,7 @@ function updateStudent(data){
     document.getElementById('s_ID').value = data.id
 }
 function deleteStudent(data){
+    console.log(data)
     document.getElementById('s_id').value = data.id
     document.getElementById('deleteStudent').submit()
 }

@@ -403,10 +403,10 @@
                                 <td>{{ $student->s_program }}</td>
                                 <td>{{ $student->s_status }}</td>
                                 <td class="flex gap-3 py-3">
-                                    <x-edit-button x-on:click="open = true" onclick="updateStudent()">
+                                    <x-edit-button x-on:click="open = true" onclick="updateStudent($student)">
                                         {{-- Edit Button --}}
                                     </x-edit-button>
-                                    <x-delete-button onclick="deleteStudent()">
+                                    <x-delete-button onclick="deleteStudent({{$student}})">
                                         {{-- Delete button --}}
                                     </x-delete-button>
     
