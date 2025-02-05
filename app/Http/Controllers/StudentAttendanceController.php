@@ -16,7 +16,8 @@ class StudentAttendanceController extends Controller
         $time = $time = date("H:i");
         $event = Event::where('date', '=', date('Y-m-d'))
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->get()
+            ->first();
         if (empty($event)) {
             $event = null;
             return view('pages.attendance', compact('event'));
