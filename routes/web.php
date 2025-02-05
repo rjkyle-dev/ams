@@ -12,8 +12,6 @@ use App\Http\Controllers\Auth\AdminCodeController;
 use App\Http\Resources\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request as Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     return view('welcome');

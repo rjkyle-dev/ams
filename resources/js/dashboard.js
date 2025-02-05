@@ -29,6 +29,19 @@ export function testStudentForm() {
             s_lvl: "2",
             s_set: "H",
             s_suffix: "Jr.",
+        },
+        {
+        s_rfid: "1297851",
+        s_studentID:"2023-00166",
+        s_fname: "Juan",
+        s_mname: "Geraldo",
+        s_lname: "Dela Cruz",
+        s_program:"BSIT",
+        s_lvl:"2",
+        s_set:"A",
+        s_suffix:"N/A"
+
+
         }
 ];
 
