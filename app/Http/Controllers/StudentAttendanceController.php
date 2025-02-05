@@ -42,10 +42,14 @@ class StudentAttendanceController extends Controller
         // INITIALIZE VARIABLES, ETC
         date_default_timezone_set('Asia/Manila');
         $time = date("H:i");
+        $currentTimestamp = now();
+        $currentTime = date('H:i:s');
+        
         $event = Event::find($request->event_id)
             ->orderBy('created_at', 'desc')
             ->get()
             ->first();
+            
         $student = StudentAttendance::where('student_rfid', $request->s_rfid)
             ->where('event_id', $request->event_id)
             ->get()
@@ -72,7 +76,7 @@ class StudentAttendanceController extends Controller
             // CHECK IF CHECK IN
             if ($time > $event->checkIn_start && $time < $event->checkIn_end) {
                 StudentAttendance::create([
-                    "attend_checkIn" => "true",
+                    "attend_checkIn" => $currentTime,
                     "event_id" => $request->event_id,
                     "student_rfid" => $request->s_rfid,
                     "didCheckIn" => "true"
@@ -82,7 +86,7 @@ class StudentAttendanceController extends Controller
             // CHECK IF CHECK OUT
             if ($time > $event->checkOut_start && $time < $event->checkOut_end) {
                 StudentAttendance::create([
-                    "attend_checkOut" => "true",
+                    "attend_checkOut" => $currentTime,
                     "event_id" => $request->event_id,
                     "student_rfid" => $request->s_rfid,
                 ]);
@@ -93,23 +97,23 @@ class StudentAttendanceController extends Controller
             // CHECK IF STUDENT ALREADY HAVE A RECORD
             if ($time > $event->checkIn_start && $time < $event->checkIn_end && $student->attend_checkIn) {
                 return response()->json([
-                    "message" => "Student have already check in",
+                    "message" => "Student has already checked in",
                     "isRecorded" => false
                 ]);
             }
 
             if ($time > $event->checkOut_start && $time < $event->checkOut_end && $student->attend_checkOut) {
                 return response()->json([
-                    "message" => "Student have already check out",
+                    "message" => "Student has already checked out",
                     "isRecorded" => false
                 ]);
             }
 
             if ($time > $event->checkOut_start && $time < $event->checkOut_end) {
-                $student = $student->first();
                 StudentAttendance::where('event_id', $request->event_id)
-                    ->where('student_rfid', $request->s_rfid)->update([
-                        "attend_checkOut" => "true",
+                    ->where('student_rfid', $request->s_rfid)
+                    ->update([
+                        "attend_checkOut" => $currentTime,
                     ]);
             }
         }

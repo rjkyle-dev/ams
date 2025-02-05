@@ -13,11 +13,11 @@ class Event extends Model
 
     protected $fillable = [
         "event_name",
-        "date",
         "checkIn_start",
         "checkIn_end",
         "checkOut_start",
         "checkOut_end",
-        "admin_id",
+        "date",
+        "admin_id"  // Add this to the fillable array
     ];
 }

@@ -18,10 +18,19 @@ class EventController extends Controller
             "checkOut_start" => ['required', "date_format:H:i", "after:checkIn_end"],
             "checkOut_end" => ['required', "date_format:H:i", "after:checkOut_start"],
         ]);
+
         date_default_timezone_set('Asia/Manila');
-        $fields['date'] = Carbon::now();
-        $fields['admin_id'] = Auth::user()->id;
-        Event::create($fields);
+        
+        // Create event with all required fields
+        Event::create([
+            'event_name' => $fields['event_name'],
+            'checkIn_start' => $fields['checkIn_start'],
+            'checkIn_end' => $fields['checkIn_end'],
+            'checkOut_start' => $fields['checkOut_start'],
+            'checkOut_end' => $fields['checkOut_end'],
+            'date' => Carbon::now(),
+            'admin_id' => Auth::id() // Get the current authenticated user's ID
+        ]);
 
         return back()->with(["success" => "Event created successfully"]);
     }
@@ -41,17 +50,23 @@ class EventController extends Controller
         Event::find($request->id)->delete();
         return back()->with(["successful" => "Event deleted successfully"]);
     }
+
     public function update(Request $request)
     {
-        $fields = $request->validate([
-            "event_name" => ['required'],
-            "checkIn_start" => ['required', "date_format:H:i"],
-            "checkIn_end" => ['required', "date_format:H:i", "after:checkIn_start"],
-            "checkOut_start" => ['required', "date_format:H:i", "after:checkIn_end"],
-            "checkOut_end" => ['required', "date_format:H:i", "after:checkOut_start"],
+        $event = Event::find($request->id);
+        
+        if (!$event) {
+            return back()->with('error', 'Event not found');
+        }
+
+        $event->update([
+            'event_name' => $request->event_name,
+            'checkIn_start' => $request->checkIn_start,
+            'checkIn_end' => $request->checkIn_end,
+            'checkOut_start' => $request->checkOut_start,
+            'checkOut_end' => $request->checkOut_end,
         ]);
 
-        Event::where('id', $request->id)->update($fields);
-        return back()->with(["successful" => "Event updated successfully"]);
+        return back()->with('success', 'Event updated successfully');
     }
 }

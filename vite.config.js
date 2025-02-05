@@ -11,6 +11,8 @@ export default defineConfig({
                 'resources/js/axios.js',
                 'resources/js/dashboard.js',
                 'resources/js/student_attendance.js',
+                'resources/js/events.js',
+                'resources/js/students.js'
             ],
             refresh: true,
         }),
