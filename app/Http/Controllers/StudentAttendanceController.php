@@ -22,20 +22,21 @@ class StudentAttendanceController extends Controller
             $event = null;
             return view('pages.attendance', compact('event'));
         }
-        $event = $event->first();
+
         if ($time > $event->checkOut_end || $time < $event->checkIn_start || ($time > $event->checkIn_end && $time < $event->checkOut_start)) {
             $event = null;
         }
-
-        return view('pages.attendance', compact('event'));
+        $students = $this->recent();
+        return view('pages.attendance', compact('event', 'students'));
     }
+
 
 
     public function recordAttendance(Request $request)
     {
         // FIRST VALIDATE REQUEST FORM
         $fields = $request->validate([
-            "s_rfid" => ['required', 'exists:students,s_rfid'],
+            "s_rfid" => ['required'],
         ]);
 
         // INITIALIZE VARIABLES, ETC
@@ -50,10 +51,11 @@ class StudentAttendanceController extends Controller
             ->get()
             ->first();
 
-        if (empty(Student::where('s_rfid', $request->s_rfid)->get())) {
+        if (empty(Student::whereAny(['s_rfid', 's_studentID'], $request->s_rfid)->get()->first())) {
             return response()->json([
                 "message" => "I am sorry but the student does not exist in the masterlist",
-                "isRecorded" => false
+                "isRecorded" => false,
+                "doesntExist" => true,
             ]);
         }
 
@@ -118,5 +120,36 @@ class StudentAttendanceController extends Controller
             "message" => "Student Attendance recorded successfully!",
             "isRecorded" => true,
         ]);
+    }
+
+    public function recent()
+    {
+        date_default_timezone_set('Asia/Manila');
+        $time = $time = date("H:i");
+        $event = Event::where('date', '=', date('Y-m-d'))
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->first();
+
+        $students = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid');
+
+        if (($time < $event->checkIn_end && $time > $event->checkIn_start)) {
+            $checkIn_start = date("Y:m:d H:i:s");
+            $checkIn_end = date("Y:m:d H:i:s");
+            $students = $students->whereBetween('student_attendances.created_at', [$event->checkIn_start, $event->checkIn_out])->get();
+        }
+        if ($time < $event->checkOut_end && $time > $event->checkOut_start) {
+            $checkOut_start = date("Y:m:d H:i:s");
+            $checkOut_end = date("Y:m:d H:i:s");
+            $students = $students->whereBetween('student_attendances.created_at', [$event->checkIn_start, $event->checkIn_out])->get();
+        }
+
+
+        if ($time > $event->checkOut_end || $time < $event->checkIn_start || ($time > $event->checkIn_end && $time < $event->checkOut_start)) {
+            $event = null;
+            $students = null;
+        }
+
+        return $students;
     }
 }
