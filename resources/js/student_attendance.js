@@ -33,7 +33,7 @@ function post(form){
     event.preventDefault();
    let isRecorded = post(new FormData(event.target));
     // notify(isRecorded, "")
-    // let isFetch = setTimeout(get(), 500);
+    let isFetch = setTimeout(get(), 500);
     // notify(isFetch, "")
 });
 
@@ -41,16 +41,17 @@ function post(form){
 function get(){
     let uri = document.getElementById('getURI').value
     let isFetch = false
-    axios.get(uri)
+   const data= axios.get(uri)
     .then( response => {
         console.log("Response",response);
         isFetch = true;
+        return response;
     })
     .catch(error=>{
         console.log("Error:", error)
     });
 
-    return isFetch;
+    return data;
 }
 
 // FOR NOTIFICATIONS ETC

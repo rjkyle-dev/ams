@@ -54,16 +54,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/students', [StudentController::class, 'view'])->name('students');
     Route::delete('/deleteStudent', [StudentController::class, 'delete'])->name('deleteStudent');
     Route::patch('/updateStudent', [StudentController::class, 'update'])->name('updateStudent');
+
     // ATTENDANCE RELATED ROUTES
     Route::get('/attendance', [StudentAttendanceController::class, 'view'])->name('attendance');
     Route::post('/student-attendance', [StudentAttendanceController::class, 'recordAttendance'])->name('attendanceStudent');
-    Route::get('/studentAttendace/recent', [StudentAttendance::class, 'recent'])->name('getAttendanceRecent');
+    Route::get('/studentAttendace/recent', [StudentAttendanceController::class, 'recent'])->name('getAttendanceRecent');
     // Route::post
 
     // EVENTS RELATED ROUTES
     Route::post('/addEvent', [EventController::class, 'create'])->name('addEvent');
     Route::get('/events', [EventController::class, 'view'])->name('events');
     Route::delete('/deleteEvent', [EventController::class, 'delete'])->name('deleteEvent');
+    Route::patch('/updateEvent', [EventController::class, 'update'])->name('updateEvent');
 });
 
 
