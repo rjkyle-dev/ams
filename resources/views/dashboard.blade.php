@@ -87,7 +87,7 @@
                 </svg>
 
                 <h1 class="font-semibold text-2xl">
-                    <span>{{ $graduateCount }}</span>
+                    <span></span>
                     Graduates
                 </h1>
             </div>
