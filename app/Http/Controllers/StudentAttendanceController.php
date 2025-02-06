@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\StudentAttendance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentAttendanceController extends Controller
 {
@@ -18,16 +19,23 @@ class StudentAttendanceController extends Controller
             ->orderBy('created_at', 'desc')
             ->get()
             ->first();
+
+
         if (empty($event)) {
             $event = null;
             return view('pages.attendance', compact('event'));
         }
-
         if ($time > $event->checkOut_end || $time < $event->checkIn_start || ($time > $event->checkIn_end && $time < $event->checkOut_start)) {
             $event = null;
         }
+
+        $pending = Event::where('date', '=', date('Y-m-d'))->get();
+        if (empty($pending->first())) {
+            $pending = null;
+        }
+
         $students = $this->recent();
-        return view('pages.attendance', compact('event', 'students'));
+        return view('pages.attendance', compact('event', 'students', 'pending'));
     }
 
 
@@ -138,16 +146,16 @@ class StudentAttendanceController extends Controller
         $students = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid');
 
         if (($time < $event->checkIn_end && $time > $event->checkIn_start)) {
-            $checkIn_start = date("Y:m:d H:i:s");
-            $checkIn_end = date("Y:m:d H:i:s");
-            $students = $students->whereBetween('student_attendances.created_at', [$event->checkIn_start, $event->checkIn_out])->get();
+            $students = $students
+                ->where('attend_checkIn', 'true')
+                ->where('event_id', $event->id)
+                ->get();
         }
         if ($time < $event->checkOut_end && $time > $event->checkOut_start) {
-            $checkOut_start = date("Y:m:d H:i:s");
-            $checkOut_end = date("Y:m:d H:i:s");
-            $students = $students->whereBetween('student_attendances.created_at', [$event->checkIn_start, $event->checkIn_out])->get();
+            $students = $students->where('attend_checkOut', "true")
+                ->where('event_id', $event->id)
+                ->get();
         }
-
 
         if ($time > $event->checkOut_end || $time < $event->checkIn_start || ($time > $event->checkIn_end && $time < $event->checkOut_start)) {
             $event = null;
