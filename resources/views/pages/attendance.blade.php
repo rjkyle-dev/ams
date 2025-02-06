@@ -118,7 +118,7 @@
                 @isset($students)
                     @foreach ($students as $student)
                         <tr>
-                            <td>{{ $student }}</td>
+                            <td>{{ $student->s_fname }}</td>
                             <td>Hi</td>
                             <td></td>
                             <td></td>
