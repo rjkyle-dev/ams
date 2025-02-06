@@ -24,14 +24,15 @@
             Students Masterlist
         </h2>
         <x-new-modal>
-            <x-slot name="button">
-                <div class="flex px-3 py-4">
+            <x-slot name="button" class="">
+                <div class="flex px-2 py-2 text-[17px]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-9">
+                        stroke="currentColor" class="size-6 mr-2 mt-1">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
                     </svg>
                     Student
+                </div>
             </x-slot>
 
 
@@ -117,17 +118,17 @@
                         <input id="uploadFile" type="file" name="s_image" x-ref="imageFile"
                             x-on:change="image = URL.createObjectURL($refs.imageFile.files[0])" hidden>
                         <button x-on:click="$refs.imageFile.click()" type="button"
-                            class="bg-green-400 text-white px-3 py-2 text-xl">
+                            class="bg-green-400 text-white px-3 py-2 text-xl hover:bg-green-600 rounded-md">
                             Upload Image
                         </button>
                     </div>
                 </form>
             </x-slot>
             <x-slot name="footer">
-                <button onclick="testStudentForm()" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
+                <button onclick="testStudentForm()" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4 hover:bg-green-600 float-start">
                     Test Form </button>
                 <button x-on:click="$refs.studentForm.submit()"
-                    class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
+                    class="bg-green-400 text-white px-3 py-2 mx-4 hover:bg-green-600 rounded-md">
                     Save </button>
             </x-slot>
         </x-new-modal>
@@ -252,7 +253,7 @@
             </div>
         </div>
 
-        <table class="min-w-full">
+        <table class="min-w-full mt-2">
             <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
                 <td>No.</td>
                 <td>First Name</td>
