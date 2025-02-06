@@ -251,34 +251,42 @@
             </x-new-modal>
         </div>
 
-        <table class="min-w-full">
-            <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
-                <td>Event Name</td>
-                <td>Date</td>
-                <td>Start of Check In</td>
-                <td>End of Check In</td>
-                <td>Start of Check In</td>
-                <td>End of Check In</td>
-                <td>Actions</td>
-            </tr>
-            <tbody>
-                @foreach ($events as $event)
-                    <tr>
-                        <td>{{ $event->event_name }}</td>
-                        <td>{{ $event->date }}</td>
-                        <td>{{ $event->checkIn_start }}</td>
-                        <td>{{ $event->checkIn_end }}</td>
-                        <td>{{ $event->checkOut_start }}</td>
-                        <td>{{ $event->checkOut_end }}</td>
-                        <td>
-                            <button x-on:click="open = true" onclick="editEvent({{ $event }})">EDIT</button>
-                            <button onclick="deleteEvent({{ $event }})">DELETE</button>
-                        </td>
+        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="min-w-full w-full text-sm text-center rtl:text-right text-gray-900 font-semibold">
+                <thead class="text-base text-gray-950 uppercase bg-gray-50">
+                    <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
+                        <td>Event Name</td>
+                        <td>Date</td>
+                        <td>Start of Check In</td>
+                        <td>End of Check In</td>
+                        <td>Start of Check In</td>
+                        <td>End of Check In</td>
+                        <td>Actions</td>
                     </tr>
-                @endforeach
-
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($events as $event)
+                        <tr>
+                            <td>{{ $event->event_name }}</td>
+                            <td>{{ $event->date }}</td>
+                            <td>{{ $event->checkIn_start }}</td>
+                            <td>{{ $event->checkIn_end }}</td>
+                            <td>{{ $event->checkOut_start }}</td>
+                            <td>{{ $event->checkOut_end }}</td>
+                            <td class="flex gap-3 py-3">
+                                <x-edit-button x-on:click="open = true" onclick="editEvent({{ $event }})">
+                                    {{-- Edit Button --}}
+                                </x-edit-button>
+                                <x-delete-button onclick="deleteEvent({{ $event }})">
+                                    {{-- Delete Button --}}
+                                </x-delete-button>
+                            </td>
+                        </tr>
+                    @endforeach
+    
+                </tbody>
+            </table>
+        </div>
     </div>
 
 
