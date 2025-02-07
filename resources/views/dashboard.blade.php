@@ -73,8 +73,9 @@
                 </svg>
 
 
-                <h1 class="font-semibold text-[20px]">
-                    <span>10000</span>
+
+                <h1 class="font-semibold text-2xl">
+                    <span>{{ $studentCount }}</span>
                     Students
                 </h1>
             </div>
@@ -86,8 +87,9 @@
                         d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
                 </svg>
 
-                <h1 class="font-semibold text-[20px]">
-                    <span>10000</span>
+
+                <h1 class="font-semibold text-2xl">
+                    <span></span>
                     Graduates
                 </h1>
             </div>
@@ -351,39 +353,46 @@
 
         </div>
     </div>
-    {{-- <div class="mt-4">
+
+{{--- HERE---}}
+{{-- <div class="mt-4">
+
         <h3 class="text-3xl text-violet-800 font-extrabold">
             Attendance Record
         </h3>
-        <table class="min-w-full">
-            <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
-                <td>No.</td>
-                <td>Name</td>
-                <td>Program</td>
-                <td>Set</td>
-                <td>Year Level</td>
-                <td>Time In</td>
-                <td>Time Out</td>
-                <td>Event</td>
-                <td>Date</td>
-            </tr>
-            <tbody>
-                @php
-                    $index = 1;
-                @endphp
-                @foreach ($attendances as $attendance)
-                    <tr>
-                        <td>{{ $index++ }}</td>
-                        <td>{{ $attendance->s_fname . ' ' . $attendance->s_lname }}</td>
-                        <td>{{ $attendance->s_program }}</td>
-                        <td>{{ $attendance->s_set }}</td>
-                        <td>{{ $attendance->s_lvl }}</td>
-                        <td>{{ $attendance->attend_checkIn }}</td>
-                        <td>{{ $attendance->attend_checkOut }}</td>
-                        <td>{{ $attendance->event_name }}</td>
-                        <td>{{ $attendance->date }}</td>
+        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="min-w-full w-full text-sm text-center rtl:text-right text-gray-900 font-semibold">
+                <thead class="text-base text-gray-950 uppercase bg-gray-50">
+                    <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
+                        <td>No.</td>
+                        <td>Name</td>
+                        <td>Program</td>
+                        <td>Set</td>
+                        <td>Year Level</td>
+                        <td>Time In</td>
+                        <td>Time Out</td>
+                        <td>Event</td>
+                        <td>Date</td>
                     </tr>
-                @endforeach
+                </thead>
+                <tbody>
+                    @php
+                        $index = 1;
+                    @endphp
+                    @foreach ($attendances as $attendance)
+                        <tr>
+                            <td>{{ $index++ }}</td>
+                            <td>{{ $attendance->s_fname . ' ' . $attendance->s_lname }}</td>
+                            <td>{{ $attendance->s_program }}</td>
+                            <td>{{ $attendance->s_set }}</td>
+                            <td>{{ $attendance->s_lvl }}</td>
+                            <td>{{ $attendance->attend_checkIn }}</td>
+                            <td>{{ $attendance->attend_checkOut }}</td>
+                            <td>{{ $attendance->event_name }}</td>
+                            <td>{{ $attendance->date }}</td>
+                        </tr>
+                    @endforeach
+
 
             </tbody>
         </table>
@@ -446,6 +455,7 @@
                 @endforeach
             </tbody>
         </table>
+
     </div>
 </div>
 

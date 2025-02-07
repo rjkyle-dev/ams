@@ -10,15 +10,17 @@
     <div class="mb-4 py-4 px-2 rounded-md flex justify-end items-center w-full">
         <div class="flex gap-3">
             <button class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-2 text-[15px] flex p-3 items-center">
+           <a href="{{ route('logs.pdf') }}" class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-2xl flex p-3 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                 </svg>
-
                 Generate Report
+          </a>
             </button>
             <button class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-[15px] flex p-3 items-center">
+                
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -53,52 +55,60 @@
                             Category
                         </h6>
                         {{-- List for Program --}}
-                        <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                            <label for="" class="font-semibold text-gray-100">Program</label>
-                            @foreach (['BSIT', 'BSIS'] as $program)
-                                <li class="flex items-center">
-                                    <input id="{{ $program }}" type="checkbox" value=""
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-
-                                    <label for="{{ $program }}"
-                                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $program }}
-                                    </label>
-                                </li>
-                            @endforeach
-                        </ul>
-                        {{-- List for Year Levels --}}
-                        <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                            <label for="" class="font-semibold text-gray-100">Year Level</label>
-                            {{-- Key-value pair for this list, key is for the database field, value is the placeholder --}}
-                            @foreach (['first_year' => 'First Year', 'second_year' => 'Second Year', 'third_year' => 'Third Year', 'fourth_year' => 'Fourth Year'] as $key => $value)
-                                <li class="flex items-center">
-                                    <input id="{{ $key }}" type="checkbox" value=""
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-
-                                    <label for="{{ $key }}"
-                                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $value }}
-                                    </label>
-                                </li>
-                            @endforeach
-
-                        </ul>
-                        {{-- List for Sets --}}
-                        <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                            <label for="" class="font-semibold text-gray-100">Set</label>
-                            @foreach (['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as $set)
-                                <li class="flex items-center">
-                                    <input id="{{ $set }}" type="checkbox" value=""
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-
-                                    <label for="{{ $set }}"
-                                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ $set }}
-                                    </label>
-                                </li>
-                            @endforeach
-                        </ul>
+                        <div class="flex justify-between gap-3">
+                            <div class="">
+                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                    <label for="" class="font-semibold text-gray-100">Program</label>
+                                    @foreach (['BSIT', 'BSIS'] as $program)
+                                        <li class="flex items-center">
+                                            <input id="{{ $program }}" type="checkbox" value=""
+                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+        
+                                            <label for="{{ $program }}"
+                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {{ $program }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            {{-- List for Year Levels --}}
+                            <div class="">
+                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                    <label for="" class="font-semibold text-gray-100">Year Level</label>
+                                    {{-- Key-value pair for this list, key is for the database field, value is the placeholder --}}
+                                    @foreach (['first_year' => 'First Year', 'second_year' => 'Second Year', 'third_year' => 'Third Year', 'fourth_year' => 'Fourth Year'] as $key => $value)
+                                        <li class="flex items-center">
+                                            <input id="{{ $key }}" type="checkbox" value=""
+                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+        
+                                            <label for="{{ $key }}"
+                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {{ $value }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+        
+                                </ul>
+                            </div>
+                            {{-- List for Sets --}}
+                            <div class="">
+                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                    <label for="" class="font-semibold text-gray-100">Set</label>
+                                    @foreach (['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as $set)
+                                        <li class="flex items-center">
+                                            <input id="{{ $set }}" type="checkbox" value=""
+                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+        
+                                            <label for="{{ $set }}"
+                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {{ $set }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -193,8 +203,8 @@
                             <td>{{ $log->s_program }}</td>
                             <td>{{ $log->s_set }}</td>
                             <td>{{ $log->s_lvl }}</td>
-                            <td>{{ $log->attend_checkIn }}</td>
-                            <td>{{ $log->attend_checkOut }}</td>
+                            <td>{{ $log->attend_checkIn ? date('h:i A', strtotime($log->attend_checkIn)) : '-' }}</td>
+                            <td>{{ $log->attend_checkOut ? date('h:i A', strtotime($log->attend_checkOut)) : '-' }}</td>
                             <td>{{ $log->event_name }}</td>
                             <td>{{ $log->date }}</td>
                         </tr>

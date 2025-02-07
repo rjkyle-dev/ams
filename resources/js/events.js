@@ -12,7 +12,7 @@ function editEvent(data){
     document.getElementById('out_start').value = data.checkOut_start;
     document.getElementById('out_end').value = data.checkOut_end;
     // document.getElementById('date').value = data.date;
-
+x
 
 }
 

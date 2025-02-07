@@ -19,8 +19,8 @@
             </style>
         @endif
     </head>
-    <body class="font-sans antialiased">
-        <div class="bg-gradient-to-r from-purple-500 to-indigo-900">
+    <body class="font-sans antialiased" style="background: url({{asset('images/background/background.jpg')}}) center; background-size: cover;">
+        <div class="">
             <header class="absolute inset-x-0 top-0 z-50">
               <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div class="flex lg:flex-1 items-center gap-2">
@@ -43,7 +43,7 @@
                         </a>
           
                         @if (Route::has('register'))
-                          <a href="{{ route('register') }}" class="rounded-md px-4 py-2 text-gray-900 font-semibold bg-gray-100 hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 transition">
+                          <a href="{{ route('admin.code') }}" class="rounded-md px-4 py-2 text-gray-900 font-semibold bg-gray-100 hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 transition">
                             Register
                           </a>
                         @endif
@@ -66,10 +66,10 @@
                     Institute of Computing's most trusted RFID Attendance Management System. 
                     Innovative and Powerful, ensures trust that all attendances of students are tracked.
                 </p>
-                {{-- <div class="mt-10 flex items-center justify-center gap-x-6">
-                  <a href="{{route('register')}}" class="rounded-md cursor-pointer bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500">Get started</a>
-                  <a href="#" class="text-sm/6 font-semibold text-gray-900">Learn more <span aria-hidden="true">→</span></a>
-                </div> --}}
+
+                <div class="mt-10 flex items-center justify-center gap-x-6">
+                  <a href="{{route('register')}}" class="rounded-md cursor-pointer bg-indigo-600 px-3.5 py-2.5 text-xl font-semibold text-white shadow-xs hover:bg-indigo-500">Get started</a>
+                </div>
               </div>
             </div>
         </div>

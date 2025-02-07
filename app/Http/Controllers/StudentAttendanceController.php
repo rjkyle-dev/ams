@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\StudentAttendance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentAttendanceController extends Controller
 {
@@ -18,16 +19,23 @@ class StudentAttendanceController extends Controller
             ->orderBy('created_at', 'desc')
             ->get()
             ->first();
+
+
         if (empty($event)) {
             $event = null;
             return view('pages.attendance', compact('event'));
         }
-
         if ($time > $event->checkOut_end || $time < $event->checkIn_start || ($time > $event->checkIn_end && $time < $event->checkOut_start)) {
             $event = null;
         }
+
+        $pending = Event::where('date', '=', date('Y-m-d'))->get();
+        if (empty($pending->first())) {
+            $pending = null;
+        }
+
         $students = $this->recent();
-        return view('pages.attendance', compact('event', 'students'));
+        return view('pages.attendance', compact('event', 'students', 'pending'));
     }
 
 
@@ -42,10 +50,14 @@ class StudentAttendanceController extends Controller
         // INITIALIZE VARIABLES, ETC
         date_default_timezone_set('Asia/Manila');
         $time = date("H:i");
+        $currentTimestamp = now();
+        $currentTime = date('H:i:s');
+        
         $event = Event::find($request->event_id)
             ->orderBy('created_at', 'desc')
             ->get()
             ->first();
+            
         $student = StudentAttendance::where('student_rfid', $request->s_rfid)
             ->where('event_id', $request->event_id)
             ->get()
@@ -72,7 +84,7 @@ class StudentAttendanceController extends Controller
             // CHECK IF CHECK IN
             if ($time > $event->checkIn_start && $time < $event->checkIn_end) {
                 StudentAttendance::create([
-                    "attend_checkIn" => "true",
+                    "attend_checkIn" => $currentTime,
                     "event_id" => $request->event_id,
                     "student_rfid" => $request->s_rfid,
                     "didCheckIn" => "true"
@@ -82,7 +94,7 @@ class StudentAttendanceController extends Controller
             // CHECK IF CHECK OUT
             if ($time > $event->checkOut_start && $time < $event->checkOut_end) {
                 StudentAttendance::create([
-                    "attend_checkOut" => "true",
+                    "attend_checkOut" => $currentTime,
                     "event_id" => $request->event_id,
                     "student_rfid" => $request->s_rfid,
                 ]);
@@ -93,23 +105,23 @@ class StudentAttendanceController extends Controller
             // CHECK IF STUDENT ALREADY HAVE A RECORD
             if ($time > $event->checkIn_start && $time < $event->checkIn_end && $student->attend_checkIn) {
                 return response()->json([
-                    "message" => "Student have already check in",
+                    "message" => "Student has already checked in",
                     "isRecorded" => false
                 ]);
             }
 
             if ($time > $event->checkOut_start && $time < $event->checkOut_end && $student->attend_checkOut) {
                 return response()->json([
-                    "message" => "Student have already check out",
+                    "message" => "Student has already checked out",
                     "isRecorded" => false
                 ]);
             }
 
             if ($time > $event->checkOut_start && $time < $event->checkOut_end) {
-                $student = $student->first();
                 StudentAttendance::where('event_id', $request->event_id)
-                    ->where('student_rfid', $request->s_rfid)->update([
-                        "attend_checkOut" => "true",
+                    ->where('student_rfid', $request->s_rfid)
+                    ->update([
+                        "attend_checkOut" => $currentTime,
                     ]);
             }
         }
@@ -134,16 +146,16 @@ class StudentAttendanceController extends Controller
         $students = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid');
 
         if (($time < $event->checkIn_end && $time > $event->checkIn_start)) {
-            $checkIn_start = date("Y:m:d H:i:s");
-            $checkIn_end = date("Y:m:d H:i:s");
-            $students = $students->whereBetween('student_attendances.created_at', [$event->checkIn_start, $event->checkIn_out])->get();
+            $students = $students
+                ->where('attend_checkIn', 'true')
+                ->where('event_id', $event->id)
+                ->get();
         }
         if ($time < $event->checkOut_end && $time > $event->checkOut_start) {
-            $checkOut_start = date("Y:m:d H:i:s");
-            $checkOut_end = date("Y:m:d H:i:s");
-            $students = $students->whereBetween('student_attendances.created_at', [$event->checkIn_start, $event->checkIn_out])->get();
+            $students = $students->where('attend_checkOut', "true")
+                ->where('event_id', $event->id)
+                ->get();
         }
-
 
         if ($time > $event->checkOut_end || $time < $event->checkIn_start || ($time > $event->checkIn_end && $time < $event->checkOut_start)) {
             $event = null;

@@ -9,7 +9,7 @@ export function testStudentForm() {
     // Added Randomality of Test Users
     const testUsers = [
         {
-            s_rfid: "1012375",
+            s_rfid: "0002803473",
             s_studentID: "2023-00364",
             s_fname: "Romeo Selwyn",
             s_mname: "Molejon",
@@ -29,6 +29,19 @@ export function testStudentForm() {
             s_lvl: "2",
             s_set: "H",
             s_suffix: "Jr.",
+        },
+        {
+        s_rfid: "1297851",
+        s_studentID:"2023-00166",
+        s_fname: "Juan",
+        s_mname: "Geraldo",
+        s_lname: "Dela Cruz",
+        s_program:"BSIT",
+        s_lvl:"2",
+        s_set:"A",
+        s_suffix:"N/A"
+
+
         }
 ];
 
