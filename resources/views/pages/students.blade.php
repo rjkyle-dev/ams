@@ -23,6 +23,7 @@
         <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
             Students Masterlist
         </h2>
+
         
         <div class="flex flex-col">
             <x-new-modal>
@@ -242,12 +243,26 @@
                                 </ul>
                             </div>
                     </div>
-        
+                    <div x-data="{ image: '{{ asset('images/icons/profile.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
+                        <img id="uploadImage" class="max-w-1/2" :src="image" alt="">
+                        <input id="uploadFile" type="file" name="s_image" x-ref="imageFile"
+                            x-on:change="image = URL.createObjectURL($refs.imageFile.files[0])" hidden>
+                        <button x-on:click="$refs.imageFile.click()" type="button"
+                            class="bg-green-400 text-white px-3 py-2 text-xl hover:bg-green-600 rounded-md">
+                            Upload Image
+                        </button>
                     </div>
-                    
-                </div>
-            </div>
-        </div>
+                </form>
+            </x-slot>
+            <x-slot name="footer">
+                <button onclick="testStudentForm()" class="bg-green-400 text-white px-3 py-2 rounded-md mx-4 hover:bg-green-600 float-start">
+                    Test Form </button>
+                <button x-on:click="$refs.studentForm.submit()"
+                    class="bg-green-400 text-white px-3 py-2 mx-4 hover:bg-green-600 rounded-md">
+                    Save </button>
+            </x-slot>
+        </x-new-modal>
+
     </div>
     <div x-data="{ open: false }"="mt-4">
         <div x-show.important="open" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -368,6 +383,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="overflow-x-auto shadow-md sm:rounded-lg">
             <table class="min-w-full w-full text-sm text-center rtl:text-right text-gray-900 font-semibold">
