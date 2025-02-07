@@ -33,90 +33,15 @@
         </script>
     @endif
 
+    <div class="flex justify-between w-full">
+      <div >
     <x-slot name="header">
-        <div class="">
-            <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
-                Welcome, {{ ucwords(auth()->user()->admin_fname) }}
+            <h2 class="font-semibold text-3xl text-violet-800 leading-tight ml-2">
+                Welcome, {{ strtoupper(auth()->user()->admin_type) }}
             </h2>
-        </div>
     </x-slot>
-
-    <div class="flex gap-5 mb-4">
-        <div class="bg-white basis-1/2 flex gap-20 p-3 items-start rounded-md">
-            <div class="">
-                <p class="text-base font-bold">First Name: <span
-                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_fname )}}</span></p>
-                <p class="text-base font-bold">Last Name: <span
-                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_lname )}}</span></p>
-                <p class="text-base font-bold">Role: <span
-                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_type )}}</span></p>
-                <p class="text-base font-bold">Username: <span
-                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_uname )}}</span></p>
-            </div>
-            {{-- <div class="">
-                <p class="text-base font-bold">Account Created: <span
-                        class="text-slate-500 font-medium">{{ auth()->user()->created_at }}</span></p>
-                <p class="text-base font-bold">Account Updated: <span
-                        class="text-slate-500 font-medium">{{ auth()->user()->updated_at }}</span></p>
-                <p class="text-base font-bold">Email Address: <span
-                        class="text-slate-500 font-medium">{{ auth()->user()->admin_email }}</span></p>
-            </div> --}}
-
-        </div>
-        <div class="bg-white basis-1/2 flex items-center justify-evenly rounded-md">
-            <div onclick="window.location.href = '{{ route('students') }}'"
-                class="flex items-center gap-1 bg-yellow-500 rounded-md p-2 hover:scale-105 hover:text-gray-900 ease-linear transition-all cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-15">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                </svg>
-
-
-                <h1 class="font-semibold text-[20px]">
-                    <span>10000</span>
-                    Students
-                </h1>
-            </div>
-            <div onclick="window.location.href = '{{ route('students') }}'"
-                class="flex items-center gap-1 bg-yellow-500 rounded-lg p-2 hover:scale-105 hover:text-gray-900 ease-linear transition-all cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-15">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-                </svg>
-
-                <h1 class="font-semibold text-[20px]">
-                    <span>10000</span>
-                    Graduates
-                </h1>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="flex items-center justify-between bg-white p-3 rounded">
-        <div class="flex gap-5">
-            <button onclick="location.href = '{{ route('attendance') }}'"
-                class="bg-violet-800 hover:bg-violet-950 ease-linear transition-all text-white rounded-xl px-3 text-[15px] flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-7">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />   
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
-                </svg>
-                Attendance
-
-            </button>
-            <div id="clockdate">
-                <div class="clockdate-wrapper bg-gray-800 p-2 max-w-xs w-full text-center rounded-xl mx-auto shadow-lg">
-                    <div id="clock" class="bg-gray-800 text-yellow-400 text-2xl font-sans shadow-sm"></div>
-                    <div id="date" class="tracking-widest text-sm font-sans text-white"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex gap-3">
+      </div>
+    <div class="flex gap-3 mb-2">
             {{-- MODALS --}}
             <x-new-modal>
                 <x-slot name="button"
@@ -350,6 +275,118 @@
             </x-new-modal>
 
         </div>
+        </div>
+        
+    
+
+    {{-- NOT --}}
+    <div class="flex gap-5 mb-4">
+        {{-- <div class="bg-white basis-1/2 flex gap-20 p-3 items-start rounded-md">
+            <div class="">
+                <p class="text-base font-bold">First Name: <span
+                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_fname )}}</span></p>
+                <p class="text-base font-bold">Last Name: <span
+                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_lname )}}</span></p>
+                <p class="text-base font-bold">Role: <span
+                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_type )}}</span></p>
+                <p class="text-base font-bold">Username: <span
+                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_uname )}}</span></p>
+            </div> --}}
+            {{-- <div class="">
+                <p class="text-base font-bold">Account Created: <span
+                        class="text-slate-500 font-medium">{{ auth()->user()->created_at }}</span></p>
+                <p class="text-base font-bold">Account Updated: <span
+                        class="text-slate-500 font-medium">{{ auth()->user()->updated_at }}</span></p>
+                <p class="text-base font-bold">Email Address: <span
+                        class="text-slate-500 font-medium">{{ auth()->user()->admin_email }}</span></p>
+            </div> --}}
+
+        {{-- </div> --}}
+        {{-- <div class="basis-1/2 flex items-center justify-evenly rounded-md">
+            <div onclick="window.location.href = '{{ route('students') }}'"
+                class="flex items-center gap-1 bg-yellow-500 rounded-md p-2 hover:scale-105 hover:text-gray-900 ease-linear transition-all cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-15">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+
+
+                <h1 class="font-semibold text-[20px]">
+                    <span>10000</span>
+                    Students
+                </h1>
+            </div>
+            <div onclick="window.location.href = '{{ route('students') }}'"
+                class="flex items-center gap-1 bg-yellow-500 rounded-lg p-2 hover:scale-105 hover:text-gray-900 ease-linear transition-all cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-15">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                </svg>
+
+                <h1 class="font-semibold text-[20px]">
+                    <span>10000</span>
+                    Graduates
+                </h1>
+            </div>
+        </div> --}}
+    </div>
+
+
+    <div class="flex items-center justify-between bg-white p-3 rounded">
+        <div class="flex gap-2">
+         <div onclick="window.location.href = '{{ route('students') }}'"
+                class="flex items-center gap-1 bg-yellow-500 rounded-lg p-2 hover:scale-105 hover:text-gray-900 ease-linear transition-all cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-15">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                </svg>
+
+                <h1 class="font-semibold text-[20px]">
+                    <span>10000</span>
+                    Graduates
+                </h1>
+            </div>
+
+            <div onclick="window.location.href = '{{ route('students') }}'"
+                class="flex items-center gap-1 bg-yellow-500 rounded-md p-2 hover:scale-105 hover:text-gray-900 ease-linear transition-all cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-15">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+
+
+                <h1 class="font-semibold text-[20px]">
+                    <span>10000</span>
+                    Students
+                </h1>
+            </div>
+         </div>
+
+        <div class="flex gap-5">
+            <button onclick="location.href = '{{ route('attendance') }}'"
+                class="bg-violet-800 hover:bg-violet-950 ease-linear transition-all text-white rounded-xl px-3 text-[15px] flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />   
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
+                </svg>
+                Attendance
+
+            </button>
+            <div id="clockdate">
+                <div class="clockdate-wrapper bg-gray-800 p-2 max-w-xs w-full text-center rounded-xl mx-auto shadow-lg">
+                    <div id="clock" class="bg-gray-800 text-yellow-400 text-2xl font-sans shadow-sm"></div>
+                    <div id="date" class="tracking-widest text-sm font-sans text-white"></div>
+                </div>
+            </div>
+        </div>
+
+        
     </div>
     {{-- <div class="mt-4">
         <h3 class="text-3xl text-violet-800 font-extrabold">
@@ -414,8 +451,8 @@
 </svg>
     </button>
     </div>
-    <div id="tableContainer" class="relative overflow-auto border border-gray-300 p-2">
-        <table class="min-w-full">
+    <div id="tableContainer" class="overflow-auto border border-gray-300 p-2">
+        <table class="min-w-full bg-white " style="background:#ffffff">
             <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
                 <td>No.</td>
                 <td>Name</td>
@@ -432,7 +469,7 @@
                     $index = 1;
                 @endphp
                 @foreach ($attendances as $attendance)
-                    <tr>
+                    <tr class="scroll">
                         <td>{{ $index++ }}</td>
                         <td>{{ $attendance->s_fname . ' ' . $attendance->s_lname }}</td>
                         <td>{{ $attendance->s_program }}</td>
@@ -453,8 +490,9 @@
     document.getElementById("fullscreenToggle").addEventListener("click", function() {
         let tableContainer = document.getElementById("tableContainer");
         if (!document.fullscreenElement) {
+            tableContainer.style.background = "#ffffff";
             tableContainer.requestFullscreen().catch(err => {
-                style.backgroundColor = 'white'
+                
                 console.error("Error attempting to enable full-screen mode:", err);
             });
         } else {
