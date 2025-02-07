@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('student_attendances', function (Blueprint $table) {
             $table->id();
-            $table->enum('attend_checkIn', ['true', 'false'])->default('false');
-            $table->enum('attend_checkOut', ['true', 'false'])->default('false');
+            $table->time('attend_checkIn')->nullable();
+            $table->time('attend_checkOut')->nullable();
             $table->string('event_id');
             $table->string('student_rfid');
             $table->enum('didCheckIn', ['true', 'false'])->default('false');
