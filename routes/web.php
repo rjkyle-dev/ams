@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminCodeController;
 use App\Http\Resources\Attendance;
 use App\Models\User;
+use FontLib\Table\Type\name;
 use Illuminate\Http\Request as Request;
 
 Route::get('/', function () {
@@ -52,6 +53,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/students', [StudentController::class, 'view'])->name('students');
     Route::delete('/deleteStudent', [StudentController::class, 'delete'])->name('deleteStudent');
     Route::patch('/updateStudent', [StudentController::class, 'update'])->name('updateStudent');
+
+    // STUDENT - API => VIA SEARCHBAR
+    Route::get('/students/filter', [StudentController::class, 'filter'])->name('fetchStudent');
+
+
+    // STUDENT - API => VIA CATEGORY
+    Route::get('/students/category', [StudentController::class, 'filterByCategory'])->name('fetchViaCategory');
+
     // ATTENDANCE RELATED ROUTES
     Route::get('/attendance', [StudentAttendanceController::class, 'view'])->name('attendance');
     Route::post('/student-attendance', [StudentAttendanceController::class, 'recordAttendance'])->name('attendanceStudent');
