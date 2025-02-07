@@ -74,4 +74,60 @@ class StudentController extends Controller
         Student::find($request->id)->delete();
         return back()->with(['successful' => "Student deleted successfully"]);
     }
+
+
+    public function filter(Request $request)
+    {
+        $students = Student::whereAny(['s_fname', 's_studentID', 's_mname', 's_lname'], 'like', $request->query('search') . '%')->get();
+
+
+        if (empty($students->first())) {
+            return response()->json([
+                "message" => "Student not found",
+                "students" => null
+            ]);
+        }
+
+        return response()->json([
+            "message" => "Working fine",
+            "students" => $students
+        ]);
+    }
+
+    public function filterByCategory(Request $request)
+    {
+
+        $students = Student::select('*');
+
+
+        if ($request->query('set')) {
+            $set = explode(',', $request->query('set'));
+            $students = $students->where('s_set', $set);
+        }
+        if ($request->query('lvl')) {
+            $lvl = explode(',', $request->query('lvl'));
+            $students = $students->where('s_lvl', $lvl);
+        }
+        if ($request->query('program')) {
+            $program = explode(',', $request->query('program'));
+            $students = $students->where('s_program', $program);
+        }
+        $students = $students->get();
+
+
+        if (empty($students->first())) {
+            return response()->json([
+                "message" => "Student not found",
+                "students" => null,
+                "query" => $request->query()
+            ]);
+        }
+
+        return response()->json([
+            "message" => "Working fine",
+            "students" => $students,
+            "query" => $request->query()
+
+        ]);
+    }
 }

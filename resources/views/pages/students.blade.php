@@ -25,6 +25,9 @@
         </h2>
 
         <div class="flex flex-col">
+
+            {{-- ADD STUDENT MODAL --}}
+
             <x-new-modal>
                 <x-slot name="button">
                     <div class="flex px-3 py-4">
@@ -133,26 +136,34 @@
                         Save </button>
                 </x-slot>
             </x-new-modal>
+
+            {{-- SEARCH FORM --}}
+
             <div class="flex justify-around gap-5 items-center">
                 {{-- SEARCH FORM --}}
                 <div class="search">
                     {{-- Search Form --}}
                     <div class="flex items-center justify-end py-3 w-full">
-                        <form class="max-w-md w-full">
+                        <form class="max-w-md w-full" id="searchForm" method="GET">
+                            <input type="hidden" id="search_uri" value="{{ route('fetchStudent') }}" hidden>
                             <label for="default-search"
                                 class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                    </svg>
-                                </div>
+                            <div class="">
                                 <div class="flex items-center">
-                                    <input type="search" id="default-search"
-                                        class=" w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Student name, Student ID, ..." required />
+
+                                    <div
+                                        class="flex items-center bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                        <svg class="w-4 h-4 text-gray-500 mx-3" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                            <path stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2"
+                                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                        </svg>
+                                        <input type="search" id="default-search"
+                                            class="outline-none w-full p-4 ps-2 text-sm text-gray-900 border-none  bg-gray-50 "
+                                            placeholder="Student name, Student ID, ..." />
+
+                                    </div>
 
                                     {{-- NOTE: Remove button if Live Search is implemented --}}
                                     <button type="submit"
@@ -189,12 +200,12 @@
                         </h6>
                         <div class="flex justify-between gap-3">
                             {{-- List for Program --}}
-                            <div class="">
+                            <form id="search_program" class="" onchange="getCategory()">
                                 <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                                    <label for="" class="font-semibold text-gray-100">Program</label>
+                                    <label for="" class="font-semibold dark:text-gray-100">Program</label>
                                     @foreach (['BSIT', 'BSIS'] as $program)
                                         <li class="flex items-center">
-                                            <input id="{{ $program }}" type="checkbox" value=""
+                                            <input value="{{ $program }}" type="checkbox" name="program"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
 
                                             <label for="{{ $program }}"
@@ -204,16 +215,16 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                            </div>
+                            </form>
 
                             {{-- List for Year Levels --}}
-                            <div class="">
+                            <form id="search_lvl" onchange="getCategory()">
                                 <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                                    <label for="" class="font-semibold text-gray-100">Year Level</label>
+                                    <label for="" class="font-semibold dark:text-gray-100">Year Level</label>
                                     {{-- Key-value pair for this list, key is for the database field, value is the placeholder --}}
-                                    @foreach (['first_year' => 'First Year', 'second_year' => 'Second Year', 'third_year' => 'Third Year', 'fourth_year' => 'Fourth Year'] as $key => $value)
+                                    @foreach (['1' => 'First Year', '2' => 'Second Year', '3' => 'Third Year', '4' => 'Fourth Year'] as $key => $value)
                                         <li class="flex items-center">
-                                            <input id="{{ $key }}" type="checkbox" value=""
+                                            <input value="{{ $key }}" type="checkbox" name="lvl"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
 
                                             <label for="{{ $key }}"
@@ -224,14 +235,14 @@
                                     @endforeach
 
                                 </ul>
-                            </div>
+                            </form>
                             {{-- List for Sets --}}
-                            <div class="">
+                            <form id="search_set" onchange="getCategory()">
                                 <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                                    <label for="" class="font-semibold text-gray-100">Set</label>
+                                    <label for="" class="font-semibold dark:text-gray-100">Set</label>
                                     @foreach (['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as $set)
                                         <li class="flex items-center">
-                                            <input id="{{ $set }}" type="checkbox" value=""
+                                            <input value="{{ $set }}" type="checkbox" name="set"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
 
                                             <label for="{{ $set }}"
@@ -241,7 +252,7 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                            </div>
+                            </form>
                         </div>
 
                     </div>
@@ -389,11 +400,11 @@
                         <td></td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="student_table_body">
                     @isset($students)
                         @foreach ($students as $student)
                             {{-- Added tr elements for rows to fix UI --}}
-                            <tr>
+                            <tr class="table_row" id="{{ $student->id }}">
                                 <td>{{ $student->s_studentID }}</td>
                                 <td>{{ $student->s_fname }}</td>
                                 <td>{{ $student->s_lname }}</td>
@@ -418,6 +429,9 @@
                     @endisset
                 </tbody>
             </table>
+            <span id="std_info_table">
+
+            </span>
         </div>
 
     </div>
