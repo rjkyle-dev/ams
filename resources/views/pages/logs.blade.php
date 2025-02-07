@@ -7,10 +7,10 @@
     </x-slot>
 
     {{-- Action buttons --}}
-    <div class="mb-4 py-4 px-2 rounded-md flex justify-end items-center w-full">
+    <div class="mb-4 px-2 rounded-md flex justify-end items-center w-full">
         <div class="flex gap-3">
-            <button class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-2 text-[15px] flex p-3 items-center">
-           <a href="{{ route('logs.pdf') }}" class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-2xl flex p-3 items-center">
+            <button class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-2 text-[10px] flex p-3 items-center">
+           <a href="{{ route('logs.pdf') }}" class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-2 text-[15px] flex p-3 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -19,7 +19,7 @@
                 Generate Report
           </a>
             </button>
-            <button class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-[15px] flex p-3 items-center">
+            <button class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-[15px] flex p-2 items-center">
                 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -115,12 +115,12 @@
             </div>
             <div class="w-full">
                 {{-- Search Form --}}
-                <div class="flex items-center justify-end py-3 w-full">
+                <div class="flex items-center justify-end py-2 w-full">
                     <form class="max-w-md w-full">
                         <label for="default-search"
                             class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -129,12 +129,12 @@
                             </div>
                             <div class="flex items-center">
                                 <input type="search" id="default-search"
-                                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                                    class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Student name, Student ID, ..." required />
 
                                 {{-- NOTE: Remove button if Live Search is implemented --}}
                                 <button type="submit"
-                                    class="inline-flex items-center py-4 px-3 ms-2 text-sm font-semibold text-gray-950 bg-yellow-400 rounded-lg hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                    class="inline-flex items-center py-2 px-3 ms-2 text-sm font-semibold text-gray-950 bg-yellow-400 rounded-lg hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                     <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -176,6 +176,7 @@
         {{-- ======================================================== --}}
 
         <div class="mt-4">
+            <div class="flex justify-between">
             <h3 class="text-3xl text-violet-800 font-extrabold">
                 Attendance Record
             </h3>
@@ -183,7 +184,7 @@
 <svg height="15px" width="15px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 viewBox="0 0 512 512"  xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#000000;}
+	.st0{fill:#ffffff;}
 </style>
 <g>
 	<polygon class="st0" points="345.495,0 394.507,49.023 287.923,155.607 356.384,224.086 462.987,117.493 511.991,166.515 
@@ -196,6 +197,7 @@
 </g>
 </svg>
     </button>
+    </div>
     <div id="tableContainer" class="overflow-auto border border-gray-300 p-2">         
             <table class="min-w-full">
                 <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
