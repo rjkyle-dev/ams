@@ -232,8 +232,9 @@
                             <th>Program</th>
                             <th>Set</th>
                             <th>Year Level</th>
-                            <th>Missing Periods</th>
-                            <th>Absences</th>
+                            <th>Morning Periods</th>
+                            <th>Afternoon Periods</th>
+                            <th>Total Absences</th>
                             <th>Total Fines</th>
                             <th>Event</th>
                             <th>Date</th>
@@ -246,12 +247,23 @@
                             <td>{{ $fine->s_program }}</td>
                             <td>{{ $fine->s_set }}</td>
                             <td>{{ $fine->s_lvl }}</td>
-                            <td>
-                                @if(!$fine->morning_checkin) Morning Check-in missed (₱25)<br>@endif
-                                @if(!$fine->morning_checkout) Morning Check-out missed (₱25)<br>@endif
-                                @if(!$fine->afternoon_checkin) Afternoon Check-in missed (₱25)<br>@endif
-                                @if(!$fine->afternoon_checkout) Afternoon Check-out missed (₱25)<br>@endif
-                                <strong>Total Missed Periods: {{ $fine->absences }}</strong>
+                            <td class="text-left">
+                                @if(!$fine->morning_checkin || !$fine->morning_checkout)
+                                    <div class="font-medium text-red-600">Morning Missed:</div>
+                                    @if(!$fine->morning_checkin) • Check-in missed (₱25)<br>@endif
+                                    @if(!$fine->morning_checkout) • Check-out missed (₱25)<br>@endif
+                                @else
+                                    <span class="text-green-600">✓ All Present</span>
+                                @endif
+                            </td>
+                            <td class="text-left">
+                                @if(!$fine->afternoon_checkin || !$fine->afternoon_checkout)
+                                    <div class="font-medium text-red-600">Afternoon Missed:</div>
+                                    @if(!$fine->afternoon_checkin) • Check-in missed (₱25)<br>@endif
+                                    @if(!$fine->afternoon_checkout) • Check-out missed (₱25)<br>@endif
+                                @else
+                                    <span class="text-green-600">✓ All Present</span>
+                                @endif
                             </td>
                             <td>{{ $fine->absences }}</td>
                             <td>₱{{ number_format($fine->total_fines, 2) }}</td>
@@ -260,7 +272,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="9" class="text-center py-4">No fines recorded</td>
+                            <td colspan="10" class="text-center py-4">No fines recorded</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -269,7 +281,7 @@
         </div>
         
         <x-modal name="fines-settings" focusable>
-            <form method="post" action="{{ route('fines.update-settings') }}" class="p-6">
+            <form method="post" action="{{ route('fines.settings.update') }}" class="p-6">
                 @csrf
                 @method('PUT')
         

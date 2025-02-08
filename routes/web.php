@@ -79,17 +79,8 @@ Route::middleware('auth')->group(function () {
     // Route::get('/pages/excel-import', [ImportController::class, 'index'])->name('pages.excel-import');
     Route::post('/import-student', [ImportController::class, 'import'])->name('importStudent');
 
-    // FINES RELATED ROUTES
-    Route::put('/fines/settings', [FinesController::class, 'updateSettings'])->name('fines.update-settings');
-    Route::post('/fines/calculate', [FinesController::class, 'calculateFines'])->name('fines.calculate');
-
-    // Test route for fines
-    Route::get('/test-fines', function() {
-        $settings = \App\Models\FineSettings::first();
-        $fines = \App\Models\Fine::with(['student', 'event'])->get();
-        
-        return view('test.fines', compact('settings', 'fines'));
-    });
+    // Fine Settings Routes
+    Route::put('/fines/settings', [FinesController::class, 'updateSettings'])->name('fines.settings.update');
 });
 
 

@@ -17,29 +17,25 @@ class FinesController extends Controller
     {
         $request->validate([
             'fine_amount' => 'required|numeric|min:0',
-            'morning_checkin' => 'boolean',
-            'morning_checkout' => 'boolean', 
-            'afternoon_checkin' => 'boolean',
-            'afternoon_checkout' => 'boolean'
+            'morning_checkin' => 'nullable|boolean',
+            'morning_checkout' => 'nullable|boolean',
+            'afternoon_checkin' => 'nullable|boolean',
+            'afternoon_checkout' => 'nullable|boolean'
         ]);
 
         $settings = FineSettings::firstOrCreate(['id' => 1], [
-            'fine_amount' => 25.00,
-            'morning_checkin' => true,
-            'morning_checkout' => true,
-            'afternoon_checkin' => true,
-            'afternoon_checkout' => true
+            'fine_amount' => 25.00
         ]);
 
         $settings->update([
             'fine_amount' => $request->fine_amount,
-            'morning_checkin' => $request->morning_checkin ?? false,
-            'morning_checkout' => $request->morning_checkout ?? false,
-            'afternoon_checkin' => $request->afternoon_checkin ?? false,
-            'afternoon_checkout' => $request->afternoon_checkout ?? false
+            'morning_checkin' => $request->has('morning_checkin'),
+            'morning_checkout' => $request->has('morning_checkout'),
+            'afternoon_checkin' => $request->has('afternoon_checkin'),
+            'afternoon_checkout' => $request->has('afternoon_checkout')
         ]);
 
-        return back()->with('success', 'Fine settings updated successfully');
+        return redirect()->route('logs')->with('success', 'Fine settings updated successfully');
     }
 
     public function calculateFines()

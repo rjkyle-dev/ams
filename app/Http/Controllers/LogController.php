@@ -30,12 +30,12 @@ class LogController extends Controller
                 'events.date'
             )
             ->where(function($query) {
-                $query->where('morning_checkin', false)
+                $query->where('absences', '>', 0)
+                      ->orWhere('morning_checkin', false)
                       ->orWhere('morning_checkout', false)
                       ->orWhere('afternoon_checkin', false)
                       ->orWhere('afternoon_checkout', false);
             })
-            ->where('absences', '>', 0)
             ->orderBy('events.date', 'desc')
             ->orderBy('students.s_lname')
             ->get();
