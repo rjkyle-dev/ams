@@ -48,6 +48,8 @@
                     icon: 'success',
                     title: 'Success!',
                     text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 1500,
                 });
             });
         </script>
@@ -65,13 +67,13 @@
         <div class="bg-white basis-1/2 flex gap-20 p-3 items-start rounded-md">
             <div class="">
                 <p class="text-base font-bold">First Name: <span
-                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_fname )}}</span></p>
+                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_fname) }}</span></p>
                 <p class="text-base font-bold">Last Name: <span
-                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_lname )}}</span></p>
+                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_lname) }}</span></p>
                 <p class="text-base font-bold">Role: <span
-                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_type )}}</span></p>
+                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_type) }}</span></p>
                 <p class="text-base font-bold">Username: <span
-                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_uname )}}</span></p>
+                        class="text-slate-500 font-medium">{{ ucfirst(auth()->user()->admin_uname) }}</span></p>
             </div>
             {{-- <div class="">
                 <p class="text-base font-bold">Account Created: <span
@@ -109,7 +111,7 @@
 
 
                 <h1 class="font-semibold text-2xl">
-                    <span></span>
+                    <span>{{$graduateCount}}</span>
                     Graduates
                 </h1>
             </div>
@@ -123,7 +125,7 @@
                 class="bg-violet-800 hover:bg-violet-950 ease-linear transition-all text-white rounded-xl px-3 text-[15px] flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-7">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />   
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
                 </svg>
@@ -380,45 +382,27 @@
         </div>
     </div>
 
-    {{-- Update the table container --}}
-    <div class="mt-4 relative z-0">
-        <div class="flex justify-between">
-            <h3 class="text-3xl text-violet-800 font-extrabold">
-                Attendance Record
-            </h3>
-            
-            {{-- full-screen-btn --}}
-            <button id="fullscreenToggle" class="bg-violet-600 text-white px-4 py-2 rounded-md mb-2">
-                <svg height="15px" width="15px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                    viewBox="0 0 512 512"  xml:space="preserve">
-                <style type="text/css">
-                    .st0{fill:#000000;}
-                </style>
-                <g>
-                    <polygon class="st0" points="345.495,0 394.507,49.023 287.923,155.607 356.384,224.086 462.987,117.493 511.991,166.515 
-                        511.991,0 	"/>
-                    <polygon class="st0" points="155.615,287.914 49.022,394.507 0.009,345.494 0.009,512 166.515,512 117.493,462.978 
-                        224.087,356.375 	"/>
-                    <polygon class="st0" points="356.384,287.914 287.923,356.375 394.507,462.978 345.495,512 511.991,512 511.991,345.485 
-                        462.977,394.507 	"/>
-                    <polygon class="st0" points="166.505,0 0.009,0 0.009,166.506 49.022,117.493 155.615,224.086 224.087,155.607 117.501,49.023 	"/>
-                </g>
-                </svg>
-            </button>
-        </div>
-        <div id="tableContainer" class="relative overflow-auto border border-gray-300 p-2" >
-            <table class="min-w-full" >
-                <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
-                    <td>No.</td>
-                    <td>Name</td>
-                    <td>Program</td>
-                    <td>Set</td>
-                    <td>Year Level</td>
-                    <td>Time In</td>
-                    <td>Time Out</td>
-                    <td>Event</td>
-                    <td>Date</td>
-                </tr>
+    {{-- - HERE- --}}
+    {{-- <div class="mt-4">
+
+        <h3 class="text-3xl text-violet-800 font-extrabold">
+            Attendance Record
+        </h3>
+        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="min-w-full w-full text-sm text-center rtl:text-right text-gray-900 font-semibold">
+                <thead class="text-base text-gray-950 uppercase bg-gray-50">
+                    <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
+                        <td>No.</td>
+                        <td>Name</td>
+                        <td>Program</td>
+                        <td>Set</td>
+                        <td>Year Level</td>
+                        <td>Time In</td>
+                        <td>Time Out</td>
+                        <td>Event</td>
+                        <td>Date</td>
+                    </tr>
+                </thead>
                 <tbody>
                     @php
                         $index = 1;
@@ -430,8 +414,75 @@
                             <td>{{ $attendance->s_program }}</td>
                             <td>{{ $attendance->s_set }}</td>
                             <td>{{ $attendance->s_lvl }}</td>
-                            <td>{{ $attendance->attend_checkIn ? date('h:i A', strtotime($attendance->attend_checkIn)) : '-' }}</td>
-                            <td>{{ $attendance->attend_checkOut ? date('h:i A', strtotime($attendance->attend_checkOut)) : '-' }}</td>
+                            <td>{{ $attendance->attend_checkIn }}</td>
+                            <td>{{ $attendance->attend_checkOut }}</td>
+                            <td>{{ $attendance->event_name }}</td>
+                            <td>{{ $attendance->date }}</td>
+                        </tr>
+                    @endforeach
+
+
+            </tbody>
+        </table>
+    </div> --}}
+
+    <div class="mt-4">
+        <div class="flex justify-between">
+            <h3 class="text-3xl text-violet-800 font-extrabold">
+                Attendance Record
+            </h3>
+
+            {{-- full-screen-btn --}}
+            <button id="fullscreenToggle" class="bg-violet-600 text-white px-4 py-2 rounded-md mb-2">
+                <svg height="15px" width="15px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                    <style type="text/css">
+                        .st0 {
+                            fill: #000000;
+                        }
+                    </style>
+                    <g>
+                        <polygon class="st0"
+                            points="345.495,0 394.507,49.023 287.923,155.607 356.384,224.086 462.987,117.493 511.991,166.515
+		511.991,0 	" />
+                        <polygon class="st0"
+                            points="155.615,287.914 49.022,394.507 0.009,345.494 0.009,512 166.515,512 117.493,462.978
+		224.087,356.375 	" />
+                        <polygon class="st0"
+                            points="356.384,287.914 287.923,356.375 394.507,462.978 345.495,512 511.991,512 511.991,345.485
+		462.977,394.507 	" />
+                        <polygon class="st0"
+                            points="166.505,0 0.009,0 0.009,166.506 49.022,117.493 155.615,224.086 224.087,155.607 117.501,49.023 	" />
+                    </g>
+                </svg>
+            </button>
+        </div>
+        <div id="tableContainer" class="z-0 overflow-auto border border-gray-300 p-2">
+            <table class="min-w-full">
+                <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold z-0">
+                    <td>No.</td>
+                    <td>Name</td>
+                    <td>Program</td>
+                    <td>Set</td>
+                    <td>Year Level</td>
+                    <td>Time In</td>
+                    <td>Time Out</td>
+                    <td>Event</td>
+                    <td>Date</td>
+                </tr>
+                <tbody class="bg-white">
+                    @php
+                        $index = 1;
+                    @endphp
+                    @foreach ($attendances as $attendance)
+                        <tr>
+                            <td>{{ $index++ }}</td>
+                            <td>{{ $attendance->s_fname . ' ' . $attendance->s_lname }}</td>
+                            <td>{{ $attendance->s_program }}</td>
+                            <td>{{ $attendance->s_set }}</td>
+                            <td>{{ $attendance->s_lvl }}</td>
+                            <td>{{ $attendance->attend_checkIn }}</td>
+                            <td>{{ $attendance->attend_checkOut }}</td>
                             <td>{{ $attendance->event_name }}</td>
                             <td>{{ $attendance->date }}</td>
                         </tr>

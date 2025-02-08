@@ -17,10 +17,30 @@ function editEvent(data){
 
 
 function deleteEvent(data){
-    console.log('deleting event')
-    console.log(data)
-    document.getElementById('s_id').value = data.id
-    document.getElementById('deleteForm').submit()
+    Swal.fire({
+        title: "Chotto Matte Kudasai!!!",
+        html: `
+                <strong>Are you sure to delete this Event's data?</strong>
+            `,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            console.log('deleting event')
+            console.log(data)
+            document.getElementById('s_id').value = data.id
+            document.getElementById('deleteForm').submit()
 
-
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Event Deleted Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
 }

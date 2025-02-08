@@ -19,6 +19,7 @@ function post(form){
     .then(response => {
         console.log("Response",response.data);
         isRecorded = true;
+        document.querySelector('#inputField').value = "";
     })
     .catch(error =>{
         console.log("Error:", error)
@@ -63,5 +64,10 @@ function notify(status, content){
 function error(status, content){
 
 }
+
+setInterval( ()=>{
+    document.querySelector('#inputField').focus()
+    console.log('hello world ')
+}, 500)
 
 
