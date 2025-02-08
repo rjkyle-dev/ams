@@ -15,9 +15,32 @@ function updateStudent(data){
     document.getElementById('s_ID').value = data.id
 }
 function deleteStudent(data){
-    console.log(data)
-    document.getElementById('s_id').value = data.id
-    document.getElementById('deleteStudent').submit()
+    Swal.fire({
+        title: "Chotto Matte Kudasai!!!",
+        html: `
+                <strong>Are you sure to delete this student's data?</strong>
+            `,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            console.log(data)
+            document.getElementById('s_id').value = data.id
+            document.getElementById('deleteStudent').submit()
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User Deleted Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
+
+    
 }
 
 document.updateStudent = updateStudent
