@@ -5,38 +5,51 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Student;
 use App\Models\StudentAttendance;
+use App\Models\Fine;
+use App\Models\FineSettings;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StudentAttendanceController extends Controller
 {
     public function view()
     {
         date_default_timezone_set('Asia/Manila');
-        $time = $time = date("H:i");
+        $time = date("H:i");
         $event = Event::where('date', '=', date('Y-m-d'))
             ->orderBy('created_at', 'desc')
-            ->get()
             ->first();
 
+        if ($event) {
+            // Check if periods have ended and calculate fines
+            $checkInEnd = date('H:i', strtotime($event->checkIn_end));
+            $checkOutEnd = date('H:i', strtotime($event->checkOut_end));
+
+            if ($time > $checkInEnd) {
+                $this->calculateMissingAttendance($event, 'checkIn');
+            }
+            if ($time > $checkOutEnd) {
+                $this->calculateMissingAttendance($event, 'checkOut');
+            }
+        }
+
+        // Remove automatic fine calculation from view method
+        // Only get pending attendance status
         $pending = Event::where('date', '=', date('Y-m-d'))
-            ->where(function (Builder $query) {
-                $query->orWhere(function (Builder $query) {
-                    $time = $time = date("H:i");
+            ->where(function (Builder $query) use ($time) {
+                $query->orWhere(function (Builder $query) use ($time) {
                     $query->where('checkIn_start', '<', $time)
                         ->where('checkIn_end', '>', $time);
                 })
-                    ->orWhere(function (Builder $query) {
-                        $time = $time = date("H:i");
-                        $query->where('checkOut_start', '<', $time)
-                            ->where('checkOut_end', '>', $time);
-                    });
+                ->orWhere(function (Builder $query) use ($time) {
+                    $query->where('checkOut_start', '<', $time)
+                        ->where('checkOut_end', '>', $time);
+                });
             })
             ->get();
-
-
 
         if (empty($event)) {
             $event = null;
@@ -46,7 +59,6 @@ class StudentAttendanceController extends Controller
             $event = null;
         }
 
-
         if (empty($pending->first())) {
             $pending = null;
         }
@@ -54,7 +66,78 @@ class StudentAttendanceController extends Controller
         return view('pages.attendance', compact('event', 'students', 'pending'));
     }
 
+    protected function calculateMissingAttendance($event, $type)
+    {
+        $settings = FineSettings::firstOrCreate(['id' => 1], [
+            'fine_amount' => 25.00
+        ]);
 
+        // Get all students
+        $allStudents = Student::all();
+        
+        foreach ($allStudents as $student) {
+            // Check attendance record
+            $attendance = StudentAttendance::where('student_rfid', $student->s_rfid)
+                ->where('event_id', $event->id)
+                ->first();
+
+            // Get or create fine record
+            $fine = Fine::firstOrCreate(
+                [
+                    'student_id' => $student->id,
+                    'event_id' => $event->id
+                ],
+                [
+                    'absences' => 0,
+                    'fine_amount' => $settings->fine_amount,
+                    'total_fines' => 0,
+                    'morning_checkin' => false,
+                    'morning_checkout' => false,
+                    'afternoon_checkin' => false,
+                    'afternoon_checkout' => false
+                ]
+            );
+
+            // Calculate missing periods and fines
+            $missingPeriods = 0;
+            $currentTime = date('H:i');
+
+            // Morning periods
+            if ($currentTime > date('H:i', strtotime($event->checkIn_end))) {
+                if (!$attendance || !$attendance->attend_checkIn) {
+                    $missingPeriods++;
+                    $fine->morning_checkin = false;
+                }
+            }
+            
+            if ($currentTime > date('H:i', strtotime($event->checkOut_end))) {
+                if (!$attendance || !$attendance->attend_checkOut) {
+                    $missingPeriods++;
+                    $fine->morning_checkout = false;
+                }
+            }
+
+            // Afternoon periods
+            if ($currentTime > date('H:i', strtotime($event->checkIn_end))) {
+                if (!$attendance || !$attendance->afternoon_checkin) {
+                    $missingPeriods++;
+                    $fine->afternoon_checkin = false;
+                }
+            }
+            
+            if ($currentTime > date('H:i', strtotime($event->checkOut_end))) {
+                if (!$attendance || !$attendance->afternoon_checkout) {
+                    $missingPeriods++;
+                    $fine->afternoon_checkout = false;
+                }
+            }
+
+            // Update fine record - ₱25 per missed period
+            $fine->absences = $missingPeriods;
+            $fine->total_fines = $missingPeriods * $settings->fine_amount;
+            $fine->save();
+        }
+    }
 
     public function recordAttendance(Request $request)
     {
@@ -144,6 +227,8 @@ class StudentAttendanceController extends Controller
             }
         }
 
+        // After recording attendance, check and create fines if needed
+        $this->checkAndCreateFines($student->id, $request->event_id);
 
         // LASTLY SEND A RESPONSE TO THE WEB SERVER OR PAGE
         return response()->json([
@@ -152,34 +237,47 @@ class StudentAttendanceController extends Controller
         ]);
     }
 
+    protected function checkAndCreateFines($studentId, $eventId)
+    {
+        $settings = FineSettings::first();
+        $attendance = StudentAttendance::where('student_id', $studentId)
+            ->where('event_id', $eventId)
+            ->first();
+
+        if (!$attendance) {
+            // Create fine record for absence
+            Fine::create([
+                'student_id' => $studentId,
+                'event_id' => $eventId,
+                'absences' => 1,
+                'fine_amount' => $settings->fine_amount,
+                'total_fines' => $settings->fine_amount
+            ]);
+        }
+    }
+
     public function recent()
     {
         date_default_timezone_set('Asia/Manila');
-        $time = $time = date("H:i");
+        $time = date("H:i");
         $event = Event::where('date', '=', date('Y-m-d'))
             ->orderBy('created_at', 'desc')
-            ->get()
             ->first();
 
-        $students = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid');
-
-        if (($time < $event->checkIn_end && $time > $event->checkIn_start)) {
-            $students = $students
-                ->where('attend_checkIn', 'true')
-                ->where('event_id', $event->id)
-                ->get();
-        }
-        if ($time < $event->checkOut_end && $time > $event->checkOut_start) {
-            $students = $students->where('attend_checkOut', "true")
-                ->where('event_id', $event->id)
-                ->get();
+        if (!$event) {
+            return null;
         }
 
-        if ($time > $event->checkOut_end || $time < $event->checkIn_start || ($time > $event->checkIn_end && $time < $event->checkOut_start)) {
-            $event = null;
-            $students = null;
+        $students = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid')
+            ->where('event_id', $event->id);
+
+        // Show students based on current period
+        if ($time >= $event->checkIn_start && $time <= $event->checkIn_end) {
+            $students->whereNotNull('attend_checkIn');
+        } else if ($time >= $event->checkOut_start && $time <= $event->checkOut_end) {
+            $students->whereNotNull('attend_checkOut');
         }
 
-        return $students;
+        return $students->get();
     }
 }

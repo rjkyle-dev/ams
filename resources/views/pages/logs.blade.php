@@ -210,8 +210,113 @@
             </table>
         </div>
 
+        <div class="mt-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-3xl text-violet-800 font-extrabold">Student Fines</h3>
+                <div class="flex gap-2">
+                    <button x-data="" x-on:click="$dispatch('open-modal', 'fines-settings')" 
+                            class="bg-violet-600 text-white px-4 py-2 rounded-md">
+                        Update Fines Settings
+                    </button>
+                    {{-- Removed Calculate Fines button --}}
+                </div>
+            </div>
+            
+            {{-- Remove the calculateFines script since it's no longer needed --}}
+            
+            <div class="overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="min-w-full">
+                    <thead>
+                        <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
+                            <th>Student Name</th>
+                            <th>Program</th>
+                            <th>Set</th>
+                            <th>Year Level</th>
+                            <th>Missing Periods</th>
+                            <th>Absences</th>
+                            <th>Total Fines</th>
+                            <th>Event</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($fines as $fine)
+                        <tr>
+                            <td>{{ $fine->s_fname . ' ' . $fine->s_lname }}</td>
+                            <td>{{ $fine->s_program }}</td>
+                            <td>{{ $fine->s_set }}</td>
+                            <td>{{ $fine->s_lvl }}</td>
+                            <td>
+                                @if(!$fine->morning_checkin) Morning Check-in missed (₱25)<br>@endif
+                                @if(!$fine->morning_checkout) Morning Check-out missed (₱25)<br>@endif
+                                @if(!$fine->afternoon_checkin) Afternoon Check-in missed (₱25)<br>@endif
+                                @if(!$fine->afternoon_checkout) Afternoon Check-out missed (₱25)<br>@endif
+                                <strong>Total Missed Periods: {{ $fine->absences }}</strong>
+                            </td>
+                            <td>{{ $fine->absences }}</td>
+                            <td>₱{{ number_format($fine->total_fines, 2) }}</td>
+                            <td>{{ $fine->event_name }}</td>
+                            <td>{{ date('Y-m-d', strtotime($fine->date)) }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="9" class="text-center py-4">No fines recorded</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <x-modal name="fines-settings" focusable>
+            <form method="post" action="{{ route('fines.update-settings') }}" class="p-6">
+                @csrf
+                @method('PUT')
+        
+                <h2 class="text-lg font-medium text-gray-900">Update Fines Settings</h2>
+        
+                <div class="mt-6 grid grid-cols-2 gap-4">
+                    <div>
+                        <h3 class="font-semibold mb-2">Morning</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="morning_checkin" class="mr-2">
+                                Time In
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="morning_checkout" class="mr-2">
+                                Time Out
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Afternoon</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="afternoon_checkin" class="mr-2">
+                                Time In
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="afternoon_checkout" class="mr-2">
+                                Time Out
+                            </label>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="mt-6">
+                    <label for="fine_amount" class="block font-medium text-sm text-gray-700">Fine Amount</label>
+                    <input type="number" name="fine_amount" id="fine_amount" 
+                           class="mt-1 block w-full" value="25" min="0" step="0.01">
+                </div>
+        
+                <div class="mt-6 flex justify-end">
+                    <x-secondary-button x-on:click="$dispatch('close')">Cancel</x-secondary-button>
+                    <x-primary-button class="ml-3">Update Settings</x-primary-button>
+                </div>
+            </form>
+        </x-modal>
+
     </div>
-
-
 
 </x-app-layout>
