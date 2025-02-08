@@ -29,6 +29,7 @@ class StudentAttendanceController extends Controller
             $event = null;
         }
 
+
         $pending = Event::where('date', '=', date('Y-m-d'))->get();
         if (empty($pending->first())) {
             $pending = null;
@@ -52,12 +53,12 @@ class StudentAttendanceController extends Controller
         $time = date("H:i");
         $currentTimestamp = now();
         $currentTime = date('H:i:s');
-        
+
         $event = Event::find($request->event_id)
             ->orderBy('created_at', 'desc')
             ->get()
             ->first();
-            
+
         $student = StudentAttendance::where('student_rfid', $request->s_rfid)
             ->where('event_id', $request->event_id)
             ->get()

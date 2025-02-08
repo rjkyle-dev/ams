@@ -11,6 +11,7 @@ class DashboardController extends Controller
 {
     public function viewDashboard()
     {
+
         $studentCount = Student::all()->count();
         $graduateCount = Student::where('s_status', 'GRADUATED')->get()->count(); //Fetch all graduate counts
         $attendances = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid')

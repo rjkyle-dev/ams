@@ -12,7 +12,7 @@
             <div x-on:click.outside="open = false" class="max-w-[1000px] bg-white p-6 rounded-lg shadow-lg">
                 <div class="border-b-2 border-gray-300 mb-5">
                     <h1 class="text-2xl font-bold">
-                        Edi Event
+                        Edit Event
                     </h1>
                 </div>
                 <div class="mb-5">
@@ -124,17 +124,16 @@
 
         <div class="flex justify-between items-center mb-3">
 
-            <h3 class="text-3xl text-violet-800 font-extrabold">
+            <h3 class="text-[20px] text-violet-800 font-extrabold">
                 Record of Events
             </h3>
 
             <x-new-modal>
                 <x-slot name="button"
-                    class="bg-violet-600 hover:bg-violet-950 ease-linear transition-all text-white rounded-xl px-5 text-2xl
-                    flex items-center p-4 gap-1">
-                    <div class="flex px-3 py-4">
+                    class="bg-violet-600 hover:bg-violet-950 ease-linear transition-all duration-75 text-white rounded-xl px-2 text-[10px] flex items-center p-2 gap-1 w-5">
+                    <div class="flex px-2 py-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="1.5" stroke="currentColor" class="size-9">
+                            stroke-width="1.5" stroke="currentColor" class="size-5 mt-1 m-1">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
                         </svg>
@@ -245,7 +244,7 @@
                 </x-slot>
                 <x-slot name="footer">
                     <button x-on:click="$refs.eventForm.submit()" type="submit"
-                        class="bg-green-400 text-white px-3 py-2 rounded-md mx-4">
+                        class="bg-green-400 text-white px-3 py-2 mx-4 hover:bg-green-600 rounded-md">
                         Save </button>
                 </x-slot>
             </x-new-modal>
