@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
     // LOGS RELATED ROUTES
     Route::get('/logs', [LogController::class, 'viewLogs'])->name('logs');
     Route::get('/logs/generate-pdf', [LogController::class, 'generatePDF'])->name('logs.pdf');
+    Route::post('/logs/clear-fines', [LogController::class, 'clearFines'])->name('logs.clear-fines');
 
     // STUDENT RELATED ROUTES
     Route::post('/addStudent', [StudentController::class, 'create'])->name('addStudent');

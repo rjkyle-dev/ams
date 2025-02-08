@@ -80,6 +80,7 @@ class StudentAttendanceController extends Controller
                 ->where('event_id', $event->id)
                 ->first();
 
+            // Reset absences count for this student's fine record
             $fine = Fine::firstOrCreate(
                 [
                     'student_id' => $student->id,
@@ -89,35 +90,40 @@ class StudentAttendanceController extends Controller
                     'absences' => 0,
                     'fine_amount' => $settings->fine_amount,
                     'total_fines' => 0,
-                    'morning_checkin' => false,
-                    'morning_checkout' => false,
-                    'afternoon_checkin' => false,
-                    'afternoon_checkout' => false
+                    'morning_checkin' => true,
+                    'morning_checkout' => true,
+                    'afternoon_checkin' => true,
+                    'afternoon_checkout' => true
                 ]
             );
 
-            // Calculate missing periods
-            if ($currentTime > $event->checkIn_end && !($attendance && $attendance->attend_checkIn)) {
+            $fine->absences = 0; // Reset absences count
+            
+            // Morning Check-in
+            if (!($attendance && $attendance->attend_checkIn)) {
                 $fine->morning_checkin = false;
                 $fine->absences += 1;
             }
 
-            if ($currentTime > $event->checkOut_end && !($attendance && $attendance->attend_checkOut)) {
+            // Morning Check-out
+            if (!($attendance && $attendance->attend_checkOut)) {
                 $fine->morning_checkout = false;
                 $fine->absences += 1;
             }
 
-            if ($currentTime > $event->afternoon_checkIn_end && !($attendance && $attendance->attend_afternoon_checkIn)) {
+            // Afternoon Check-in
+            if (!($attendance && $attendance->attend_afternoon_checkIn)) {
                 $fine->afternoon_checkin = false;
                 $fine->absences += 1;
             }
 
-            if ($currentTime > $event->afternoon_checkOut_end && !($attendance && $attendance->attend_afternoon_checkOut)) {
+            // Afternoon Check-out
+            if (!($attendance && $attendance->attend_afternoon_checkOut)) {
                 $fine->afternoon_checkout = false;
                 $fine->absences += 1;
             }
 
-            // Update total fines
+            // Calculate total fines (₱25 per missed period)
             $fine->total_fines = $fine->absences * $settings->fine_amount;
             $fine->save();
         }
@@ -170,66 +176,77 @@ class StudentAttendanceController extends Controller
             'event_id' => $request->event_id
         ]);
 
-        // Morning attendance
-        if ($time > $event->checkIn_start && $time < $event->checkIn_end) {
-            $attendance->attend_checkIn = $currentTime;
-            $attendance->morning_attendance = true;
-            $attendance->save();
-            
-            // Update fine record if exists
-            Fine::where('student_id', $student->id)
-                ->where('event_id', $event->id)
-                ->update([
-                    'morning_checkin' => true,
-                    'absences' => DB::raw('absences - 1'),
-                    'total_fines' => DB::raw('total_fines - 25')
-                ]);
-        }
+        $settings = FineSettings::firstOrCreate(
+            ['id' => 1],
+            [
+                'fine_amount' => 25.00,
+                'morning_checkin' => true,
+                'morning_checkout' => true,
+                'afternoon_checkin' => true,
+                'afternoon_checkout' => true
+            ]
+        );
 
-        if ($time > $event->checkOut_start && $time < $event->checkOut_end) {
-            $attendance->attend_checkOut = $currentTime;
-            $attendance->morning_attendance = true;
-            $attendance->save();
-            
-            // Update fine record if exists
-            Fine::where('student_id', $student->id)
-                ->where('event_id', $event->id)
-                ->update([
-                    'morning_checkout' => true,
-                    'absences' => DB::raw('absences - 1'),
-                    'total_fines' => DB::raw('total_fines - 25')
-                ]);
-        }
+        $fine = Fine::where('student_id', $student->id)
+            ->where('event_id', $event->id)
+            ->first();
 
-        // Afternoon attendance
-        if ($time > $event->afternoon_checkIn_start && $time < $event->afternoon_checkIn_end) {
-            $attendance->attend_afternoon_checkIn = $currentTime;
-            $attendance->afternoon_attendance = true;
-            $attendance->save();
-            
-            // Update fine record if exists
-            Fine::where('student_id', $student->id)
-                ->where('event_id', $event->id)
-                ->update([
-                    'afternoon_checkin' => true,
-                    'absences' => DB::raw('absences - 1'),
-                    'total_fines' => DB::raw('total_fines - 25')
-                ]);
-        }
+        if ($fine) {
+            // Morning check-in
+            if ($time > $event->checkIn_start && $time < $event->checkIn_end) {
+                $attendance->attend_checkIn = $currentTime;
+                $attendance->morning_attendance = true;
+                $attendance->save();
+                
+                if (!$fine->morning_checkin) {
+                    $fine->morning_checkin = true;
+                    $fine->absences -= 1;
+                    $fine->total_fines = $fine->absences * $settings->fine_amount;
+                    $fine->save();
+                }
+            }
 
-        if ($time > $event->afternoon_checkOut_start && $time < $event->afternoon_checkOut_end) {
-            $attendance->attend_afternoon_checkOut = $currentTime;
-            $attendance->afternoon_attendance = true;
-            $attendance->save();
-            
-            // Update fine record if exists
-            Fine::where('student_id', $student->id)
-                ->where('event_id', $event->id)
-                ->update([
-                    'afternoon_checkout' => true,
-                    'absences' => DB::raw('absences - 1'),
-                    'total_fines' => DB::raw('total_fines - 25')
-                ]);
+            // Morning check-out
+            if ($time > $event->checkOut_start && $time < $event->checkOut_end) {
+                $attendance->attend_checkOut = $currentTime;
+                $attendance->morning_attendance = true;
+                $attendance->save();
+                
+                if (!$fine->morning_checkout) {
+                    $fine->morning_checkout = true;
+                    $fine->absences -= 1;
+                    $fine->total_fines = $fine->absences * $settings->fine_amount;
+                    $fine->save();
+                }
+            }
+
+            // Afternoon check-in
+            if ($time > $event->afternoon_checkIn_start && $time < $event->afternoon_checkIn_end) {
+                $attendance->attend_afternoon_checkIn = $currentTime;
+                $attendance->afternoon_attendance = true;
+                $attendance->save();
+                
+                if (!$fine->afternoon_checkin) {
+                    $fine->afternoon_checkin = true;
+                    $fine->absences -= 1;
+                    $fine->total_fines = $fine->absences * $settings->fine_amount;
+                    $fine->save();
+                }
+            }
+
+            // Afternoon check-out
+            if ($time > $event->afternoon_checkOut_start && $time < $event->afternoon_checkOut_end) {
+                $attendance->attend_afternoon_checkOut = $currentTime;
+                $attendance->afternoon_attendance = true;
+                $attendance->save();
+                
+                if (!$fine->afternoon_checkout) {
+                    $fine->afternoon_checkout = true;
+                    $fine->absences -= 1;
+                    $fine->total_fines = $fine->absences * $settings->fine_amount;
+                    $fine->save();
+                }
+            }
         }
 
         return response()->json([

@@ -52,4 +52,10 @@ class LogController extends Controller
         $pdf = PDF::loadView('reports.attendance', compact('logs'));
         return $pdf->download('attendance_report.pdf');
     }
+
+    public function clearFines()
+    {
+        Fine::truncate(); // Clear all fines
+        return redirect()->route('logs')->with('success', 'All fines have been cleared successfully.');
+    }
 }
