@@ -19,12 +19,62 @@
         </script>
     @endif
 
+    {{-- Session Error Handling from Import Controller --}}
+    @if (session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: '{{ session('error') }}',
+                    showConfirmButton: true,
+                });
+            });
+        </script>
+    @endif
+
     <div class="flex justify-between items-center">
-        <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
-            Students Masterlist
-        </h2>
+        <div class="flex flex-col items-start">
+            <h2 class="font-semibold text-3xl text-violet-800 leading-tight my-3">
+                Students Masterlist
+            </h2>
+            <form action="{{ route('importStudent') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="flex items-center">
+                    <label for="file" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                        Choose Excel File
+                    </label>
+                    <input type="file" name="file" id="file" class="hidden" onchange="selectFile(event)">
+                    {{-- Choose Excel file and import it --}}
+                    <button id="import-btn"
+                    class="hidden focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                    >
+                    Import Data
+                    </button>
+                </div>
+                <div class="preview mb-4 mt-2 p-1 border border-gray-300 rounded-lg bg-gray-100 shadow-md">
+                    <p id="preview-name" class="text-gray-700 text-base font-semibold italic text-center">
+                        No file currently selected
+                    </p>
+                </div>
+            </form>
+        </div>
         
         <div class="flex flex-col">
+
             <x-new-modal>
                 <x-slot name="button">
                     <div class="flex px-3 py-4">
@@ -270,7 +320,7 @@
                                     <label for="">
                                         RFID
                                     </label>
-                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_RFID">
+                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_RFID" value="">
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Student ID:</label>
@@ -425,4 +475,22 @@
         @method('DELETE')
         <input type="text" name="id" id="s_id" hidden>
     </form>
+
+
+    <script>
+        //FILE UPLOADED PREVIEW AND DISPLAYING OF IMPORT BUTTON
+        function selectFile(event){
+            let preview = document.getElementById("preview-name");
+            let importBtn = document.getElementById("import-btn");
+
+            // Check if a file is selected
+            if (event.target.files.length > 0) {
+                const fileName = event.target.files[0].name; // Get file name
+                preview.innerHTML = fileName; // Display file name
+                importBtn.classList.remove('hidden'); //Show the import button
+                console.log('File Upload: ' + fileName);
+            }
+        }
+    </script>
+
 </x-app-layout>

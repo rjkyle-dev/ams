@@ -9,6 +9,7 @@ use App\Http\Controllers\StudentController;
 use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminCodeController;
+use App\Http\Controllers\ImportController;
 use App\Http\Resources\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request as Request;
@@ -63,6 +64,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/events', [EventController::class, 'view'])->name('events');
     Route::delete('/deleteEvent', [EventController::class, 'delete'])->name('deleteEvent');
     Route::patch('/updateEvent', [EventController::class, 'update'])->name('updateEvent'); // Add this line
+
+    //IMPORT RELATED ROUTES
+    // Route::get('/pages/excel-import', [ImportController::class, 'index'])->name('pages.excel-import');
+    Route::post('/import-student', [ImportController::class, 'import'])->name('importStudent');
 });
 
 

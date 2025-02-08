@@ -28,6 +28,8 @@
                     icon: 'success',
                     title: 'Success!',
                     text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 1500,
                 });
             });
         </script>
@@ -87,7 +89,7 @@
                 </svg>
 
                 <h1 class="font-semibold text-2xl">
-                    <span></span>
+                    <span>{{$graduateCount}}</span>
                     Graduates
                 </h1>
             </div>
