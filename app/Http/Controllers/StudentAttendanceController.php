@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\Student;
 use App\Models\StudentAttendance;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder as Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +21,22 @@ class StudentAttendanceController extends Controller
             ->get()
             ->first();
 
+        $pending = Event::where('date', '=', date('Y-m-d'))
+            ->where(function (Builder $query) {
+                $query->orWhere(function (Builder $query) {
+                    $time = $time = date("H:i");
+                    $query->where('checkIn_start', '<', $time)
+                        ->where('checkIn_end', '>', $time);
+                })
+                    ->orWhere(function (Builder $query) {
+                        $time = $time = date("H:i");
+                        $query->where('checkOut_start', '<', $time)
+                            ->where('checkOut_end', '>', $time);
+                    });
+            })
+            ->get();
+
+
 
         if (empty($event)) {
             $event = null;
@@ -30,11 +47,9 @@ class StudentAttendanceController extends Controller
         }
 
 
-        $pending = Event::where('date', '=', date('Y-m-d'))->get();
         if (empty($pending->first())) {
             $pending = null;
         }
-
         $students = $this->recent();
         return view('pages.attendance', compact('event', 'students', 'pending'));
     }
@@ -47,6 +62,16 @@ class StudentAttendanceController extends Controller
         $fields = $request->validate([
             "s_rfid" => ['required'],
         ]);
+
+        // CHECK IF STUDENT EXIST IN THE MASTERLIST
+        if (empty(Student::whereAny(['s_rfid', 's_studentID'], $request->s_rfid)->get()->first())) {
+            return response()->json([
+                "message" => "I am sorry but the student does not exist in the masterlist",
+                "isRecorded" => false,
+                "doesntExist" => true,
+            ]);
+        }
+
 
         // INITIALIZE VARIABLES, ETC
         date_default_timezone_set('Asia/Manila');
@@ -63,14 +88,6 @@ class StudentAttendanceController extends Controller
             ->where('event_id', $request->event_id)
             ->get()
             ->first();
-
-        if (empty(Student::whereAny(['s_rfid', 's_studentID'], $request->s_rfid)->get()->first())) {
-            return response()->json([
-                "message" => "I am sorry but the student does not exist in the masterlist",
-                "isRecorded" => false,
-                "doesntExist" => true,
-            ]);
-        }
 
         // DETERMINE IF IT IS ALREADY PAST THE SET CHECK IN AND CHECK OUT TIME
         if ($time < $event->checkIn_start || ($time > $event->checkIn_end && $time < $event->checkOut_start) || $time > $event->checkOut_end) {
