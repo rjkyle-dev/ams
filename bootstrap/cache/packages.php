@@ -1,5 +1,4 @@
 <?php return array (
-
   'barryvdh/laravel-dompdf' => 
   array (
     'aliases' => 
@@ -58,7 +57,6 @@
       0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
     ),
   ),
-
   'nesbot/carbon' => 
   array (
     'providers' => 
@@ -78,6 +76,13 @@
     'providers' => 
     array (
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    ),
+  ),
+  'pestphp/pest-plugin-laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Pest\\Laravel\\PestServiceProvider',
     ),
   ),
 );

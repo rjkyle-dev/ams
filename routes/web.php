@@ -54,6 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/students', [StudentController::class, 'view'])->name('students');
     Route::delete('/deleteStudent', [StudentController::class, 'delete'])->name('deleteStudent');
     Route::patch('/updateStudent', [StudentController::class, 'update'])->name('updateStudent');
+    Route::patch('/updateManyStudent', [StudentController::class, 'updateMany'])->name('multiStudentEdit');
+    Route::delete('/deleteManyStudent', [StudentController::class, 'manyDelete'])->name('multiStudentDelete');
 
     // STUDENT - API => VIA SEARCHBAR
     Route::get('/students/filter', [StudentController::class, 'filter'])->name('fetchStudent');

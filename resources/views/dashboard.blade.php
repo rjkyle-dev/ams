@@ -91,7 +91,7 @@
 
 
                 <h1 class="font-semibold text-2xl">
-                    <span>{{$graduateCount}}</span>
+                    <span>{{ $graduateCount }}</span>
                     Graduates
                 </h1>
             </div>
@@ -356,49 +356,6 @@
         </div>
     </div>
 
-    {{-- - HERE- --}}
-    {{-- <div class="mt-4">
-
-        <h3 class="text-3xl text-violet-800 font-extrabold">
-            Attendance Record
-        </h3>
-        <div class="overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="min-w-full w-full text-sm text-center rtl:text-right text-gray-900 font-semibold">
-                <thead class="text-base text-gray-950 uppercase bg-gray-50">
-                    <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
-                        <td>No.</td>
-                        <td>Name</td>
-                        <td>Program</td>
-                        <td>Set</td>
-                        <td>Year Level</td>
-                        <td>Time In</td>
-                        <td>Time Out</td>
-                        <td>Event</td>
-                        <td>Date</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $index = 1;
-                    @endphp
-                    @foreach ($attendances as $attendance)
-                        <tr>
-                            <td>{{ $index++ }}</td>
-                            <td>{{ $attendance->s_fname . ' ' . $attendance->s_lname }}</td>
-                            <td>{{ $attendance->s_program }}</td>
-                            <td>{{ $attendance->s_set }}</td>
-                            <td>{{ $attendance->s_lvl }}</td>
-                            <td>{{ $attendance->attend_checkIn }}</td>
-                            <td>{{ $attendance->attend_checkOut }}</td>
-                            <td>{{ $attendance->event_name }}</td>
-                            <td>{{ $attendance->date }}</td>
-                        </tr>
-                    @endforeach
-
-
-            </tbody>
-        </table>
-    </div> --}}
 
     <div class="mt-4">
         <div class="flex justify-between">
