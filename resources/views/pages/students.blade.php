@@ -20,6 +20,7 @@
     @endif
 
     {{-- Session Error Handling from Import Controller --}}
+    {{-- UPDATE: This error handling pop ups is not exclusive to the Import Controller anymore --}}
     @if (session('success'))
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -101,38 +102,38 @@
                                     <label for="">
                                         RFID
                                     </label>
-                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_rfid">
+                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_rfid" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Student ID:</label>
-                                    <input type="text" placeholder="Enter Student ID (Ex. 2023-00069)"
+                                    <input type="text" placeholder="Enter Student ID (Ex. 2023-00069)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         name="s_studentID" id="s_studentID">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <label for="">First Name:</label>
-                                <input type="text" placeholder="Enter Firstname" name="s_fname" id="s_fname">
+                                <input type="text" placeholder="Enter Firstname" name="s_fname" id="s_fname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <label for="">Last Name:</label>
-                                <input type="text" placeholder="Enter Lastname" name="s_lname" id="s_lname">
+                                <input type="text" placeholder="Enter Lastname" name="s_lname" id="s_lname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
 
                                 <div class="grid grid-cols-1">
                                     <label for="">Middle Name</label>
-                                    <input type="text" placeholder="Enter Middlename" name="s_mname" id="s_mname">
+                                    <input type="text" placeholder="Enter Middlename" name="s_mname" id="s_mname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Suffix</label>
-                                    <input type="text" placeholder="Enter Suffix" name="s_suffix" id="s_suffix">
+                                    <input type="text" placeholder="Enter Suffix" name="s_suffix" id="s_suffix" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 
                                 <div class="grid grid-cols-1">
                                     <label for="">Program</label>
-                                    <select name="s_program" id="s_program">
+                                    <select name="s_program" id="s_program" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option selected value="">Select Program</option>
                                         <option value="BSIT">BSIT</option>
                                         <option value="BSIS">BSIS</option>
@@ -140,7 +141,7 @@
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Year Level</label>
-                                    <select name="s_lvl" id="s_lvl">
+                                    <select name="s_lvl" id="s_lvl" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option selected value="">Select Year Level</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -150,7 +151,7 @@
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Set</label>
-                                    <select name="s_set" id="s_set">
+                                    <select name="s_set" id="s_set" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option selected value="">Select Set</option>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
@@ -164,8 +165,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div x-data="{ image: '{{ asset('images/icons/profile.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
-                            <img id="uploadImage" class="max-w-1/2" :src="image" alt="">
+                        <div x-data="{ image: '{{ asset('images/icons/default-image.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
+                            <img id="uploadImage" class="max-w-1/2 w-100" :src="image" alt="">
                             <input id="uploadFile" type="file" name="s_image" x-ref="imageFile"
                                 x-on:change="image = URL.createObjectURL($refs.imageFile.files[0])" hidden>
                             <button x-on:click="$refs.imageFile.click()" type="button"
@@ -241,7 +242,7 @@
                     </button>
 
                     <!-- Dropdown menu -->
-                    <div id="dropdown" class="z-10 hidden w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div id="dropdown" class="z-10 hidden w-auto p-3 bg-white rounded-lg shadow dark:bg-gray-700">
                         <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                             Category
                         </h6>
@@ -295,6 +296,23 @@
                                             <label for="{{ $set }}"
                                                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                                                 {{ $set }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </form>
+                            {{-- List for Status if Enrolled, Dropped, or Graduated --}}
+                            <form id="search_set" onchange="getCategory()">
+                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                    <label for="" class="font-semibold dark:text-gray-100">Status</label>
+                                    @foreach (['ENROLLED', 'DROPPED', 'GRADUATED'] as $status)
+                                        <li class="flex items-center">
+                                            <input value="{{ $status }}" type="checkbox" name="status"
+                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+
+                                            <label for="{{ $status }}"
+                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {{ $status }}
                                             </label>
                                         </li>
                                     @endforeach
@@ -431,17 +449,38 @@
 
 
         <div class="overflow-x-auto shadow-md sm:rounded-lg">
-            <div class="shadow-lg rounded-md border border-gray-400 my-2 p-2">
-                Action Bar
-                <button id="selectAllBtn" onclick="selectAll()" class="p-1 bg-blue-400 rounded-md">
-                    Select All
-                </button>
-                <button onclick="editSelectedRows()" class="p-1 rounded-md bg-blue-400">
-                    Edit
-                </button>
-                <button onclick="deleteSelectedRows()" class="bg-red-400 p-1 rounded-md">
-                    Delete
-                </button>
+            <div class="flex justify-between shadow-lg rounded-md border border-gray-400 my-2 p-2">
+                <div class="">
+                    <button id="selectAllBtn" onclick="selectAll()" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                        <div class="flex gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
+                            </svg>
+                              
+                            Select All
+                        </div>
+                    </button>
+                </div>
+                <div class="">
+                    <button onclick="editSelectedRows()" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                        <div class="flex gap-1 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                            </svg>
+                              
+                            Edit
+                        </div>
+                    </button>
+                    <button onclick="deleteSelectedRows()" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                        <div class="flex gap-1 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            </svg>
+                              
+                            Delete
+                        </div>
+                    </button>
+                </div>
             </div>
             <table class="min-w-full w-full text-sm text-center rtl:text-right text-gray-900 font-semibold">
                 <thead class="text-base text-gray-700 uppercase bg-gray-50">
@@ -503,7 +542,7 @@
 
     {{-- MODALS FOR MULTIPLE EDIT AND DELETE --}}
     {{-- EDIT MODAL --}}
-    <div id="multipleEditModal" class="d-none inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div id="multipleEditModal" class="inset-0 bg-black bg-opacity-50 hidden justify-center items-center">
         <div class="max-w-[1000px] bg-white p-6 rounded-lg shadow-lg">
             <div class="border-b-2 border-gray-300 mb-5">
                 <h1 class="text-2xl font-bold">
@@ -516,9 +555,9 @@
                 @csrf
                 @method('PATCH')
                 <input type="text" name="students" id="_selected_students_field" hidden>
-                <div>
-                    <label for="">Set:</label>
-                    <select name="s_set" id="">
+                <div class="my-3">
+                    <label for="" class="font-semibold text-base">Set:</label>
+                    <select name="s_set" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="">Keep Current</option>
                         @foreach (['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as $set)
                             <option value="{{ $set }}">{{ $set }}</option>
@@ -526,26 +565,26 @@
                     </select>
                 </div>
 
-                <div>
-                    <label for="">Status</label>
-                    <select name="s_status" id="">
+                <div class="my-3">
+                    <label for="" class="font-semibold text-base">Status</label>
+                    <select name="s_status" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="">Keep Current</option>
                         @foreach (['ENROLLED', 'GRADUATED', 'DROPPED', 'TO BE UPDATED'] as $status)
                             <option value="{{ $status }}">{{ $status }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div>
-                    <label for="">Program</label>
-                    <select name="s_program" id="">
+                <div class="my-3">
+                    <label for="" class="font-semibold text-base">Program</label>
+                    <select name="s_program" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="">Keep Current</option>
                         <option value="BSIT">BSIT</option>
                         <option value="BSIS">BSIS</option>
                     </select>
                 </div>
-                <div>
-                    <label for="">Year Level</label>
-                    <select name="s_lvl" id="">
+                <div class="my-3">
+                    <label for="" class="font-semibold text-base">Year Level</label>
+                    <select name="s_lvl" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="">Keep Current</option>
                         @foreach (['1' => 'First Year', '2' => 'Second Year', '3' => 'Third Year', '4' => 'Fourth Year'] as $key => $value)
                             <option value="{{ $key }}">{{ $value }}</option>
@@ -554,9 +593,9 @@
                 </div>
             </form>
 
-            <div class="flex justify-end">
+            <div class="flex justify-evenly">
                 <button onclick="document.getElementById('multiEditForm').submit()"
-                    class="px-4 py-2 mx-2 bg-green-600 text-white rounded-md hover:bg-green-800 transition-colors">
+                    class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-800 transition-colors">
                     Apply Changes
                 </button>
                 <button onclick="closeEditModal()"

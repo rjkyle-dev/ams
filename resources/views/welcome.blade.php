@@ -113,6 +113,7 @@
 
             <div class="mx-auto mt-14 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3" id="cardsContainer">
               {{-- Cards generated dynamically by welcome.js --}}
+              
             </div>
           </div>
         </div>
@@ -120,19 +121,21 @@
 
         {{-- TEAM SECTION --}}
         <div class="bg-white py-24 sm:py-32">
-            <div class="mx-auto grid max-w-7xl gap-20 px-6 lg:px-8 xl:grid-cols-3">
-              <div class="max-w-xl">
-                <h2 class="text-3xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-4xl">Meet our Development Team</h2>
-                <p class="mt-6 text-lg/8 text-gray-600">
-                  We're a dynamic group of individuals who are passionate about what we do and 
-                  dedicated to delivering the best results of this system.
-                </p>
-              </div>
-              <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2" id="teamContainer">
-                  {{-- GENERATED DYNAMICALLY --}}
-              </ul>
+          <div class="mx-auto grid max-w-7xl gap-20 px-6 lg:px-8 xl:grid-cols-3">
+            <div class="max-w-xl">
+              <h2 class="text-3xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-4xl">Meet our Development Team</h2>
+              <p class="mt-6 text-lg/8 text-gray-600">
+                We're a dynamic group of individuals who are passionate about what we do and 
+                dedicated to delivering the best results of this system.
+              </p>
             </div>
+            <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2" id="teamContainer">
+                {{-- GENERATED DYNAMICALLY --}}
+                
+            </ul>
+          </div>
         </div>
+              
         
           
         <footer class="bg-purple-950 shadow-sm">
