@@ -149,7 +149,9 @@ class StudentController extends Controller
 
 
 
-        return back()->with(["successful"=> "Students updated successfully"]);
+        return back()->with(["success"=> "Students updated successfully"]);
+        //Changed the first param into success to allow Sweet Alert for Confirm dialog
+        //From student.js
     }
 
 
@@ -160,7 +162,9 @@ class StudentController extends Controller
         foreach(explode(',', $request->students) as $id){
             Student::find($id)->delete();
         }
-        return back()->with(['successful' => 'Student deleted successfully']);
+        return back()->with(['success' => 'Student deleted successfully']); 
+        //Changed the first param into success to allow Sweet Alert for Confirm dialog
+        //From student.js
 
     }
 }

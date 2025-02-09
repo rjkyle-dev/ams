@@ -172,8 +172,8 @@ async function getCategory() {
 window.closeEditModal = closeEditModal;
 
 function closeEditModal() {
-    document.querySelector("#multipleEditModal").classList.add("d-none");
-    document.querySelector("#multipleEditModal").classList.remove("fixed");
+    document.querySelector("#multipleEditModal").classList.add("hidden");
+    document.querySelector("#multipleEditModal").classList.remove("flex");
 }
 
 window.selectAll = selectAll;
@@ -187,13 +187,31 @@ function selectAll() {
         rows.forEach((e) => {
             e.classList.add("selected", "bg-green-400");
         });
-        document.querySelector("#selectAllBtn").innerHTML = "Deselect All";
+        document.querySelector("#selectAllBtn").innerHTML = 
+            `
+            <div class="flex gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
+                </svg>
+                    
+                Deselect All
+            </div>
+            `;
         return;
     }
     rows.forEach((e) => {
         e.classList.remove("selected", "bg-green-400");
     });
-    document.querySelector("#selectAllBtn").innerHTML = "Select All";
+    document.querySelector("#selectAllBtn").innerHTML = 
+            `
+            <div class="flex gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
+                </svg>
+                    
+                Select All
+            </div>
+            `;
 }
 
 window.editSelectedRows = editSelectedRows;
@@ -201,8 +219,9 @@ function editSelectedRows() {
     const selected = Array.from(document.querySelectorAll(".selected"));
 
     // DISPLAY MODAL
-    document.querySelector("#multipleEditModal").classList.remove("d-none");
+    document.querySelector("#multipleEditModal").classList.remove("hidden");
     document.querySelector("#multipleEditModal").classList.add("fixed");
+    document.querySelector("#multipleEditModal").classList.add("flex"); //Added Flex
 
     // UPDATE MODAL
     const field = document.querySelector("#_selected_students_field");
@@ -211,14 +230,29 @@ function editSelectedRows() {
 
 window.deleteSelectedRows = deleteSelectedRows;
 async function deleteSelectedRows() {
-    const field = document.querySelector("#_selected_students_delete");
-    const selected = Array.from(document.querySelectorAll(".selected")).map(
-        (e) => e.id
-    );
-
-    field.value = selected;
-
-    document.querySelector("#_selected_delete_form").submit();
+    // Added a confirmation Sweet Alert Pop up before Deleting
+    Swal.fire({
+        title: "Chotto Matte Kudasai!!!",
+        html: `
+    <strong>Are you sure to delete this student's data?</strong>
+    `,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const field = document.querySelector("#_selected_students_delete");
+            const selected = Array.from(document.querySelectorAll(".selected")).map(
+                (e) => e.id
+            );
+        
+            field.value = selected;
+        
+            document.querySelector("#_selected_delete_form").submit();       
+        }
+    });
 }
 
 // AXIOS API

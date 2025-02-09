@@ -50,7 +50,7 @@
                     </button>
 
                     <!-- Dropdown menu -->
-                    <div id="dropdown" class="z-10 hidden w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div id="dropdown" class="z-10 hidden w-auto p-3 bg-white rounded-lg shadow dark:bg-gray-700">
                         <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                             Category
                         </h6>
@@ -103,6 +103,23 @@
                                             <label for="{{ $set }}"
                                                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                                                 {{ $set }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            {{-- List for Status if Enrolled, Dropped, or Graduated --}}
+                            <div class="">
+                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                    <label for="" class="font-semibold text-gray-100">Status</label>
+                                    @foreach (['ENROLLED', 'DROPPED', 'GRADUATED'] as $status)
+                                        <li class="flex items-center">
+                                            <input id="{{ $status }}" type="checkbox" value="status"
+                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+        
+                                            <label for="{{ $status }}"
+                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {{ $status }}
                                             </label>
                                         </li>
                                     @endforeach

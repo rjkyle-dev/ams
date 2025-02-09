@@ -23,7 +23,7 @@ const cardsData = [
 // Function to generate a card
 function createCard(card) {
   return `
-        <div class="card relative max-w-sm bg-pink-400 border-4 border-black shadow-[8px_8px_0px_#000] translate-x-[-6px] translate-y-[-6px] transition-all duration-300">
+        <div class="card relative max-w-sm bg-pink-500 border-4 border-black shadow-[8px_8px_0px_#000] translate-x-[-6px] translate-y-[-6px] transition-all duration-300">
             <div class="head font-bold text-sm bg-gray-500 py-2 px-4">Window</div>
             <div class="content p-5">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-black">
@@ -45,12 +45,21 @@ function createCard(card) {
 }
 
 // Select the container where you want to insert the cards
-const container = document.getElementById("cardsContainer");
+document.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById("cardsContainer");
 
-// Loop through the data and insert cards into the container
-cardsData.forEach(card => {
-    container.innerHTML += createCard(card);
+    if (!container) {
+        console.error("Error: #cardsContainer not found!");
+        return;
+    }
+
+    // Append cards
+    cardsData.forEach(card => {
+        container.insertAdjacentHTML("beforeend", createCard(card));
+    });
 });
+
+
 
 //TEAMS DYNAMIC GENERATION===============================================================
 
