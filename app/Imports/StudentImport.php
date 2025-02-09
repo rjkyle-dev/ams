@@ -9,10 +9,10 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class StudentImport implements ToModel, WithStartRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         // Ensure the program is either BSIS or BSIT
@@ -34,7 +34,7 @@ class StudentImport implements ToModel, WithStartRow
             "s_lvl" => $row[7],
             "s_set" => $row[8],
             "s_image" => $row[9],
-            "s_status" => $row[10],
+            "s_status" => "TO BE UPDATED",
         ]);
     }
 

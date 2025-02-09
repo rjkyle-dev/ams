@@ -7,23 +7,16 @@ let attendanceStart = false;
 
 const form = document.getElementById('attendanceForm');
 
-function post(form){
-    console.log('working')
+async function post(form){
     let isRecorded = false;
-    axios.post(form.get('uri'), form, {
+    const response = await axios.post(form.get('uri'), form, {
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
             'Content-Type': 'application/json'
         }
-    })
-    .then(response => {
-        console.log("Response",response.data);
-        isRecorded = true;
-        document.querySelector('#inputField').value = "";
-    })
-    .catch(error =>{
-        console.log("Error:", error)
     });
+    document.querySelector('#inputField').value = "";
+
 
     return isRecorded;
 }
@@ -39,18 +32,10 @@ function post(form){
 });
 
 // LOAD THE TABLE => GET
-function get(){
+async function get(){
     let uri = document.getElementById('getURI').value
     let isFetch = false
-   const data= axios.get(uri)
-    .then( response => {
-        console.log("Response",response);
-        isFetch = true;
-        return response;
-    })
-    .catch(error=>{
-        console.log("Error:", error)
-    });
+   const data= await axios.get(uri)
 
     return data;
 }

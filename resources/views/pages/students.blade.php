@@ -54,15 +54,15 @@
             <form action="{{ route('importStudent') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="flex items-center">
-                    <label for="file" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                    <label for="file"
+                        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                         Choose Excel File
                     </label>
                     <input type="file" name="file" id="file" class="hidden" onchange="selectFile(event)">
                     {{-- Choose Excel file and import it --}}
                     <button id="import-btn"
-                    class="hidden focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                    >
-                    Import Data
+                        class="hidden focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                        Import Data
                     </button>
                 </div>
                 <div class="preview mb-4 mt-2 p-1 border border-gray-300 rounded-lg bg-gray-100 shadow-md">
@@ -72,7 +72,7 @@
                 </div>
             </form>
         </div>
-        
+
         <div class="flex flex-col">
 
             <x-new-modal>
@@ -329,7 +329,8 @@
                                     <label for="">
                                         RFID
                                     </label>
-                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_RFID" value="">
+                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_RFID"
+                                        value="">
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Student ID:</label>
@@ -430,6 +431,18 @@
 
 
         <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <div class="shadow-lg rounded-md border border-gray-400 my-2 p-2">
+                Action Bar
+                <button id="selectAllBtn" onclick="selectAll()" class="p-1 bg-blue-400 rounded-md">
+                    Select All
+                </button>
+                <button onclick="editSelectedRows()" class="p-1 rounded-md bg-blue-400">
+                    Edit
+                </button>
+                <button onclick="deleteSelectedRows()" class="bg-red-400 p-1 rounded-md">
+                    Delete
+                </button>
+            </div>
             <table class="min-w-full w-full text-sm text-center rtl:text-right text-gray-900 font-semibold">
                 <thead class="text-base text-gray-700 uppercase bg-gray-50">
                     <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
@@ -457,7 +470,6 @@
                                 <td>{{ $student->s_lname }}</td>
                                 <td>{{ $student->s_mname }}</td>
                                 <td>{{ $student->s_suffix }}</td>
-
                                 <td>{{ $student->s_lvl }}</td>
                                 <td>{{ $student->s_set }}</td>
                                 <td>{{ $student->s_program }}</td>
@@ -489,10 +501,79 @@
         <input type="text" name="id" id="s_id" hidden>
     </form>
 
+    {{-- MODALS FOR MULTIPLE EDIT AND DELETE --}}
+    {{-- EDIT MODAL --}}
+    <div id="multipleEditModal" class="d-none inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div class="max-w-[1000px] bg-white p-6 rounded-lg shadow-lg">
+            <div class="border-b-2 border-gray-300 mb-5">
+                <h1 class="text-2xl font-bold">
+                    Edit Selected Students
+                </h1>
+            </div>
+            <form
+
+            class="mb-5" id="multiEditForm" action="{{route('multiStudentEdit')}}" method="POST">
+                @csrf
+                @method('PATCH')
+                <input type="text" name="students" id="_selected_students_field" hidden>
+                <div>
+                    <label for="">Set:</label>
+                    <select name="s_set" id="">
+                        <option value="">Keep Current</option>
+                        @foreach (['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as $set)
+                            <option value="{{ $set }}">{{ $set }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="">Status</label>
+                    <select name="s_status" id="">
+                        <option value="">Keep Current</option>
+                        @foreach (['ENROLLED', 'GRADUATED', 'DROPPED', 'TO BE UPDATED'] as $status)
+                            <option value="{{ $status }}">{{ $status }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="">Program</label>
+                    <select name="s_program" id="">
+                        <option value="">Keep Current</option>
+                        <option value="BSIT">BSIT</option>
+                        <option value="BSIS">BSIS</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="">Year Level</label>
+                    <select name="s_lvl" id="">
+                        <option value="">Keep Current</option>
+                        @foreach (['1' => 'First Year', '2' => 'Second Year', '3' => 'Third Year', '4' => 'Fourth Year'] as $key => $value)
+                            <option value="{{ $key }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+
+            <div class="flex justify-end">
+                <button onclick="document.getElementById('multiEditForm').submit()"
+                    class="px-4 py-2 mx-2 bg-green-600 text-white rounded-md hover:bg-green-800 transition-colors">
+                    Apply Changes
+                </button>
+                <button onclick="closeEditModal()"
+                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <form id="_selected_delete_form" method="POST" action="{{route('multiStudentDelete')}}">
+        @csrf
+        @method('DELETE')
+        <input type="text" name="students" id="_selected_students_delete" hidden>
+    </form>
 
     <script>
         //FILE UPLOADED PREVIEW AND DISPLAYING OF IMPORT BUTTON
-        function selectFile(event){
+        function selectFile(event) {
             let preview = document.getElementById("preview-name");
             let importBtn = document.getElementById("import-btn");
 
