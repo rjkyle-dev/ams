@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StudentAttendanceController extends Controller
 {
@@ -62,70 +63,104 @@ class StudentAttendanceController extends Controller
 
     protected function processAbsentStudents($event, $currentTime)
     {
-        $settings = FineSettings::firstOrCreate(
-            ['id' => 1],
-            [
-                'fine_amount' => 25.00,
-                'morning_checkin' => true,
-                'morning_checkout' => true,
-                'afternoon_checkin' => true,
-                'afternoon_checkout' => true
-            ]
-        );
-
-        $allStudents = Student::all();
-        
-        foreach ($allStudents as $student) {
-            $attendance = StudentAttendance::where('student_rfid', $student->s_rfid)
-                ->where('event_id', $event->id)
-                ->first();
-
-            // Reset absences count for this student's fine record
-            $fine = Fine::firstOrCreate(
-                [
-                    'student_id' => $student->id,
-                    'event_id' => $event->id
-                ],
-                [
-                    'absences' => 0,
-                    'fine_amount' => $settings->fine_amount,
-                    'total_fines' => 0,
-                    'morning_checkin' => true,
-                    'morning_checkout' => true,
-                    'afternoon_checkin' => true,
-                    'afternoon_checkout' => true
-                ]
-            );
-
-            $fine->absences = 0; // Reset absences count
+        try {
+            // Clean and parse time values
+            $currentTime = Carbon::createFromFormat('H:i', $currentTime)->format('H:i:00');
+            $checkInEnd = Carbon::createFromFormat('H:i', substr($event->checkIn_end, 0, 5))->format('H:i:00');
+            $checkOutEnd = Carbon::createFromFormat('H:i', substr($event->checkOut_end, 0, 5))->format('H:i:00');
             
-            // Morning Check-in
-            if (!($attendance && $attendance->attend_checkIn)) {
-                $fine->morning_checkin = false;
-                $fine->absences += 1;
+            // Only process if these times exist in the event
+            if (isset($event->afternoon_checkIn_end) && isset($event->afternoon_checkOut_end)) {
+                $afternoonCheckInEnd = Carbon::createFromFormat('H:i', substr($event->afternoon_checkIn_end, 0, 5))->format('H:i:00');
+                $afternoonCheckOutEnd = Carbon::creasteFromFormat('H:i', substr($event->afternoon_checkOut_end, 0, 5))->format('H:i:00');
             }
 
-            // Morning Check-out
-            if (!($attendance && $attendance->attend_checkOut)) {
-                $fine->morning_checkout = false;
-                $fine->absences += 1;
+            // Don't process if no periods have ended yet
+            $currentTime = Carbon::createFromFormat('H:i:s', $currentTime);
+            $checkInEnd = Carbon::createFromFormat('H:i:s', $checkInEnd);
+            
+            if ($currentTime->lt($checkInEnd)) {
+                return;
             }
 
-            // Afternoon Check-in
-            if (!($attendance && $attendance->attend_afternoon_checkIn)) {
-                $fine->afternoon_checkin = false;
-                $fine->absences += 1;
-            }
+            // Rest of the function remains the same
+            $settings = FineSettings::firstOrCreate(['id' => 1], [
+                'fine_amount' => 25.00
+            ]);
 
-            // Afternoon Check-out
-            if (!($attendance && $attendance->attend_afternoon_checkOut)) {
-                $fine->afternoon_checkout = false;
-                $fine->absences += 1;
-            }
+            $allStudents = Student::all();
+            
+            foreach ($allStudents as $student) {
+                $attendance = StudentAttendance::where('student_rfid', $student->s_rfid)
+                    ->where('event_id', $event->id)
+                    ->first();
 
-            // Calculate total fines (₱25 per missed period)
-            $fine->total_fines = $fine->absences * $settings->fine_amount;
-            $fine->save();
+                $fine = Fine::firstOrCreate(
+                    [
+                        'student_id' => $student->id,
+                        'event_id' => $event->id
+                    ],
+                    [
+                        'absences' => 0,
+                        'fine_amount' => $settings->fine_amount,
+                        'total_fines' => 0,
+                        'morning_checkin' => true,
+                        'morning_checkout' => true,
+                        'afternoon_checkin' => true,
+                        'afternoon_checkout' => true
+                    ]
+                );
+
+                // Reset counters
+                $fine->absences = 0;
+                
+                // Only check morning check-in if that period has ended
+                if ($currentTime->gt($checkInEnd)) {
+                    if (!$attendance || !$attendance->attend_checkIn) {
+                        $fine->morning_checkin = false;
+                        $fine->absences++;
+                    } else {
+                        $fine->morning_checkin = true;
+                    }
+                }
+
+                // Only check morning check-out if that period has ended
+                if ($currentTime->gt($checkOutEnd)) {
+                    if (!$attendance || !$attendance->attend_checkOut) {
+                        $fine->morning_checkout = false;
+                        $fine->absences++;
+                    } else {
+                        $fine->morning_checkout = true;
+                    }
+                }
+
+                // Only check afternoon check-in if that period has ended
+                if (isset($afternoonCheckInEnd) && $currentTime->gt($afternoonCheckInEnd)) {
+                    if (!$attendance || !$attendance->attend_afternoon_checkIn) {
+                        $fine->afternoon_checkin = false;
+                        $fine->absences++;
+                    } else {
+                        $fine->afternoon_checkin = true;
+                    }
+                }
+
+                // Only check afternoon check-out if that period has ended
+                if (isset($afternoonCheckOutEnd) && $currentTime->gt($afternoonCheckOutEnd)) {
+                    if (!$attendance || !$attendance->attend_afternoon_checkOut) {
+                        $fine->afternoon_checkout = false;
+                        $fine->absences++;
+                    } else {
+                        $fine->afternoon_checkout = true;
+                    }
+                }
+
+                // Calculate total fines
+                $fine->total_fines = $fine->absences * $settings->fine_amount;
+                $fine->save();
+            }
+        } catch (\Exception $e) {
+            Log::error('Error processing absences: ' . $e->getMessage());
+            return;
         }
     }
 

@@ -17,7 +17,11 @@ class Event extends Model
         "checkIn_end",
         "checkOut_start",
         "checkOut_end",
+        "afternoon_checkIn_start",
+        "afternoon_checkIn_end",
+        "afternoon_checkOut_start", 
+        "afternoon_checkOut_end",
         "date",
-        "admin_id"  // Add this to the fillable array
+        "admin_id"
     ];
 }
