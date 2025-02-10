@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FinesController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentAttendanceController;
@@ -48,6 +49,7 @@ Route::middleware('auth')->group(function () {
     // LOGS RELATED ROUTES
     Route::get('/logs', [LogController::class, 'viewLogs'])->name('logs');
     Route::get('/logs/generate-pdf', [LogController::class, 'generatePDF'])->name('logs.pdf');
+    Route::post('/logs/clear-fines', [LogController::class, 'clearFines'])->name('logs.clear-fines');
 
     // STUDENT RELATED ROUTES
     Route::post('/addStudent', [StudentController::class, 'create'])->name('addStudent');
@@ -81,6 +83,9 @@ Route::middleware('auth')->group(function () {
     //IMPORT RELATED ROUTES
     // Route::get('/pages/excel-import', [ImportController::class, 'index'])->name('pages.excel-import');
     Route::post('/import-student', [ImportController::class, 'import'])->name('importStudent');
+
+    // Fine Settings Routes
+    Route::put('/fines/settings', [FinesController::class, 'updateSettings'])->name('fines.settings.update');
 });
 
 
