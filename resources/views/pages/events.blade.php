@@ -153,8 +153,8 @@
                     <form x-ref="eventForm" action="{{ route('addEvent') }}" method="POST" class="min-w-[500px]">
                         @csrf
                         <div class="flex flex-col mb-3">
-                            <label for="">Day or Event:</label>
-                            <input type="text" placeholder="Enter Event Name" name="event_name">
+                            <label for="" class="mb-2">Day or Event:</label>
+                            <input type="text" placeholder="Enter Event Name" name="event_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
 
                         <div class="flex flex-col mb-3">

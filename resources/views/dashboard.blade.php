@@ -293,39 +293,39 @@
                                     <label for="">
                                         RFID
                                     </label>
-                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_rfid">
+                                    <input type="text" placeholder="Scan RFID" name="s_rfid" id="s_rfid" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Student ID:</label>
-                                    <input type="text" placeholder="Enter Student ID (Ex. 2023-00069)"
+                                    <input type="text" placeholder="Enter Student ID (Ex. 2023-00069)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         name="s_studentID" id="s_studentID">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <label for="">First Name:</label>
-                                <input type="text" placeholder="Enter Firstname" name="s_fname" id="s_fname">
+                                <input type="text" placeholder="Enter Firstname" name="s_fname" id="s_fname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             </div>
                             <div class="grid grid-cols-1 mt-5 mx-7">
                                 <label for="">Last Name:</label>
-                                <input type="text" placeholder="Enter Lastname" name="s_lname" id="s_lname">
+                                <input type="text" placeholder="Enter Lastname" name="s_lname" id="s_lname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
 
                                 <div class="grid grid-cols-1">
                                     <label for="">Middle Name</label>
-                                    <input type="text" placeholder="Enter Middlename" name="s_mname"
+                                    <input type="text" placeholder="Enter Middlename" name="s_mname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         id="s_mname">
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Suffix</label>
-                                    <input type="text" placeholder="Enter Suffix" name="s_suffix" id="s_suffix">
+                                    <input type="text" placeholder="Enter Suffix" name="s_suffix" id="s_suffix" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 
                                 <div class="grid grid-cols-1">
                                     <label for="">Program</label>
-                                    <select name="s_program" id="s_program">
+                                    <select name="s_program" id="s_program" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option selected value="">Select Program</option>
                                         <option value="BSIT">BSIT</option>
                                         <option value="BSIS">BSIS</option>
@@ -333,7 +333,7 @@
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Year Level</label>
-                                    <select name="s_lvl" id="s_lvl">
+                                    <select name="s_lvl" id="s_lvl" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option selected value="">Select Year Level</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -343,7 +343,7 @@
                                 </div>
                                 <div class="grid grid-cols-1">
                                     <label for="">Set</label>
-                                    <select name="s_set" id="s_set">
+                                    <select name="s_set" id="s_set" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option selected value="">Select Set</option>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
@@ -357,8 +357,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div x-data="{ image: '{{ asset('images/icons/profile.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
-                            <img id="uploadImage" class="max-w-1/2" :src="image" alt="">
+                        <div x-data="{ image: '{{ asset('images/icons/default-image.svg') }}' }" class="basis-1/4 flex flex-col mt-5 items-center gap-5">
+                            <img id="uploadImage" class="max-w-1/2 w-100" :src="image" alt="">
                             <input id="uploadFile" type="file" name="s_image" x-ref="imageFile"
                                 x-on:change="image = URL.createObjectURL($refs.imageFile.files[0])" hidden>
                             <button x-on:click="$refs.imageFile.click()" type="button"
