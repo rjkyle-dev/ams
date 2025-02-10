@@ -69,4 +69,30 @@ class EventController extends Controller
 
         return back()->with('success', 'Event updated successfully');
     }
+
+    // Add this method to check fines in real-time
+    public function checkCurrentFines(Event $event)
+    {
+        $currentTime = now()->format('H:i');
+        
+        // Only calculate fines if we're past the check-out end time
+        if ($currentTime > $event->checkOut_end) {
+            app(FineController::class)->calculateEventFines($event);
+        }
+        
+        return back()->with('success', 'Fines calculated successfully');
+    }
+
+    // Update the completeEvent method
+    public function completeEvent($id)
+    {
+        $event = Event::findOrFail($id);
+        
+        // Calculate final fines for the event
+        app(FineController::class)->calculateEventFines($event);
+        
+        $event->update(['status' => 'completed']); // Status value is now properly quoted
+        
+        return redirect()->route('logs')->with('success', 'Event completed and fines calculated successfully');
+    }
 }

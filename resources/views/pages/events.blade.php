@@ -279,6 +279,14 @@
                                 <x-delete-button onclick="deleteEvent({{ $event }})">
                                     {{-- Delete Button --}}
                                 </x-delete-button>
+                                
+                                {{-- Add Complete Event Button --}}
+                                <form action="{{ route('events.complete', $event->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                        Complete Event
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

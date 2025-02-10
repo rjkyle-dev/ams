@@ -75,6 +75,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/events', [EventController::class, 'view'])->name('events');
     Route::delete('/deleteEvent', [EventController::class, 'delete'])->name('deleteEvent');
     Route::patch('/updateEvent', [EventController::class, 'update'])->name('updateEvent'); // Add this line
+    Route::patch('/events/{event}/complete', [EventController::class, 'completeEvent'])->name('events.complete');
+    Route::post('/events/{id}/complete', [EventController::class, 'completeEvent'])->name('events.complete');
 
     //IMPORT RELATED ROUTES
     // Route::get('/pages/excel-import', [ImportController::class, 'index'])->name('pages.excel-import');
