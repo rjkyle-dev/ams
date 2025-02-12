@@ -48,8 +48,11 @@ Route::middleware('auth')->group(function () {
 
     // LOGS RELATED ROUTES
     Route::get('/logs', [LogController::class, 'viewLogs'])->name('logs');
-    Route::get('/logs/generate-pdf', [LogController::class, 'generatePDF'])->name('logs.pdf');
+    Route::post('/logs/export-file', [LogController::class, 'exportFile'])->name('logs.export');
     Route::post('/logs/clear-fines', [LogController::class, 'clearFines'])->name('logs.clear-fines');
+
+    // STUDENT LOGS - API => VIA CATEGORY
+    Route::get('/logs/category', [LogController::class, 'filterByCategory'])->name('fetchViaCategory');
 
     // STUDENT RELATED ROUTES
     Route::post('/addStudent', [StudentController::class, 'create'])->name('addStudent');
