@@ -7,7 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'RFID Attendance Management System') }}</title>
-
+         <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -25,7 +26,7 @@
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex items-center">
                         <div class="shrink-0">
-                            <img class="h-14 w-auto" src="{{ asset('images/logos/fox.png') }}" alt="Your Company">
+                            <img class="h-14 w-auto" src="{{ asset('images/logos/ICLOGO.jpg') }}" alt="IC LOGO">
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4 w-100">
@@ -44,7 +45,7 @@
 
                                 <div class="font-black">
                                     <x-nav-link href="{{ route('events') }}" :active="request()->routeIs('events')">Events</x-nav-link>
-
+                                               
                                 </div>
 
                             </div>
@@ -115,7 +116,7 @@
                 RFID Attendance Management System
             </legend>
 
-            <img src="{{ asset('images/logos/fox.png') }}" alt=""
+            <img src="{{ asset('images/logos/ICLOGO.png') }}" alt=""
                 class="max-h-[100px] fixed z-0 opacity-25 bottom-0 hover:opacity-100 transition-opacity duration-100">
 
             @isset($header)

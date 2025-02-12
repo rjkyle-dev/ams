@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
+         <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Styles / Scripts -->
@@ -19,15 +20,38 @@
             </style>
         @endif
     </head>
-    <body class="font-sans antialiased" style="background: url({{asset('images/background/background.jpg')}}) center; background-size: cover;">
-        <div class="">
+
+    <style>
+
+      
+      img .fox {
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+}
+ .rfid{
+  font-family: 'Codega';
+  font-size: 3.5rem;
+
+ }
+
+    </style>
+<body class="font-sans antialiased relative h-[100vh] w-full ">
+      {{-- ImageBG --}}
+          <div class="relative w-full h-screen bg-cover bg-center" style="background-image: url('{{asset('images/background/background.jpg')}}')">
+          {{-- ImageBG End --}}
+
+          {{-- OverlayBG --}}
+            {{-- <div class="absolute bg-gradient-to-tr from-violet-800/90 to-violet-200/10 w-full h-full"></div> --}}
+            <div class="absolute bg-gradient-to-r from-violet-950 via-violet-700/80 to-violet-100/10"></div>
+
+
+            {{-- Overlay End --}}
             <header class="absolute inset-x-0 top-0 z-50">
               <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div class="flex lg:flex-1 items-center gap-2">
                   <a href="#" class="-m-1.5 p-1.5">
-                    <img class="h-16 w-auto" src="{{asset('images/logos/fox.png')}}" alt="">
+                    <img class="h-[5em] w-auto" src="{{asset('images/logos/ICLOGO.jpg')}}" alt="">
                   </a>
-                  {{-- <span class="text-black text-5xl">AMS</span> --}}
                 </div>
 
                 <div class="flex lg:flex-1 lg:justify-end">
@@ -38,7 +62,7 @@
                           Dashboard
                         </a>
                       @else
-                        <a href="{{ route('login') }}" class="rounded-md px-4 py-2 text-white font-semibold bg-indigo-600 hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-300 transition">
+                        <a href="{{ route('login') }}" class="rounded-md px-4 py-2 text-white font-semibold bg-violet-600 hover:bg-violet-500 focus:ring-2 focus:ring-indigo-300 transition">
                           Log in
                         </a>
           
@@ -53,28 +77,44 @@
                 </div>
               </nav>
             </header>
-          
+           
             <!-- Hero Section -->
-            <div class="relative isolate px-6 pt-14 lg:px-8">
-              <div class="mx-auto max-w-4xl py-32 sm:py-48 lg:py-56 text-center">
-                <h1 class="text-6xl font-semibold tracking-tight text-gray-300 sm:text-8xl drop-shadow-lg">
-                    <span class="text-yellow-300 font-bold">Tracking</span> 
-                    <span class="text-yellow-300 font-bold">Attendance</span> 
-                    <span class="text-gray-100 font-bold">Effortlessly</span> 
-                </h1>
-                <p class="mt-8 text-lg font-light text-gray-100 drop-shadow-lg sm:text-xl">
-                    Institute of Computing's most trusted RFID Attendance Management System. 
-                    Innovative and Powerful, ensures trust that all attendances of students are tracked.
-                </p>
-
-                <div class="mt-10 flex items-center justify-center gap-x-6">
+            <div class="isolate px-6 pt-14 lg:px-8">
+              <div class="flex w-full flex-col items-center justify-center">
+                <div class="flex flex-col items-center justify-items-start">
+                <div class="flex-col justify-start w-[80rem] mt-14 p-10">
+                <div class="flex-col justify-start ml-5 mt-2">
+                 <span class="flex-column">
+                  <h1 class="text-6xl font-bold text-yellow-500">RFID</h1>
+                  <h2 class="text-yellow-500 text-4xl mt-2 font-semibold">Attendance Management System</h2>
+                </span>
+                </div>
+                <div class="flex w-full p-5 relative">
+                 <div class="flex w-1/2 p-3 mt-3 rounded-md justify-start" style="backdrop-filter: blur(10px); background-color: rgba(255, 255, 255, 0.187);">
+                <span class="p-2 mx-auto">
+                  <p class="text-white text-2xl text-start font-mono">
+                    Tracking Attendance Effortlessly Institute of Computing's most trusted RFID Attendance Management System. Innovative and Powerful, ensures trush that all attendance of students are tracked.
+                  </p>
+                </span>
+                </div>
+                <div class="flex justify-end absolute right-[130px] -top-[90px] w-[20rem] h-auto">
+  {{-- <img src="{{ asset('images/logos/fox.png') }}" class="w-full h-auto" alt="IC FOX"> --}}
+       <img src="{{ asset('images/logos/fox.png') }}" class="fox object-contain w-full h-auto" alt="IC FOX">
+</div>
+{{-- <div class="flex justify-end absolute right-[130px] -top-[90px] w-[30rem] h-auto">
+  <img src="{{ asset('images/logos/fox.png') }}" class="w-full h-auto" alt="IC FOX">
+</div> --}}
+                </div>
+                </div>
+                </div>
+               </div>
+                <div class="relative -top-10 -right-10">
                   <a href="{{route('register')}}" class="rounded-md cursor-pointer bg-indigo-600 px-3.5 py-2.5 text-xl font-semibold text-white shadow-xs hover:bg-indigo-500">Get started</a>
                 </div>
-              </div>
+             
             </div>
         </div>
-          
-          
+        </div>
         
     </body>
 </html>

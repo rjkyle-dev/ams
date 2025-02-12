@@ -14,8 +14,14 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                codega: ['Codega', ...defaultTheme.fontFamily.mono],
             },
+            backgroundImage: {
+                bgImage: "url('/background/background.jpg')",
+                overlay:"linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%)",
+                bg:"bg-gradient-to-r from-violet-950 via-violet-700/80 to-violet-100/10"
         },
+    },
     },
 
     plugins: [forms],
