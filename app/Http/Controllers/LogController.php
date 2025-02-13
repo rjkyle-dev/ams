@@ -19,7 +19,10 @@ class LogController extends Controller
 {
     public function viewLogs()
     {
-        $logs = StudentAttendance::join('students', 'students.s_rfid', '=', 'student_attendances.student_rfid')
+        $logs = StudentAttendance::join('students', function($join){
+            $join->on('student_attendances.student_rfid', '=', 'students.s_rfid')
+            ->orOn('student_attendances.student_rfid', '=', 'students.s_studentID');
+        })
             ->join('events', 'events.id', '=', 'student_attendances.event_id')
             ->get();
 

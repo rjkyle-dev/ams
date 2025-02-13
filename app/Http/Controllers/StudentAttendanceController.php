@@ -56,6 +56,7 @@ class StudentAttendanceController extends Controller
         if (empty($pending->first())) {
             $pending = null;
         }
+
         $students = $this->recent();
         return view('pages.attendance', compact('event', 'students', 'pending'));
     }
@@ -216,7 +217,7 @@ class StudentAttendanceController extends Controller
             ]);
         }
 
-        if ($time > $event->checkOut_start && $time < $event->checkOut_end && !empty(StudentAttendance::where('event_id',$event->id )->where("student_rfid", $request->s_rfid)->where('attend_checkOut', "true")->get()->first())) {
+        if ($time > $event->checkOut_start && $time < $event->checkOut_end && !empty(StudentAttendance::where('event_id',$event->id )->where("student_rfid", $request->s_rfid)->whereNotNull('attend_checkOut')->get()->first())) {
             return response()->json([
                 "message" =>"Student's attendance is already recorded",
                 "isRecorded" => false,
@@ -356,9 +357,9 @@ class StudentAttendanceController extends Controller
                 ->get();
         }
 
-
         if ($time < $event->checkOut_end && $time > $event->checkOut_start) {
-            $students = $students->where('attend_checkOut', "true")
+
+            $students = $students->whereNotNull('attend_checkOut')
                 ->where('event_id', $event->id)
                 ->get();
         }
