@@ -1,26 +1,15 @@
 <?php return array (
-<<<<<<< HEAD
-=======
-  'barryvdh/laravel-dompdf' => 
+  'barryvdh/laravel-debugbar' => 
   array (
     'aliases' => 
     array (
-      'PDF' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
-      'Pdf' => 'Barryvdh\\DomPDF\\Facade\\Pdf',
+      'Debugbar' => 'Barryvdh\\Debugbar\\Facades\\Debugbar',
     ),
     'providers' => 
     array (
-      0 => 'Barryvdh\\DomPDF\\ServiceProvider',
+      0 => 'Barryvdh\\Debugbar\\ServiceProvider',
     ),
   ),
-  'laravel/breeze' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Breeze\\BreezeServiceProvider',
-    ),
-  ),
->>>>>>> 179d4643e07a65192848b863db0dcb271ba47710
   'laravel/pail' => 
   array (
     'providers' => 
@@ -40,13 +29,6 @@
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    ),
-  ),
-  'laravel/ui' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Ui\\UiServiceProvider',
     ),
   ),
   'maatwebsite/excel' => 
@@ -79,13 +61,6 @@
     'providers' => 
     array (
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    ),
-  ),
-  'pestphp/pest-plugin-laravel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Pest\\Laravel\\PestServiceProvider',
     ),
   ),
 );

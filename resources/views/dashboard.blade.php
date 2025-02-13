@@ -58,20 +58,12 @@
     <div class="flex justify-between w-full">
       <div class="w-full relative">
     <x-slot name="header">
-<<<<<<< HEAD
-            <h2 class="font-semibold text-3xl text-violet-800 leading-tight ml-2">
-                Welcome, {{ strtoupper(auth()->user()->admin_type) }}
-=======
         <div class="">
             <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
                 Welcome, {{ ucwords(auth()->user()->admin_uname) }}
->>>>>>> 179d4643e07a65192848b863db0dcb271ba47710
             </h2>
            
     </x-slot>
-<<<<<<< HEAD
-     <div class="flex gap-3 justify-end absolute right-0 top-[-60px] mt-2 mr-2">
-=======
 
     <div class="flex gap-5 mb-4">
         <div class="bg-white basis-1/2 flex gap-20 p-3 items-start rounded-md">
@@ -150,7 +142,6 @@
 
         {{-- Update the modals wrapper to include higher z-index --}}
         <div class="flex gap-3 relative z-50">
->>>>>>> 179d4643e07a65192848b863db0dcb271ba47710
             {{-- MODALS --}}
             <x-new-modal>
                 <x-slot name="button"
@@ -453,7 +444,6 @@
 
     <div class="mt-4">
         <div class="flex justify-between">
-<<<<<<< HEAD
     <h3 class="text-3xl text-violet-800 font-extrabold">
         Attendance Record
     </h3>
@@ -527,7 +517,6 @@
         }
     });
 </script>
-=======
             <h3 class="text-3xl text-violet-800 font-extrabold">
                 Attendance Record
             </h3>
@@ -600,7 +589,6 @@
             }
         });
     </script>
->>>>>>> 179d4643e07a65192848b863db0dcb271ba47710
 
 </x-app-layout>
 
