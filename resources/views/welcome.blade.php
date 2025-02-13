@@ -33,6 +33,15 @@
   font-size: 3.5rem;
 
  }
+ .back-bg{
+  background: linear-gradient(90deg, rgba(92, 0, 126, 0.9) 0%, rgba(113, 0, 165, 0.5) 50%, rgba(203, 91, 255, 0.1) 100%);
+  backdrop-filter: blur(5px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+ }
 
     </style>
 <body class="font-sans antialiased relative h-[100vh] w-full ">
@@ -42,7 +51,7 @@
 
           {{-- OverlayBG --}}
             {{-- <div class="absolute bg-gradient-to-tr from-violet-800/90 to-violet-200/10 w-full h-full"></div> --}}
-            <div class="absolute bg-gradient-to-r from-violet-950 via-violet-700/80 to-violet-100/10"></div>
+            <div class="back-bg absolute bg-gradient-to-r from-violet-950 via-violet-700/80 to-violet-100/10"></div>
 
 
             {{-- Overlay End --}}

@@ -14,7 +14,6 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                codega: ['Codega', ...defaultTheme.fontFamily.mono],
             },
             backgroundImage: {
                 bgImage: "url('/background/background.jpg')",
