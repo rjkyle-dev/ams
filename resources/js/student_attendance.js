@@ -57,9 +57,9 @@ form.addEventListener("submit", async (event) => {
     // notify(isFetch, "")
 });
 // PREVENT THE FORM FROM SUBMITTING AND REDIRECTING TO A PAGE
-form_auto.addEventListener("submit", (event) => {
+form_auto.addEventListener("submit", async (event) => {
     event.preventDefault();
-    let response = post(new FormData(event.target));
+    let response = await post(new FormData(event.target));
     if (response.isRecorded) {
         AttendanceRecorded();
     } else {
