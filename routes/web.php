@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FinesController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentAttendanceController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\StudentController;
 use App\Models\StudentAttendance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminCodeController;
+use App\Http\Controllers\FineController;
+use App\Http\Controllers\ImportController;
 use App\Http\Resources\Attendance;
 use App\Models\User;
 use FontLib\Table\Type\name;
@@ -46,13 +49,19 @@ Route::middleware('auth')->group(function () {
 
     // LOGS RELATED ROUTES
     Route::get('/logs', [LogController::class, 'viewLogs'])->name('logs');
-    Route::get('/logs/generate-pdf', [LogController::class, 'generatePDF'])->name('logs.pdf');
+    Route::post('/logs/export-file', [LogController::class, 'exportFile'])->name('logs.export');
+    Route::post('/logs/clear-fines', [LogController::class, 'clearFines'])->name('logs.clear-fines');
+
+    // STUDENT LOGS - API => VIA CATEGORY
+    Route::get('/logs/category', [LogController::class, 'filterByCategory'])->name('fetchViaCategory');
 
     // STUDENT RELATED ROUTES
     Route::post('/addStudent', [StudentController::class, 'create'])->name('addStudent');
     Route::get('/students', [StudentController::class, 'view'])->name('students');
     Route::delete('/deleteStudent', [StudentController::class, 'delete'])->name('deleteStudent');
     Route::patch('/updateStudent', [StudentController::class, 'update'])->name('updateStudent');
+    Route::patch('/updateManyStudent', [StudentController::class, 'updateMany'])->name('multiStudentEdit');
+    Route::delete('/deleteManyStudent', [StudentController::class, 'manyDelete'])->name('multiStudentDelete');
 
     // STUDENT - API => VIA SEARCHBAR
     Route::get('/students/filter', [StudentController::class, 'filter'])->name('fetchStudent');
@@ -72,6 +81,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/events', [EventController::class, 'view'])->name('events');
     Route::delete('/deleteEvent', [EventController::class, 'delete'])->name('deleteEvent');
     Route::patch('/updateEvent', [EventController::class, 'update'])->name('updateEvent'); // Add this line
+    Route::patch('/events/{event}/complete', [EventController::class, 'completeEvent'])->name('events.complete');
+    Route::post('/events/{id}/complete', [EventController::class, 'completeEvent'])->name('events.complete');
+
+    //IMPORT RELATED ROUTES
+    // Route::get('/pages/excel-import', [ImportController::class, 'index'])->name('pages.excel-import');
+    Route::post('/import-student', [ImportController::class, 'import'])->name('importStudent');
+
+    // Fine Settings Routes
+    Route::get('/fines', [FineController::class, 'view'])->name('fines.view');
+    Route::put('/fines/settings', [FinesController::class, 'updateSettings'])->name('fines.settings.update');
 });
 
 

@@ -1,5 +1,6 @@
 <x-app-layout>
 
+    @vite(['resources/js/logs.js'])
     <x-slot name="header">
         <h2 class="font-semibold text-3xl text-violet-800 leading-tight">
             {{ __('Activity Reports') }}
@@ -9,18 +10,40 @@
     {{-- Action buttons --}}
     <div class="mb-4 px-2 rounded-md flex justify-end items-center w-full">
         <div class="flex gap-3">
+<<<<<<< HEAD
             <button class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-2 text-[10px] flex p-3 items-center">
            <a href="{{ route('logs.pdf') }}" class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-2 text-[15px] flex p-3 items-center">
+=======
+
+           <button
+           onclick="GeneratePDFReport()"
+           class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-2xl flex p-3 items-center">
+>>>>>>> 179d4643e07a65192848b863db0dcb271ba47710
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                 </svg>
-                Generate Report
-          </a>
+                Generate PDF Report
             </button>
+<<<<<<< HEAD
             <button class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-[15px] flex p-2 items-center">
                 
+=======
+            <button
+            onclick="GenerateExcelReport()"
+            class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-2xl flex p-3 items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                </svg>
+                Generate Excel Report
+            </button>
+            <button
+            class="bg-violet-600 hover:bg-violet-700 text-white rounded-md px-5 text-[15px] flex p-3 items-center">
+
+>>>>>>> 179d4643e07a65192848b863db0dcb271ba47710
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -31,13 +54,34 @@
             </button>
         </div>
     </div>
+    {{-- FORMS FOR EXPORTING PDFS AND EXCELS --}}
+    <form method="POST" action="{{route('logs.export')}}"
+    id="exportForm"
+    hidden>
+        @csrf
+        <input type="text" name="s_program" id="programField">
+        <input type="text" name="s_set" id="setField">
+        <input type="text" name="s_lvl" id="lvlField">
+        <input type="text" name="s_status" id="statusField">
+        <input type="text" name="file_type" id="fileType">
+        <input type="text" name="event_id" id="inputField">
+    </form>
 
     {{-- Content --}}
     <div class="bg-white p-3 rounded-md">
         <div class="flex justify-between mb-3">
-            <div class="w-full">
+            <div class="w-full flex items-center gap-5">
+                <div class="">
+                    <select name="event_id" id="eventField">
+                        <option value="">Select Event</option>
+                        @foreach ($events as $event)
+                            <option value="{{$event->id}}">{{$event->event_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 {{-- SELECTION FORM --}}
-                <div class="flex items-center py-3">
+                <div class="flex items-center py-3 ">
                     <button id="dropdownDefault" data-dropdown-toggle="dropdown"
                         class="text-gray-100 bg-violet-800 hover:bg-violet-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-4 text-center inline-flex items-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                         type="button">
@@ -50,20 +94,20 @@
                     </button>
 
                     <!-- Dropdown menu -->
-                    <div id="dropdown" class="z-10 hidden w-56 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div id="dropdown" class="z-10 hidden w-auto p-3 bg-white rounded-lg shadow dark:bg-gray-700 border-2">
                         <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                             Category
                         </h6>
                         {{-- List for Program --}}
                         <div class="flex justify-between gap-3">
-                            <div class="">
+                            <form id="search_program" onchange="getCategory()" class="">
                                 <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                     <label for="" class="font-semibold text-gray-100">Program</label>
                                     @foreach (['BSIT', 'BSIS'] as $program)
                                         <li class="flex items-center">
-                                            <input id="{{ $program }}" type="checkbox" value=""
+                                            <input value="{{ $program }}" type="checkbox" name="program"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-        
+
                                             <label for="{{ $program }}"
                                                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                                                 {{ $program }}
@@ -71,35 +115,35 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                            </div>
+                            </form>
                             {{-- List for Year Levels --}}
-                            <div class="">
+                            <form id="search_lvl" onchange="getCategory()" class="">
                                 <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                     <label for="" class="font-semibold text-gray-100">Year Level</label>
                                     {{-- Key-value pair for this list, key is for the database field, value is the placeholder --}}
-                                    @foreach (['first_year' => 'First Year', 'second_year' => 'Second Year', 'third_year' => 'Third Year', 'fourth_year' => 'Fourth Year'] as $key => $value)
+                                    @foreach (['1' => 'First Year', '2' => 'Second Year', '3' => 'Third Year', '4' => 'Fourth Year'] as $key => $value)
                                         <li class="flex items-center">
-                                            <input id="{{ $key }}" type="checkbox" value=""
+                                            <input  type="checkbox" value="{{$key}}" name="lvl"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-        
+
                                             <label for="{{ $key }}"
                                                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                                                 {{ $value }}
                                             </label>
                                         </li>
                                     @endforeach
-        
+
                                 </ul>
-                            </div>
+                            </form>
                             {{-- List for Sets --}}
-                            <div class="">
+                            <form id="search_set" onchange="getCategory()" class="">
                                 <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                     <label for="" class="font-semibold text-gray-100">Set</label>
                                     @foreach (['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'] as $set)
                                         <li class="flex items-center">
-                                            <input id="{{ $set }}" type="checkbox" value=""
+                                            <input value="{{ $set }}" type="checkbox" name="set"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
-        
+
                                             <label for="{{ $set }}"
                                                 class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                                                 {{ $set }}
@@ -107,7 +151,24 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                            </div>
+                            </form>
+                            {{-- List for Status if Enrolled, Dropped, or Graduated --}}
+                            <form id="search_status" onchange="getCategory()" class="">
+                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                    <label for="" class="font-semibold text-gray-100">Status</label>
+                                    @foreach (['ENROLLED', 'DROPPED', 'GRADUATED'] as $status)
+                                        <li class="flex items-center">
+                                            <input value="{{ $status }}" type="checkbox" name="status"
+                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+
+                                            <label for="{{ $status }}"
+                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {{ $status }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </form>
                         </div>
 
                     </div>
@@ -211,7 +272,7 @@
                     <td>Event</td>
                     <td>Date</td>
                 </tr>
-                <tbody>
+                <tbody id="student_table_body">
                     {{-- Removed Hard-coded data --- This is now ready for dynamic data --}}
                     @php
                         $i = 1;
@@ -231,12 +292,65 @@
                     @endforeach
                 </tbody>
             </table>
+            <span id="std_info_table"></span>
         </div>
         </div>
 
+        {{-- Fines Table Section --}}
+        <div class="mt-8">
+            <h3 class="text-3xl text-violet-800 font-extrabold mb-4">
+                Fines Record
+            </h3>
+            <table class="min-w-full">
+                <tr class="bg-violet-200 text-violet-900 py-2 text-lg font-semibold">
+                    <td>No.</td>
+                    <td>Name</td>
+                    <td>Program</td>
+                    <td>Set</td>
+                    <td>Level</td>
+                    <td>Missed Actions</td>
+                    <td>Fine Amount</td>
+                    <td>Total Fines</td>
+                    <td>Event</td>
+                    <td>Date</td>
+                </tr>
+                <tbody>
+                    @php
+                        $i = 1;
+                    @endphp
+                    @foreach ($fines as $fine)
+                        <tr>
+                            <td>{{ $i++ }}</td>
+                            <td>{{ $fine->student->s_fname . ' ' . $fine->student->s_lname }}</td>
+                            <td>{{ $fine->student->s_program }}</td>
+                            <td>{{ $fine->student->s_set }}</td>
+                            <td>{{ $fine->student->s_lvl }}</td>
+                            <td>
+                                <ul class="list-disc list-inside">
+                                    @if($fine->morning_checkIn_missed)
+                                        <li>Morning Check-in</li>
+                                    @endif
+                                    @if($fine->morning_checkOut_missed)
+                                        <li>Morning Check-out</li>
+                                    @endif
+                                    @if($fine->afternoon_checkIn_missed)
+                                        <li>Afternoon Check-in</li>
+                                    @endif
+                                    @if($fine->afternoon_checkOut_missed)
+                                        <li>Afternoon Check-out</li>
+                                    @endif
+                                </ul>
+                            </td>
+                            <td>₱{{ number_format($fine->fine_amount, 2) }}</td>
+                            <td>₱{{ number_format($fine->total_fines, 2) }}</td>
+                            <td>{{ $fine->event->event_name }}</td>
+                            <td>{{ $fine->created_at->format('Y-m-d') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-
-
 
 </x-app-layout>
 <script>

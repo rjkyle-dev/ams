@@ -24,6 +24,11 @@
                             <label for="">Day or Event:</label>
                             <input type="text" placeholder="Enter Event Name" name="event_name" id="evn_name">
                         </div>
+                        
+                        <div class="flex flex-col mb-3">
+                            <label for="">Event Date:</label>
+                            <input type="date" name="date" id="evn_date" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </div>
 
                         <p>Check In:</p>
                         <div class="flex gap-5 mb-3">
@@ -147,10 +152,14 @@
                 <x-slot name="content">
                     <form x-ref="eventForm" action="{{ route('addEvent') }}" method="POST" class="min-w-[500px]">
                         @csrf
+                        <div class="flex flex-col mb-3">
+                            <label for="" class="mb-2">Day or Event:</label>
+                            <input type="text" placeholder="Enter Event Name" name="event_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </div>
 
                         <div class="flex flex-col mb-3">
-                            <label for="">Day or Event:</label>
-                            <input type="text" placeholder="Enter Event Name" name="event_name">
+                            <label for="">Event Date:</label>
+                            <input type="date" name="date" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         </div>
 
                         <p>Check In:</p>
@@ -279,6 +288,14 @@
                                 <x-delete-button onclick="deleteEvent({{ $event }})">
                                     {{-- Delete Button --}}
                                 </x-delete-button>
+                                
+                                {{-- Add Complete Event Button --}}
+                                <form action="{{ route('events.complete', $event->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                        Complete Event
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

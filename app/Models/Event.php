@@ -18,6 +18,7 @@ class Event extends Model
         "checkOut_start",
         "checkOut_end",
         "date",
-        "admin_id"  // Add this to the fillable array
+        "admin_id",
+        "status"
     ];
 }

@@ -24,6 +24,7 @@
     20 => 'Illuminate\\Translation\\TranslationServiceProvider',
     21 => 'Illuminate\\Validation\\ValidationServiceProvider',
     22 => 'Illuminate\\View\\ViewServiceProvider',
+<<<<<<< HEAD
     23 => 'Laravel\\Pail\\PailServiceProvider',
     24 => 'Laravel\\Sail\\SailServiceProvider',
     25 => 'Laravel\\Tinker\\TinkerServiceProvider',
@@ -31,6 +32,20 @@
     27 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     28 => 'Termwind\\Laravel\\TermwindServiceProvider',
     29 => 'App\\Providers\\AppServiceProvider',
+=======
+    23 => 'Barryvdh\\DomPDF\\ServiceProvider',
+    24 => 'Laravel\\Breeze\\BreezeServiceProvider',
+    25 => 'Laravel\\Pail\\PailServiceProvider',
+    26 => 'Laravel\\Sail\\SailServiceProvider',
+    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    28 => 'Laravel\\Ui\\UiServiceProvider',
+    29 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    30 => 'Carbon\\Laravel\\ServiceProvider',
+    31 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    32 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    33 => 'Pest\\Laravel\\PestServiceProvider',
+    34 => 'App\\Providers\\AppServiceProvider',
+>>>>>>> 179d4643e07a65192848b863db0dcb271ba47710
   ),
   'eager' => 
   array (
@@ -44,11 +59,23 @@
     7 => 'Illuminate\\Pagination\\PaginationServiceProvider',
     8 => 'Illuminate\\Session\\SessionServiceProvider',
     9 => 'Illuminate\\View\\ViewServiceProvider',
+<<<<<<< HEAD
     10 => 'Laravel\\Pail\\PailServiceProvider',
     11 => 'Carbon\\Laravel\\ServiceProvider',
     12 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     13 => 'Termwind\\Laravel\\TermwindServiceProvider',
     14 => 'App\\Providers\\AppServiceProvider',
+=======
+    10 => 'Barryvdh\\DomPDF\\ServiceProvider',
+    11 => 'Laravel\\Pail\\PailServiceProvider',
+    12 => 'Laravel\\Ui\\UiServiceProvider',
+    13 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    14 => 'Carbon\\Laravel\\ServiceProvider',
+    15 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    16 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    17 => 'Pest\\Laravel\\PestServiceProvider',
+    18 => 'App\\Providers\\AppServiceProvider',
+>>>>>>> 179d4643e07a65192848b863db0dcb271ba47710
   ),
   'deferred' => 
   array (
